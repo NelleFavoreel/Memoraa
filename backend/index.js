@@ -14,6 +14,9 @@ app.use(express.static("public"));
 const tripsRoutes = require("./routes/trips");
 app.use("/trips", tripsRoutes);
 
+const userRoutes = require("./routes/users");
+app.use("/users", userRoutes);
+
 // MongoDB connectie opstarten en daarna server starten
 connectDB().then(() => {
   app.listen(port, () => {

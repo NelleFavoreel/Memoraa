@@ -41,4 +41,44 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// Reis toevoegen (POST)
+router.post("/", async (req, res) => {
+  try {
+    const db = getDB();
+    const collection = db.collection("trips");
+    const usersCollection = db.collection("users"); // Referentie naar de users collectie
+
+    const { place, country, imageUrl, startDate, endDate, screenNames, familyId } = req.body;
+
+    // Controleer of alle noodzakelijke gegevens aanwezig zijn
+    if (!place || !country || !startDate || !endDate || !screenNames || !familyId) {
+      return res.status(400).json({ message: "Fout: Alle velden zijn vereist." });
+    }
+
+    // Zoek de gebruikers met de opgegeven screenNames
+    const users = await usersCollection.find({ screenName: { $in: screenNames } }).toArray();
+    const travelerIds = users.map((user) => user._id);
+
+    // Maak een nieuw reisobject
+    const newTrip = {
+      place,
+      country,
+      imageUrl,
+      startDate: new Date(startDate), // Zorg ervoor dat de datums als Date object worden opgeslagen
+      endDate: new Date(endDate),
+      travelers: travelerIds, // Voeg de gevonden user _id's toe aan de travelers array
+      familyId,
+    };
+
+    // Voeg de reis toe aan de MongoDB collectie
+    const result = await collection.insertOne(newTrip);
+
+    // Geef een succesbericht terug
+    res.status(201).json({ message: "Reis succesvol toegevoegd.", tripId: result.insertedId });
+  } catch (err) {
+    console.error("❌ Fout bij toevoegen van reis:", err);
+    res.status(500).json({ message: "Fout bij het toevoegen van reis." });
+  }
+});
+
 module.exports = router;
