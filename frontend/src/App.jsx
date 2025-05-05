@@ -7,7 +7,7 @@ import Calendar from "./pages/Calendar";
 import Account from "./pages/Account";
 import TravelOverview from "./pages/TravelOverview";
 import TravelDetail from "./pages/TravelDetail";
-
+import LogIn from "./pages/LogIn";
 function App() {
   return (
     <>
@@ -19,6 +19,7 @@ function App() {
           <Route path="/trips/:id" element={<TravelDetail />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/login" element={<LogIn />} />
         </Routes>
       </BrowserRouter>
     </>
