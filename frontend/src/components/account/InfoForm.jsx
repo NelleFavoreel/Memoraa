@@ -13,7 +13,7 @@ function InfoForm() {
 
         const response = await fetch("http://localhost:3001/users/me", {
           headers: {
-            Authorization: `Bearer ${token}`, // JWT token meesturen
+            Authorization: `Bearer ${token}`,
           },
         });
 

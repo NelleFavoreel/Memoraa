@@ -32,7 +32,8 @@ function LogIn() {
 
       if (response.ok) {
         localStorage.setItem("token", data.token);
-        setIsLoggedIn(true); // ✅ Markeer als ingelogd
+        setIsLoggedIn(true);
+        console.log("Inloggen succesvol:", data);
         alert("Inloggen succesvol!");
       } else {
         // Toon foutmelding als login niet geslaagd is

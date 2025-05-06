@@ -81,6 +81,7 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+  console.log("Inlogverzoek ontvangen");
   try {
     const { email, password } = req.body;
     const db = getDB();
@@ -98,7 +99,7 @@ router.post("/login", async (req, res) => {
     }
 
     // JWT token genereren (bijv. 1 dag geldig)
-    const token = jwt.sign({ userId: user._id.toString() }, "geheime_sleutel", { expiresIn: "1d" });
+    const token = jwt.sign({ userId: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
     res.json({
       message: "Inloggen succesvol",
@@ -175,15 +176,18 @@ router.post("/change-password", authenticateToken, async (req, res) => {
 });
 
 // Ingelogde gebruiker ophalen op basis van token
-
 router.get("/me", authenticateToken, async (req, res) => {
   const db = getDB();
   const collection = db.collection("users");
 
-  try {
-    // Zet de userId uit de token om naar een ObjectId
-    const userId = new ObjectId(req.user.userId); // Hier is het belangrijk dat je het omzet naar een ObjectId
+  const userIdFromToken = req.user.userId;
 
+  if (!ObjectId.isValid(userIdFromToken)) {
+    return res.status(400).json({ message: "Ongeldig gebruikers-ID formaat" });
+  }
+
+  try {
+    const userId = new ObjectId(userIdFromToken);
     const user = await collection.findOne({ _id: userId });
 
     if (!user) return res.status(404).json({ message: "Gebruiker niet gevonden" });
