@@ -1,12 +1,14 @@
-import ChangingPassword from "../components/ChangePassword";
 import React, { useState } from "react";
+
+import ChangingPassword from "../components/account/ChangePassword";
+import InfoForm from "../components/account/InfoForm";
 
 function Account() {
   const [showChangePassword, setShowChangePassword] = useState(false);
   return (
     <div>
       <h2>Account</h2>
-      <p>Comming soon... 👉</p>
+      {/* <InfoForm></InfoForm> */}
       <div>
         <button type="button" onClick={() => setShowChangePassword(!showChangePassword)}>
           Wachtwoord wijzigen?

@@ -172,4 +172,33 @@ router.post("/change-password", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Fout bij wachtwoord wijzigen." });
   }
 });
+
+// Ingelogde gebruiker ophalen op basis van token
+router.get("/me", authenticateToken, async (req, res) => {
+  try {
+    // Haal userId uit de token die in de middleware wordt gezet
+    const userId = req.user.userId;
+
+    if (!userId || !ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: "Ongeldig gebruikers-ID" });
+    }
+
+    const db = getDB();
+    const collection = db.collection("users");
+
+    // Haal de gebruiker op uit de database
+    const user = await collection.findOne({ _id: new ObjectId(userId) });
+
+    if (!user) {
+      return res.status(404).json({ message: "Gebruiker niet gevonden" });
+    }
+
+    // Stuur de gebruiker terug als JSON
+    res.json(user);
+  } catch (error) {
+    console.error("❌ Fout bij ophalen user:", error);
+    res.status(500).json({ message: "Serverfout" });
+  }
+});
+
 module.exports = router;
