@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import DeleteTrip from "./DeleteTrip"; // Import de DeleteTrip component
+import { Link } from "react-router-dom"; // Voeg Link toe om naar detailpagina's te navigeren
+import DeleteTrip from "./DeleteTrip";
 
 function TravelInfo() {
   const [trips, setTrips] = useState([]);
@@ -30,21 +31,20 @@ function TravelInfo() {
               <strong>Bestemming:</strong> {trip.place} - {trip.country}
             </p>
             <p>
-              <strong>Datum:</strong> {new Date(trip.date).toLocaleDateString()}
+              <strong>Datum:</strong> {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
             </p>
             <p>
               <strong>Deelnemende gebruikers:</strong>
             </p>
             <ul>
-              {trip.travelers.map((userId) => {
-                return (
-                  <li key={userId}>
-                    <FetchUserInfo userId={userId} />
-                  </li>
-                );
-              })}
+              {trip.travelers.map((userId) => (
+                <li key={userId}>
+                  <FetchUserInfo userId={userId} />
+                </li>
+              ))}
             </ul>
-            {/* Gebruik de DeleteTrip component voor elke reis */}
+            {/* Voeg een link naar de detailpagina van de reis */}
+            <Link to={`/trips/${trip._id}`}>Bekijk de reisdetails</Link>
             <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
           </li>
         ))}
