@@ -8,7 +8,7 @@ function Account() {
   return (
     <div>
       <h2>Account</h2>
-      {/* <InfoForm></InfoForm> */}
+      <InfoForm></InfoForm>
       <div>
         <button type="button" onClick={() => setShowChangePassword(!showChangePassword)}>
           Wachtwoord wijzigen?

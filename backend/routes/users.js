@@ -6,6 +6,7 @@ const { ObjectId } = require("mongodb");
 const bcrypt = require("bcryptjs");
 const authenticateToken = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
+
 // Gebruiker ophalen op basis van userId
 router.get("/:userId", async (req, res) => {
   try {
@@ -97,14 +98,14 @@ router.post("/login", async (req, res) => {
     }
 
     // JWT token genereren (bijv. 1 dag geldig)
-    const token = jwt.sign({ userId: user._id }, "geheime_sleutel", { expiresIn: "1d" });
+    const token = jwt.sign({ userId: user._id.toString() }, "geheime_sleutel", { expiresIn: "1d" });
 
     res.json({
       message: "Inloggen succesvol",
       userId: user._id,
       name: user.name,
       screenName: user.screenName,
-      token, // ⚠️ Stuur token mee!
+      token,
     });
   } catch (err) {
     console.error("❌ Fout bij inloggen:", err);
@@ -174,30 +175,22 @@ router.post("/change-password", authenticateToken, async (req, res) => {
 });
 
 // Ingelogde gebruiker ophalen op basis van token
+
 router.get("/me", authenticateToken, async (req, res) => {
+  const db = getDB();
+  const collection = db.collection("users");
+
   try {
-    // Haal userId uit de token die in de middleware wordt gezet
-    const userId = req.user.userId;
+    // Zet de userId uit de token om naar een ObjectId
+    const userId = new ObjectId(req.user.userId); // Hier is het belangrijk dat je het omzet naar een ObjectId
 
-    if (!userId || !ObjectId.isValid(userId)) {
-      return res.status(400).json({ message: "Ongeldig gebruikers-ID" });
-    }
+    const user = await collection.findOne({ _id: userId });
 
-    const db = getDB();
-    const collection = db.collection("users");
+    if (!user) return res.status(404).json({ message: "Gebruiker niet gevonden" });
 
-    // Haal de gebruiker op uit de database
-    const user = await collection.findOne({ _id: new ObjectId(userId) });
-
-    if (!user) {
-      return res.status(404).json({ message: "Gebruiker niet gevonden" });
-    }
-
-    // Stuur de gebruiker terug als JSON
     res.json(user);
   } catch (error) {
-    console.error("❌ Fout bij ophalen user:", error);
-    res.status(500).json({ message: "Serverfout" });
+    res.status(500).json({ message: "Fout bij het ophalen van gebruiker", error: error.message });
   }
 });
 

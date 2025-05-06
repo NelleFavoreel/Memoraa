@@ -6,9 +6,15 @@ function InfoForm() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        // Haal gebruikersgegevens op zonder token of autorisatie
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Geen token gevonden. Gebruiker is niet ingelogd.");
+        }
+
         const response = await fetch("http://localhost:3001/users/me", {
-          method: "GET", // Geen headers nodig voor authenticatie
+          headers: {
+            Authorization: `Bearer ${token}`, // JWT token meesturen
+          },
         });
 
         if (!response.ok) {
@@ -17,8 +23,6 @@ function InfoForm() {
 
         const data = await response.json();
         console.log("User info:", data);
-
-        // Zet de gebruikersdata in de state
         setUser(data);
       } catch (error) {
         console.error("Error:", error);
@@ -26,7 +30,7 @@ function InfoForm() {
     };
 
     fetchUser();
-  }, []); // De lege array zorgt ervoor dat dit alleen bij de eerste render wordt uitgevoerd
+  }, []);
 
   if (!user) return <p>Gebruikersgegevens worden geladen...</p>;
 
