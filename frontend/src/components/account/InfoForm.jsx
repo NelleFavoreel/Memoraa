@@ -11,8 +11,10 @@ function InfoForm() {
           throw new Error("Geen token gevonden. Gebruiker is niet ingelogd.");
         }
 
-        const response = await fetch("http://localhost:3001/users/me", {
+        const response = await fetch("http://localhost:3001/users/profile", {
+          method: "GET",
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         });

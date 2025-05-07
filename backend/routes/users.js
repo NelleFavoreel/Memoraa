@@ -176,7 +176,7 @@ router.post("/change-password", authenticateToken, async (req, res) => {
 });
 
 // Ingelogde gebruiker ophalen op basis van token
-router.get("/me", authenticateToken, async (req, res) => {
+router.get("/profile", authenticateToken, async (req, res) => {
   const db = getDB();
   const collection = db.collection("users");
 

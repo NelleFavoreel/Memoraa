@@ -11,7 +11,8 @@ function authenticateToken(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Zorg dat dit { userId: ... } bevat
+    req.user = decoded;
+    console.log("✅ Token geverifieerd:", decoded);
     next();
   } catch (err) {
     console.error("❌ Token verificatie mislukt:", err);
