@@ -31,8 +31,21 @@ function LogIn() {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("token", data.token);
-        setIsLoggedIn(true); // ✅ Markeer als ingelogd
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("userId", data.userId);
+          console.log("Token opgeslagen:", data.token);
+          setIsLoggedIn(true);
+          alert("Inloggen succesvol!");
+        } else {
+          console.error("❌ Geen token ontvangen:", data);
+          setError("Er is iets mis met het ontvangen van het token.");
+        }
+
+        setIsLoggedIn(true);
+        console.log("Inloggen succesvol:", data);
+        console.log("Token ontvangen:", data.token);
+
         alert("Inloggen succesvol!");
       } else {
         // Toon foutmelding als login niet geslaagd is
@@ -64,7 +77,7 @@ function LogIn() {
       // screenName aanpassen als voornaam al bestaat
       let screenName = firstName;
       if (checkData.firstNameExists) {
-        screenName = `${firstName}_${lastName}`; // bijv. Nelle_Favoreel
+        screenName = `${firstName}_${lastName}`;
       }
 
       const userCredentials = {

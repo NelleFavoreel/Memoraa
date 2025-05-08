@@ -1,21 +1,35 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import ChangingPassword from "../components/account/ChangePassword";
 import InfoForm from "../components/account/InfoForm";
 
 function Account() {
   const [showChangePassword, setShowChangePassword] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <div>
       <h2>Account</h2>
-      <InfoForm></InfoForm>
-      <div>
-        <button type="button" onClick={() => setShowChangePassword(!showChangePassword)}>
-          Wachtwoord wijzigen?
-        </button>
+      {isLoggedIn ? (
+        <>
+          <InfoForm />
+          <div>
+            <button type="button" onClick={() => setShowChangePassword(!showChangePassword)}>
+              Wachtwoord wijzigen?
+            </button>
 
-        {showChangePassword && <ChangingPassword onClose={() => setShowChangePassword(false)} />}
-      </div>
+            {showChangePassword && <ChangingPassword onClose={() => setShowChangePassword(false)} />}
+          </div>
+        </>
+      ) : (
+        <p>Je moet inloggen om toegang te krijgen tot je account.</p>
+      )}
     </div>
   );
 }

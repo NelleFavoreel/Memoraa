@@ -1,21 +1,16 @@
-// middleware/auth.js
+// backend/middleware/auth.js
 const jwt = require("jsonwebtoken");
 
-const authenticateToken = (req, res, next) => {
-  const token = req.header("Authorization")?.replace("Bearer ", "");
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (!token) return res.sendStatus(401);
 
-  if (!token) {
-    return res.status(401).json({ message: "Geen token, toegang geweigerd" });
-  }
-
-  try {
-    const decoded = jwt.verify(token, "geheime_sleutel");
-    req.user = decoded;
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user; // <-- deze moet een `user.id` bevatten``
+    console.log("Authenticated user:", user);
     next();
-  } catch (err) {
-    console.error("❌ Token verificatie mislukt", err);
-    res.status(403).json({ message: "Ongeldig of verlopen token" });
-  }
-};
-
+  });
+}
 module.exports = authenticateToken;

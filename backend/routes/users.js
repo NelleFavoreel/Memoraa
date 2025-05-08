@@ -10,14 +10,44 @@ const jwt = require("jsonwebtoken");
 // Gebruiker ophalen op basis van userId
 router.get("/:userId", async (req, res) => {
   try {
+    const { userId } = req.params; // Haal userId uit de URL
     const db = getDB();
     const collection = db.collection("users");
 
-    const userId = req.params.userId;
-
+    // Controleer of userId geldig is
     if (!ObjectId.isValid(userId)) {
       return res.status(400).json({ message: "Ongeldig gebruikers-ID formaat" });
     }
+
+    // Haal de gebruiker op uit de users collectie
+    const user = await collection.findOne({ _id: new ObjectId(userId) });
+
+    if (!user) {
+      return res.status(404).json({ message: "Gebruiker niet gevonden" });
+    }
+
+    res.json(user);
+  } catch (err) {
+    console.error("❌ Fout bij ophalen van gebruiker:", err);
+    res.status(500).json({ message: "Fout bij ophalen van gebruiker." });
+  }
+});
+
+module.exports = router;
+router.get("/profile", async (req, res) => {
+  const { userId } = req.query; // Haal de userId uit de queryparameters (bijvoorbeeld: /profile?userId=12345)
+
+  if (!userId) {
+    return res.status(400).json({ message: "Geen gebruikers-ID opgegeven" });
+  }
+
+  if (!ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: "Ongeldig gebruikers-ID formaat" });
+  }
+
+  try {
+    const db = getDB();
+    const collection = db.collection("users");
 
     const user = await collection.findOne({ _id: new ObjectId(userId) });
 
@@ -81,6 +111,7 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+  console.log("Inlogverzoek ontvangen");
   try {
     const { email, password } = req.body;
     const db = getDB();
@@ -98,7 +129,7 @@ router.post("/login", async (req, res) => {
     }
 
     // JWT token genereren (bijv. 1 dag geldig)
-    const token = jwt.sign({ userId: user._id.toString() }, "geheime_sleutel", { expiresIn: "1d" });
+    const token = jwt.sign({ userId: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
     res.json({
       message: "Inloggen succesvol",
@@ -171,26 +202,6 @@ router.post("/change-password", authenticateToken, async (req, res) => {
   } catch (err) {
     console.error("❌ Fout bij wachtwoord wijzigen:", err);
     res.status(500).json({ message: "Fout bij wachtwoord wijzigen." });
-  }
-});
-
-// Ingelogde gebruiker ophalen op basis van token
-
-router.get("/me", authenticateToken, async (req, res) => {
-  const db = getDB();
-  const collection = db.collection("users");
-
-  try {
-    // Zet de userId uit de token om naar een ObjectId
-    const userId = new ObjectId(req.user.userId); // Hier is het belangrijk dat je het omzet naar een ObjectId
-
-    const user = await collection.findOne({ _id: userId });
-
-    if (!user) return res.status(404).json({ message: "Gebruiker niet gevonden" });
-
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: "Fout bij het ophalen van gebruiker", error: error.message });
   }
 });
 
