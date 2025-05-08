@@ -34,3 +34,30 @@ router.get("/search-family-members", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Zoeken mislukt." });
   }
 });
+// Familielid toevoegen aan friend list
+router.post("/add-friend", authenticateToken, async (req, res) => {
+  const { friendId } = req.body;
+  const db = getDB();
+  const collection = db.collection("users");
+
+  try {
+    const user = await collection.findOne({ _id: new ObjectId(req.user.userId) });
+    const friend = await collection.findOne({ _id: new ObjectId(friendId) });
+
+    if (!user || !friend) {
+      return res.status(404).json({ message: "Gebruiker of vriend niet gevonden." });
+    }
+
+    // Voeg toe aan vriendenlijst, alleen als nog niet toegevoegd
+    await collection.updateOne(
+      { _id: new ObjectId(user._id) },
+      { $addToSet: { friends: friend._id } } // $addToSet voorkomt dubbele items
+    );
+
+    res.json({ message: "Familielid succesvol toegevoegd als vriend." });
+  } catch (err) {
+    console.error("❌ Fout bij toevoegen familielid:", err);
+    res.status(500).json({ message: "Toevoegen mislukt." });
+  }
+});
+module.exports = router;

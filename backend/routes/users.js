@@ -33,7 +33,6 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
-module.exports = router;
 router.get("/profile", async (req, res) => {
   const { userId } = req.query; // Haal de userId uit de queryparameters (bijvoorbeeld: /profile?userId=12345)
 

@@ -18,8 +18,8 @@ app.use("/trips", tripsRoutes);
 const userRoutes = require("./routes/users");
 app.use("/users", userRoutes);
 
-const userRoutes = require("./routes/family");
-app.use("/family", userRoutes);
+const familyRoutes = require("./routes/family");
+app.use("/family", familyRoutes);
 
 // MongoDB connectie opstarten en daarna server starten
 connectDB().then(() => {
