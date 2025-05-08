@@ -33,6 +33,7 @@ function LogIn() {
       if (response.ok) {
         if (data.token) {
           localStorage.setItem("token", data.token);
+          localStorage.setItem("userId", data.userId);
           console.log("Token opgeslagen:", data.token);
           setIsLoggedIn(true);
           alert("Inloggen succesvol!");

@@ -8,6 +8,7 @@ import Account from "./pages/Account";
 import TravelOverview from "./pages/TravelOverview";
 import TravelDetail from "./pages/TravelDetail";
 import LogIn from "./pages/LogIn";
+import InfoForm from "./components/account/InfoForm";
 function App() {
   return (
     <>
@@ -19,7 +20,9 @@ function App() {
           <Route path="/trips/:id" element={<TravelDetail />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/account" element={<Account />} />
+          {/* <Route path="/account" element={<Account />} /> */}
           <Route path="/login" element={<LogIn />} />
+          <Route path="/users/:userId" element={<InfoForm />} />
         </Routes>
       </BrowserRouter>
     </>

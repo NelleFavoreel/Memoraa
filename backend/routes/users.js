@@ -10,14 +10,44 @@ const jwt = require("jsonwebtoken");
 // Gebruiker ophalen op basis van userId
 router.get("/:userId", async (req, res) => {
   try {
+    const { userId } = req.params; // Haal userId uit de URL
     const db = getDB();
     const collection = db.collection("users");
 
-    const userId = req.params.userId;
-
+    // Controleer of userId geldig is
     if (!ObjectId.isValid(userId)) {
       return res.status(400).json({ message: "Ongeldig gebruikers-ID formaat" });
     }
+
+    // Haal de gebruiker op uit de users collectie
+    const user = await collection.findOne({ _id: new ObjectId(userId) });
+
+    if (!user) {
+      return res.status(404).json({ message: "Gebruiker niet gevonden" });
+    }
+
+    res.json(user);
+  } catch (err) {
+    console.error("❌ Fout bij ophalen van gebruiker:", err);
+    res.status(500).json({ message: "Fout bij ophalen van gebruiker." });
+  }
+});
+
+module.exports = router;
+router.get("/profile", async (req, res) => {
+  const { userId } = req.query; // Haal de userId uit de queryparameters (bijvoorbeeld: /profile?userId=12345)
+
+  if (!userId) {
+    return res.status(400).json({ message: "Geen gebruikers-ID opgegeven" });
+  }
+
+  if (!ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: "Ongeldig gebruikers-ID formaat" });
+  }
+
+  try {
+    const db = getDB();
+    const collection = db.collection("users");
 
     const user = await collection.findOne({ _id: new ObjectId(userId) });
 
@@ -172,29 +202,6 @@ router.post("/change-password", authenticateToken, async (req, res) => {
   } catch (err) {
     console.error("❌ Fout bij wachtwoord wijzigen:", err);
     res.status(500).json({ message: "Fout bij wachtwoord wijzigen." });
-  }
-});
-
-// Ingelogde gebruiker ophalen op basis van token
-router.get("/profile", authenticateToken, async (req, res) => {
-  const db = getDB();
-  const collection = db.collection("users");
-
-  const userIdFromToken = req.user.userId;
-
-  if (!ObjectId.isValid(userIdFromToken)) {
-    return res.status(400).json({ message: "Ongeldig gebruikers-ID formaat" });
-  }
-
-  try {
-    const userId = new ObjectId(userIdFromToken);
-    const user = await collection.findOne({ _id: userId });
-
-    if (!user) return res.status(404).json({ message: "Gebruiker niet gevonden" });
-
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: "Fout bij het ophalen van gebruiker", error: error.message });
   }
 });
 
