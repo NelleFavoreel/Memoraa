@@ -22,7 +22,7 @@ function App() {
           <Route path="/account" element={<Account />} />
           {/* <Route path="/account" element={<Account />} /> */}
           <Route path="/login" element={<LogIn />} />
-          <Route path="/users/:userId" element={<InfoForm />} />
+          <Route path="/users" element={<InfoForm />} />
         </Routes>
       </BrowserRouter>
     </>

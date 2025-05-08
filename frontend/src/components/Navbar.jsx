@@ -25,7 +25,7 @@ export default function Navbar() {
       <Link to="/calendar" style={linkStyle}>
         Kalender
       </Link>
-      <Link to="/users/:userId" style={linkStyle}>
+      <Link to="/users" style={linkStyle}>
         Account
       </Link>
     </nav>
