@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ChangingPassword from "../components/account/ChangePassword";
 import InfoForm from "../components/account/InfoForm";
-
+import AddFamilyMembers from "../components/account/AddFamilyMembers";
 function Account() {
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -19,6 +19,7 @@ function Account() {
       {isLoggedIn ? (
         <>
           <InfoForm />
+          <AddFamilyMembers />
           <div>
             <button type="button" onClick={() => setShowChangePassword(!showChangePassword)}>
               Wachtwoord wijzigen?

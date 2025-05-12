@@ -9,6 +9,7 @@ import TravelOverview from "./pages/TravelOverview";
 import TravelDetail from "./pages/TravelDetail";
 import LogIn from "./pages/LogIn";
 import InfoForm from "./components/account/InfoForm";
+import Notifications from "./pages/Notifications";
 function App() {
   return (
     <>
@@ -22,7 +23,8 @@ function App() {
           <Route path="/account" element={<Account />} />
           {/* <Route path="/account" element={<Account />} /> */}
           <Route path="/login" element={<LogIn />} />
-          <Route path="/users" element={<InfoForm />} />
+          <Route path="/users" element={<Account />} />
+          <Route path="/notifications" element={<Notifications />} />
         </Routes>
       </BrowserRouter>
     </>

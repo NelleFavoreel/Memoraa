@@ -25,6 +25,9 @@ export default function Navbar() {
       <Link to="/calendar" style={linkStyle}>
         Kalender
       </Link>
+      <Link to="/notifications" style={linkStyle}>
+        Meldingen
+      </Link>
       <Link to="/users" style={linkStyle}>
         Account
       </Link>

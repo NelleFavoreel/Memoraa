@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ChangingPassword from "./ChangePassword";
 
 function InfoForm() {
   const { userId } = useParams(); // Haal userId op uit de URL
@@ -47,12 +48,13 @@ function InfoForm() {
   if (!user) return <p>Gebruikersgegevens worden geladen...</p>;
 
   return (
-    <div>
-      <h2>Welkom, {user.screenName}</h2>
-      <p>Email: {user.email}</p>
-      <p>Familie-ID: {user.familyId}</p>
-      <p>Familieleden: {user.familyMembers.join(", ")}</p>
-    </div>
+    <>
+      <div>
+        <h2>Welkom, {user.screenName}</h2>
+        <p>Email: {user.email}</p>
+        <p>Familie-ID: {user.familyId}</p>
+      </div>
+    </>
   );
 }
 
