@@ -41,23 +41,76 @@ router.post("/add-friend", authenticateToken, async (req, res) => {
   const collection = db.collection("users");
 
   try {
-    const user = await collection.findOne({ _id: new ObjectId(req.user.userId) });
-    const friend = await collection.findOne({ _id: new ObjectId(friendId) });
+    const userId = new ObjectId(req.user.userId);
+    const friendObjectId = new ObjectId(friendId);
+
+    const user = await collection.findOne({ _id: userId });
+    const friend = await collection.findOne({ _id: friendObjectId });
 
     if (!user || !friend) {
       return res.status(404).json({ message: "Gebruiker of vriend niet gevonden." });
     }
 
-    // Voeg toe aan vriendenlijst, alleen als nog niet toegevoegd
+    // Voeg een verzoek toe bij de andere gebruiker
     await collection.updateOne(
-      { _id: new ObjectId(user._id) },
-      { $addToSet: { friends: friend._id } } // $addToSet voorkomt dubbele items
+      { _id: friendObjectId },
+      { $addToSet: { familyRequests: userId } } // gebruiker stuurt verzoek
     );
 
-    res.json({ message: "Familielid succesvol toegevoegd als vriend." });
+    res.json({ message: "Familieverzoek verzonden." });
   } catch (err) {
-    console.error("❌ Fout bij toevoegen familielid:", err);
-    res.status(500).json({ message: "Toevoegen mislukt." });
+    console.error("❌ Fout bij verzenden verzoek:", err);
+    res.status(500).json({ message: "Verzoek verzenden mislukt." });
   }
 });
+router.post("/accept-family-request", authenticateToken, async (req, res) => {
+  const { requesterId } = req.body;
+  const db = getDB();
+  const collection = db.collection("users");
+
+  const userId = new ObjectId(req.user.userId);
+  const requesterObjectId = new ObjectId(requesterId);
+
+  try {
+    // Voeg elkaar toe aan elkaars familieleden
+    await collection.updateOne(
+      { _id: userId },
+      {
+        $addToSet: { familyMembers: requesterObjectId },
+        $pull: { familyRequests: requesterObjectId },
+      }
+    );
+
+    await collection.updateOne({ _id: requesterObjectId }, { $addToSet: { familyMembers: userId } });
+
+    res.json({ message: "Familieverzoek geaccepteerd." });
+  } catch (err) {
+    console.error("❌ Fout bij accepteren verzoek:", err);
+    res.status(500).json({ message: "Kon verzoek niet accepteren." });
+  }
+});
+router.get("/family-requests", authenticateToken, async (req, res) => {
+  const db = getDB();
+  const collection = db.collection("users");
+  const userId = new ObjectId(req.user.userId);
+
+  try {
+    const user = await collection.findOne({ _id: userId });
+
+    if (!user || !user.familyRequests || user.familyRequests.length === 0) {
+      return res.json([]); // geen verzoeken
+    }
+
+    const requests = await collection
+      .find({ _id: { $in: user.familyRequests } })
+      .project({ _id: 1, screenName: 1 })
+      .toArray();
+
+    res.json(requests);
+  } catch (err) {
+    console.error("❌ Fout bij ophalen verzoeken:", err);
+    res.status(500).json({ message: "Ophalen mislukt." });
+  }
+});
+
 module.exports = router;
