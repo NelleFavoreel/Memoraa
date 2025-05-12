@@ -9,8 +9,9 @@ function AddTrip() {
   const [screenNames, setScreenNames] = useState(""); // Hier komen de geselecteerde screenNames
   const [familyId, setFamilyId] = useState("");
   const [friends, setFriends] = useState([]);
-  const [selectedFriend, setSelectedFriend] = useState(""); // voor de geselecteerde vriend
+  const [selectedFriend, setSelectedFriend] = useState([]); // Zorg dat dit een array is
   const token = localStorage.getItem("token");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const userId = localStorage.getItem("userId");
@@ -44,6 +45,7 @@ function AddTrip() {
         console.error("Fout bij toevoegen van reis:", err);
       });
   };
+
   useEffect(() => {
     const fetchFriends = async () => {
       try {
@@ -59,6 +61,17 @@ function AddTrip() {
 
     fetchFriends();
   }, []);
+
+  const handleCheckboxChange = (friendId) => {
+    // Als de vriend al is geselecteerd, deselecteer hem, anders selecteer hem
+    setSelectedFriend((prevSelectedFriends) => {
+      if (prevSelectedFriends.includes(friendId)) {
+        return prevSelectedFriends.filter((id) => id !== friendId);
+      } else {
+        return [...prevSelectedFriends, friendId];
+      }
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -82,17 +95,16 @@ function AddTrip() {
         Einddatum:
         <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
       </label>
-      <label>
-        Kies je vriend voor de reis:
-        <select value={selectedFriend} onChange={(e) => setSelectedFriend(e.target.value)} required>
-          <option value="">Selecteer een vriend</option>
-          {friends.map((friend) => (
-            <option key={friend._id} value={friend._id}>
-              {friend.screenName}
-            </option>
-          ))}
-        </select>
-      </label>
+
+      <label>Kies je vrienden voor de reis:</label>
+      <div>
+        {friends.map((friend) => (
+          <div key={friend._id}>
+            <input type="checkbox" id={friend._id} checked={selectedFriend.includes(friend._id)} onChange={() => handleCheckboxChange(friend._id)} />
+            <label htmlFor={friend._id}>{friend.screenName}</label>
+          </div>
+        ))}
+      </div>
 
       <label>
         Family ID:

@@ -64,7 +64,7 @@ router.post("/", async (req, res) => {
     const collection = db.collection("trips");
     const usersCollection = db.collection("users");
 
-    const { place, country, imageUrl, startDate, endDate, screenNames, familyId, userId } = req.body;
+    const { place, country, imageUrl, startDate, endDate, screenNames, familyId, userId, selectedFriend } = req.body;
 
     if (!place || !country || !startDate || !endDate || !familyId || !userId) {
       return res.status(400).json({ message: "Fout: Alle velden zijn vereist." });
@@ -73,6 +73,10 @@ router.post("/", async (req, res) => {
     // Zoek gebruikers op basis van screenNames
     const users = await usersCollection.find({ screenName: { $in: screenNames || [] } }).toArray();
     const travelerIds = users.map((user) => user._id);
+
+    // Voeg de geselecteerde vrienden toe aan de lijst van reizigers
+    const selectedFriendObjectIds = selectedFriend.map((friendId) => new ObjectId(friendId));
+    travelerIds.push(...selectedFriendObjectIds);
 
     const currentUserObjectId = new ObjectId(userId);
 
