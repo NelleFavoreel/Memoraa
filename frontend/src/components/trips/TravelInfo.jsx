@@ -35,7 +35,8 @@ function TravelInfo() {
       <h2>Alle reizen</h2>
       <ul>
         {trips.map((trip) => (
-          <li key={trip._id}>
+          <li key={trip._id} style={{ border: "1px solid #ccc", borderRadius: "10px", padding: "15px", marginBottom: "20px", maxWidth: "600px" }}>
+            {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} style={{ width: "100%", borderRadius: "10px", marginBottom: "10px" }} />}
             <p>
               <strong>Bestemming:</strong> {trip.place} - {trip.country}
             </p>
@@ -52,9 +53,10 @@ function TravelInfo() {
                 </li>
               ))}
             </ul>
-            {/* Voeg een link naar de detailpagina van de reis */}
-            <Link to={`/trips/${trip._id}`}>Bekijk de reisdetails</Link>
-            <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
+              <Link to={`/trips/${trip._id}`}>📄 Bekijk de reisdetails</Link>
+              <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
+            </div>
           </li>
         ))}
       </ul>

@@ -11,15 +11,39 @@ function AddTrip() {
   const [friends, setFriends] = useState([]);
   const [selectedFriend, setSelectedFriend] = useState([]); // Zorg dat dit een array is
   const token = localStorage.getItem("token");
+  const fetchCountryImage = async (countryName) => {
+    const accessKey = "ul5tNUtQ1UlFRJ-IaGYykyzhxTSnjhanMR7NDqMJLag"; // vervang dit met je eigen sleutel
 
-  const handleSubmit = (e) => {
+    try {
+      const response = await fetch(`https://api.unsplash.com/search/photos?query=${countryName}&orientation=landscape&client_id=${accessKey}`);
+      const data = await response.json();
+
+      if (data.results.length > 0) {
+        return data.results[0].urls.regular;
+      } else {
+        console.warn("Geen afbeelding gevonden voor dit land.");
+        return "";
+      }
+    } catch (error) {
+      console.error("Fout bij ophalen afbeelding van Unsplash:", error);
+      return "";
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const userId = localStorage.getItem("userId");
 
+    let finalImageUrl = imageUrl?.trim();
+
+    // Als er geen geldige URL is opgegeven, haal er automatisch één op via Unsplash
+    if (!finalImageUrl || !finalImageUrl.startsWith("http")) {
+      finalImageUrl = await fetchCountryImage(country);
+    }
     const newTrip = {
       place,
       country,
-      imageUrl,
+      imageUrl: finalImageUrl,
       startDate,
       endDate,
       screenNames: screenNames.split(",").map((name) => name.trim()),
