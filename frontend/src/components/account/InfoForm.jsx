@@ -53,7 +53,6 @@ function InfoForm() {
         <h2>Welkom, {user.screenName}</h2>
         <p>Email: {user.email}</p>
         <p>Familie-ID: {user.familyId}</p>
-        <p>Familieleden: {user.familyMembers.join(", ")}</p>
       </div>
     </>
   );

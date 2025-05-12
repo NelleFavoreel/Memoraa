@@ -112,5 +112,49 @@ router.get("/family-requests", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Ophalen mislukt." });
   }
 });
+router.get("/friends", authenticateToken, async (req, res) => {
+  const db = getDB();
+  const collection = db.collection("users");
+  const userId = new ObjectId(req.user.userId);
+
+  try {
+    const user = await collection.findOne({ _id: userId });
+
+    if (!user || !user.familyMembers || user.familyMembers.length === 0) {
+      return res.json([]); // Geen familieleden
+    }
+
+    const friends = await collection
+      .find({ _id: { $in: user.familyMembers } })
+      .project({ _id: 1, screenName: 1 })
+      .toArray();
+
+    res.json(friends);
+  } catch (err) {
+    console.error("❌ Fout bij ophalen familieleden:", err);
+    res.status(500).json({ message: "Ophalen familieleden mislukt." });
+  }
+});
+router.delete("/remove-friend", authenticateToken, async (req, res) => {
+  const db = getDB();
+  const collection = db.collection("users");
+
+  try {
+    const userId = new ObjectId(req.user.userId);
+    const { friendId } = req.body;
+    const friendObjectId = new ObjectId(friendId);
+
+    // Verwijder vriend bij gebruiker
+    await collection.updateOne({ _id: userId }, { $pull: { familyMembers: friendObjectId } });
+
+    // Verwijder gebruiker bij vriend
+    await collection.updateOne({ _id: friendObjectId }, { $pull: { familyMembers: userId } });
+
+    res.json({ message: "Familielid verwijderd." });
+  } catch (err) {
+    console.error("❌ Fout bij verwijderen familielid:", err);
+    res.status(500).json({ message: "Verwijderen mislukt." });
+  }
+});
 
 module.exports = router;
