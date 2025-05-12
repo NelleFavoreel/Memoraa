@@ -6,13 +6,22 @@ function TravelInfo() {
   const [trips, setTrips] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/trips")
-      .then((res) => res.json())
+    const token = localStorage.getItem("token"); // Haal je JWT-token op
+
+    fetch("http://localhost:3001/trips", {
+      headers: {
+        Authorization: `Bearer ${token}`, // Stuur token mee in headers
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Niet geautoriseerd of fout bij ophalen.");
+        return res.json();
+      })
       .then((data) => {
         setTrips(data);
       })
       .catch((err) => {
-        console.error("Fout bij ophalen van trips:", err);
+        console.error("❌ Fout bij ophalen van trips:", err);
       });
   }, []);
 

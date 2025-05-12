@@ -3,16 +3,32 @@ const express = require("express");
 const router = express.Router();
 const { getDB } = require("../db");
 const { ObjectId } = require("mongodb"); // Correcte manier om ObjectId te importeren
+const authenticateToken = require("../middleware/auth");
 
 // Alle reizen ophalen
-router.get("/", async (req, res) => {
+router.get("/", authenticateToken, async (req, res) => {
   try {
     const db = getDB();
-    const collection = db.collection("trips");
+    const tripsCollection = db.collection("trips");
+    const usersCollection = db.collection("users");
 
-    const trips = await collection.find().toArray(); // haal alles op als array
+    const userId = new ObjectId(req.user.userId);
 
-    res.json(trips); // stuur terug naar frontend
+    // Haal ingelogde gebruiker op om zijn familyId te vinden
+    const user = await usersCollection.findOne({ _id: userId });
+
+    if (!user) {
+      return res.status(404).json({ message: "Gebruiker niet gevonden." });
+    }
+
+    // Vind alle trips van deze gebruiker of zijn familie
+    const trips = await tripsCollection
+      .find({
+        $or: [{ familyId: user.familyId }, { travelers: userId }],
+      })
+      .toArray();
+
+    res.json(trips);
   } catch (err) {
     console.error("❌ Fout bij ophalen van trips:", err);
     res.status(500).send("Fout bij ophalen van reizen.");
@@ -46,40 +62,44 @@ router.post("/", async (req, res) => {
   try {
     const db = getDB();
     const collection = db.collection("trips");
-    const usersCollection = db.collection("users"); // Referentie naar de users collectie
+    const usersCollection = db.collection("users");
 
-    const { place, country, imageUrl, startDate, endDate, screenNames, familyId } = req.body;
+    const { place, country, imageUrl, startDate, endDate, screenNames, familyId, userId } = req.body;
 
-    // Controleer of alle noodzakelijke gegevens aanwezig zijn
-    if (!place || !country || !startDate || !endDate || !screenNames || !familyId) {
+    if (!place || !country || !startDate || !endDate || !familyId || !userId) {
       return res.status(400).json({ message: "Fout: Alle velden zijn vereist." });
     }
 
-    // Zoek de gebruikers met de opgegeven screenNames
-    const users = await usersCollection.find({ screenName: { $in: screenNames } }).toArray();
+    // Zoek gebruikers op basis van screenNames
+    const users = await usersCollection.find({ screenName: { $in: screenNames || [] } }).toArray();
     const travelerIds = users.map((user) => user._id);
 
-    // Maak een nieuw reisobject
+    const currentUserObjectId = new ObjectId(userId);
+
+    // Voeg jezelf toe als je nog niet in de lijst zit
+    if (!travelerIds.some((id) => id.equals(currentUserObjectId))) {
+      travelerIds.push(currentUserObjectId);
+    }
+
     const newTrip = {
       place,
       country,
       imageUrl,
-      startDate: new Date(startDate), // Zorg ervoor dat de datums als Date object worden opgeslagen
+      startDate: new Date(startDate),
       endDate: new Date(endDate),
-      travelers: travelerIds, // Voeg de gevonden user _id's toe aan de travelers array
+      travelers: travelerIds,
       familyId,
     };
 
-    // Voeg de reis toe aan de MongoDB collectie
     const result = await collection.insertOne(newTrip);
 
-    // Geef een succesbericht terug
     res.status(201).json({ message: "Reis succesvol toegevoegd.", tripId: result.insertedId });
   } catch (err) {
     console.error("❌ Fout bij toevoegen van reis:", err);
     res.status(500).json({ message: "Fout bij het toevoegen van reis." });
   }
 });
+
 // Reis detailpagina met bijbehorende dagen ophalen
 router.get("/:id", async (req, res) => {
   try {
