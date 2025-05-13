@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Voeg Link toe om naar detailpagina's te navigeren
+import { Link } from "react-router-dom";
 import DeleteTrip from "./DeleteTrip";
 
 function TravelInfo() {
@@ -10,7 +10,7 @@ function TravelInfo() {
 
     fetch("http://localhost:3001/trips", {
       headers: {
-        Authorization: `Bearer ${token}`, // Stuur token mee in headers
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
@@ -25,7 +25,6 @@ function TravelInfo() {
       });
   }, []);
 
-  // Functie voor het verwijderen van een reis uit de lijst
   const handleDelete = (id) => {
     setTrips((prevTrips) => prevTrips.filter((trip) => trip._id !== id));
   };
@@ -79,7 +78,7 @@ function FetchUserInfo({ userId }) {
   }, [userId]);
 
   if (!user) {
-    return <span>Laden...</span>; // Toon een laadbericht terwijl de gebruiker wordt opgehaald
+    return <span>Laden...</span>;
   }
 
   return (

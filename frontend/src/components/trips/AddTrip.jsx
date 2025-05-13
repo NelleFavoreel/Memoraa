@@ -12,7 +12,7 @@ function AddTrip() {
   const [selectedFriend, setSelectedFriend] = useState([]); // Zorg dat dit een array is
   const token = localStorage.getItem("token");
   const fetchCountryImage = async (countryName) => {
-    const accessKey = "ul5tNUtQ1UlFRJ-IaGYykyzhxTSnjhanMR7NDqMJLag"; // vervang dit met je eigen sleutel
+    const accessKey = "ul5tNUtQ1UlFRJ-IaGYykyzhxTSnjhanMR7NDqMJLag";
 
     try {
       const response = await fetch(`https://api.unsplash.com/search/photos?query=${countryName}&orientation=landscape&client_id=${accessKey}`);
@@ -36,7 +36,6 @@ function AddTrip() {
 
     let finalImageUrl = imageUrl?.trim();
 
-    // Als er geen geldige URL is opgegeven, haal er automatisch één op via Unsplash
     if (!finalImageUrl || !finalImageUrl.startsWith("http")) {
       finalImageUrl = await fetchCountryImage(country);
     }
