@@ -1,22 +1,30 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Voeg Link toe om naar detailpagina's te navigeren
+import { Link } from "react-router-dom";
 import DeleteTrip from "./DeleteTrip";
 
 function TravelInfo() {
   const [trips, setTrips] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/trips")
-      .then((res) => res.json())
+    const token = localStorage.getItem("token"); // Haal je JWT-token op
+
+    fetch("http://localhost:3001/trips", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Niet geautoriseerd of fout bij ophalen.");
+        return res.json();
+      })
       .then((data) => {
         setTrips(data);
       })
       .catch((err) => {
-        console.error("Fout bij ophalen van trips:", err);
+        console.error("❌ Fout bij ophalen van trips:", err);
       });
   }, []);
 
-  // Functie voor het verwijderen van een reis uit de lijst
   const handleDelete = (id) => {
     setTrips((prevTrips) => prevTrips.filter((trip) => trip._id !== id));
   };
@@ -26,7 +34,8 @@ function TravelInfo() {
       <h2>Alle reizen</h2>
       <ul>
         {trips.map((trip) => (
-          <li key={trip._id}>
+          <li key={trip._id} style={{ border: "1px solid #ccc", borderRadius: "10px", padding: "15px", marginBottom: "20px", maxWidth: "600px" }}>
+            {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} style={{ width: "100%", borderRadius: "10px", marginBottom: "10px" }} />}
             <p>
               <strong>Bestemming:</strong> {trip.place} - {trip.country}
             </p>
@@ -43,9 +52,10 @@ function TravelInfo() {
                 </li>
               ))}
             </ul>
-            {/* Voeg een link naar de detailpagina van de reis */}
-            <Link to={`/trips/${trip._id}`}>Bekijk de reisdetails</Link>
-            <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
+              <Link to={`/trips/${trip._id}`}>📄 Bekijk de reisdetails</Link>
+              <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
+            </div>
           </li>
         ))}
       </ul>
@@ -68,7 +78,7 @@ function FetchUserInfo({ userId }) {
   }, [userId]);
 
   if (!user) {
-    return <span>Laden...</span>; // Toon een laadbericht terwijl de gebruiker wordt opgehaald
+    return <span>Laden...</span>;
   }
 
   return (

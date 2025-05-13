@@ -1,6 +1,6 @@
-import TravelInfo from "../components/TravelInfo";
-import AddTrip from "../components/AddTrip";
-import DeleteTrip from "../components/DeleteTrip";
+import TravelInfo from "../components/trips/TravelInfo";
+import AddTrip from "../components/trips/AddTrip";
+import DeleteTrip from "../components/trips/DeleteTrip";
 
 function TravelOverview() {
   return (

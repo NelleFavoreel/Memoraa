@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ShareTripButton from "./ShareTripButton";
 
 function TravelDetail() {
   const { id } = useParams();
@@ -32,6 +33,8 @@ function TravelDetail() {
 
   return (
     <div>
+      <ShareTripButton tripId={trip._id} />
+
       <h1>ik weet het niet</h1>
       <h1>
         {trip.place} - {trip.country}

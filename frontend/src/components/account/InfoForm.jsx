@@ -9,7 +9,7 @@ function InfoForm() {
   useEffect(() => {
     const fetchUser = async () => {
       const userId = localStorage.getItem("userId");
-      console.log("userId:", userId); // Log de userId
+      // console.log("userId:", userId); // Log de userId
       if (!userId) {
         console.error("userId is not valid!");
         return;
