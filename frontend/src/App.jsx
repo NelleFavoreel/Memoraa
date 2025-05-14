@@ -10,6 +10,7 @@ import TravelDetail from "./pages/TravelDetail";
 import LogIn from "./pages/LogIn";
 import InfoForm from "./components/account/InfoForm";
 import Notifications from "./pages/Notifications";
+import EditTrip from "./components/trips/EditTip";
 function App() {
   return (
     <>
@@ -25,6 +26,7 @@ function App() {
           <Route path="/login" element={<LogIn />} />
           <Route path="/users" element={<Account />} />
           <Route path="/notifications" element={<Notifications />} />
+          <Route path="/edit-trip/:id" element={<EditTrip />} />
         </Routes>
       </BrowserRouter>
     </>

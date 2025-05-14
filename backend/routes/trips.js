@@ -116,7 +116,29 @@ router.get("/:id", async (req, res) => {
       return res.status(404).json({ message: "Reis niet gevonden" });
     }
 
-    const tripDays = await tripDaysCollection.find({ tripId: tripObjectId }).toArray();
+    let tripDays = await tripDaysCollection.find({ tripId: tripObjectId }).toArray();
+
+    // Als er geen tripDays bestaan: automatisch aanmaken
+    if (!tripDays.length) {
+      const start = new Date(trip.startDate);
+      const end = new Date(trip.endDate);
+      const newTripDays = [];
+
+      for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+        newTripDays.push({
+          tripId: tripObjectId,
+          date: new Date(d),
+          description: "", // leeg laten, kan ingevuld worden
+          activities: [],
+          photos: [],
+        });
+      }
+
+      if (newTripDays.length > 0) {
+        await tripDaysCollection.insertMany(newTripDays);
+        tripDays = newTripDays;
+      }
+    }
 
     res.json({
       trip,
@@ -125,6 +147,61 @@ router.get("/:id", async (req, res) => {
   } catch (err) {
     console.error("❌ Fout bij ophalen van reis detail:", err);
     res.status(500).json({ message: "Fout bij ophalen van reis details." });
+  }
+});
+
+// Reis bewerken (PUT)
+router.put("/:id", authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { place, country, startDate, endDate, travelers, familyId, imageUrl, tripDays } = req.body;
+
+    // Valideer of alle benodigde velden aanwezig zijn
+    if (!place && !country && !startDate && !endDate && !familyId && !travelers && !imageUrl && !tripDays) {
+      return res.status(400).json({ message: "Geen wijzigingen gevonden." });
+    }
+
+    const db = getDB();
+    const tripsCollection = db.collection("trips");
+    const tripObjectId = new ObjectId(id);
+
+    // Zoek de reis op
+    const trip = await tripsCollection.findOne({ _id: tripObjectId });
+
+    if (!trip) {
+      return res.status(404).json({ message: "Reis niet gevonden." });
+    }
+
+    // Update de reisgegevens
+    const travelerObjectIds = travelers ? travelers.map((id) => new ObjectId(id)) : null;
+
+    const updatedTrip = {
+      place: place || trip.place,
+      country: country || trip.country,
+      startDate: startDate ? new Date(startDate) : trip.startDate,
+      endDate: endDate ? new Date(endDate) : trip.endDate,
+      travelers: travelerObjectIds || trip.travelers,
+      familyId: familyId || trip.familyId,
+      imageUrl: imageUrl || trip.imageUrl,
+    };
+
+    const result = await tripsCollection.updateOne({ _id: tripObjectId }, { $set: updatedTrip });
+
+    // Werk de tripDays bij
+    if (tripDays) {
+      const tripDaysCollection = db.collection("tripDays");
+      await tripDaysCollection.deleteMany({ tripId: tripObjectId }); // Verwijder oude tripdagen
+      const tripDaysInsert = tripDays.map((day) => ({
+        ...day,
+        tripId: tripObjectId,
+      }));
+      await tripDaysCollection.insertMany(tripDaysInsert); // Voeg nieuwe tripdagen toe
+    }
+
+    res.status(200).json({ message: "Reis succesvol bijgewerkt." });
+  } catch (err) {
+    console.error("❌ Fout bij het bijwerken van reis:", err);
+    res.status(500).json({ message: "Fout bij het bijwerken van reis." });
   }
 });
 
