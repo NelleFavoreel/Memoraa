@@ -48,9 +48,9 @@ function EditTrip() {
         const res = await fetch(`http://localhost:3001/trips/${id}`);
         const data = await res.json();
         setTrip(data.trip);
-        setOriginalTrip(data.trip); // Bewaar originele trip
+        setOriginalTrip(data.trip);
         setTripDays(data.tripDays);
-        setOriginalTripDays(data.tripDays); // Bewaar originele tripDays
+        setOriginalTripDays(data.tripDays);
       } catch (error) {
         console.error("Fout bij ophalen van trip details:", error);
       } finally {
@@ -63,7 +63,6 @@ function EditTrip() {
   const handleTravelerToggle = (userId) => {
     if (!trip) return;
 
-    // Alleen familieleden mogen toegevoegd worden
     const isFamilyMember = familyMembers.some((member) => member._id === userId);
     if (!isFamilyMember) {
       alert("Je kunt alleen familieleden toevoegen.");
@@ -73,7 +72,6 @@ function EditTrip() {
     const isTraveler = trip.travelers.includes(userId);
     const updatedTravelers = isTraveler ? trip.travelers.filter((id) => id !== userId) : [...trip.travelers, userId];
 
-    // Update de trip state met de nieuwe lijst van reizigers
     setTrip((prevTrip) => ({
       ...prevTrip,
       travelers: updatedTravelers,
@@ -81,24 +79,19 @@ function EditTrip() {
   };
   const handleSaveChanges = async (e) => {
     e.preventDefault();
-
-    // Maak een object voor de bijgewerkte trip
     const updatedTrip = {};
 
-    // Voeg alleen de velden toe die gewijzigd zijn
     if (trip.place !== originalTrip.place) updatedTrip.place = trip.place;
     if (trip.country !== originalTrip.country) updatedTrip.country = trip.country;
     if (trip.startDate !== originalTrip.startDate) updatedTrip.startDate = trip.startDate;
     if (trip.endDate !== originalTrip.endDate) updatedTrip.endDate = trip.endDate;
     if (JSON.stringify(trip.travelers) !== JSON.stringify(originalTrip.travelers)) updatedTrip.travelers = trip.travelers;
 
-    // Alleen tripDays toevoegen als ze veranderd zijn
     if (JSON.stringify(tripDays) !== JSON.stringify(originalTripDays)) updatedTrip.tripDays = tripDays;
 
-    // Als de cover niet is gewijzigd, wordt het niet toegevoegd
     if (trip.cover !== originalTrip.cover) updatedTrip.cover = trip.cover;
 
-    console.log("Updated Trip:", updatedTrip); // Bekijk wat er wordt verzonden
+    console.log("Updated Trip:", updatedTrip);
 
     try {
       const response = await fetch(`http://localhost:3001/trips/${id}`, {
@@ -123,7 +116,6 @@ function EditTrip() {
 
   if (loading || !trip) return <p>De reisgegevens worden geladen...</p>;
 
-  // Voeg de huidige gebruiker altijd toe aan de reizigerslijst
   if (!trip.travelers.includes(currentUserId)) {
     trip.travelers.push(currentUserId);
   }
@@ -163,8 +155,7 @@ function EditTrip() {
 
         <button type="submit">Opslaan</button>
       </form>
-
-      <EditTripDays tripDays={tripDays} setTripDays={setTripDays} />
+      <EditTripDays tripDays={tripDays} setTripDays={setTripDays} tripId={id} />
     </div>
   );
 }

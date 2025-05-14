@@ -40,12 +40,14 @@ router.delete("/:id", async (req, res) => {
   try {
     const db = getDB();
     const collection = db.collection("trips");
+    const tripDaysCollection = db.collection("tripDays");
 
     const tripId = req.params.id;
 
     const result = await collection.deleteOne({ _id: new ObjectId(tripId) }); // Gebruik 'new ObjectId'
 
     if (result.deletedCount === 1) {
+      await tripDaysCollection.deleteMany({ tripId: new ObjectId(tripId) });
       res.status(200).send("Reis succesvol verwijderd.");
     } else {
       res.status(404).send("Reis niet gevonden.");
@@ -190,12 +192,15 @@ router.put("/:id", authenticateToken, async (req, res) => {
     // Werk de tripDays bij
     if (tripDays) {
       const tripDaysCollection = db.collection("tripDays");
-      await tripDaysCollection.deleteMany({ tripId: tripObjectId }); // Verwijder oude tripdagen
+      // Verwijder oude tripdagen van de reis
+      await tripDaysCollection.deleteMany({ tripId: tripObjectId });
+
+      // Voeg de nieuwe tripdagen toe
       const tripDaysInsert = tripDays.map((day) => ({
         ...day,
-        tripId: tripObjectId,
+        tripId: tripObjectId, // Zorg ervoor dat tripId correct wordt gekoppeld
       }));
-      await tripDaysCollection.insertMany(tripDaysInsert); // Voeg nieuwe tripdagen toe
+      await tripDaysCollection.insertMany(tripDaysInsert);
     }
 
     res.status(200).json({ message: "Reis succesvol bijgewerkt." });
