@@ -57,7 +57,9 @@ function TravelDetail() {
         <ul>
           {tripDays.map((day) => (
             <li key={day._id}>
-              <strong>{new Date(day.date).toLocaleDateString()}</strong>
+              <strong>
+                {new Date(day.date).toLocaleDateString()} {day.place}
+              </strong>
               <p>{day.description}</p>
               <ul>
                 {day.activities.map((activity, index) => (

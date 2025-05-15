@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 function EditTripDays({ tripDays, setTripDays, tripId }) {
   const token = localStorage.getItem("token");
-
+  const [successMessage, setSuccessMessage] = useState("");
   const handleDayChange = (index, key, value) => {
     const updatedTripDays = [...tripDays];
     updatedTripDays[index][key] = value;
@@ -59,6 +60,11 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
       console.error("Fout bij verkleinen van foto's:", err);
     }
   };
+  const handleRemoveActivity = (dayIndex, activityIndex) => {
+    const updatedTripDays = [...tripDays];
+    updatedTripDays[dayIndex].activities.splice(activityIndex, 1);
+    setTripDays(updatedTripDays);
+  };
 
   const handleSaveChanges = async () => {
     try {
@@ -77,6 +83,8 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
 
       const result = await response.json();
       console.log("Wijzigingen opgeslagen:", result);
+      setSuccessMessage("Wijzigingen succesvol opgeslagen! ✅");
+      setTimeout(() => setSuccessMessage(""), 4000);
     } catch (error) {
       console.error("Fout bij het opslaan van wijzigingen:", error);
     }
@@ -85,6 +93,7 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
   return (
     <div>
       <h2>Dag per dag details</h2>
+      {successMessage && <div style={{ backgroundColor: "#d4edda", color: "#155724", padding: "10px", borderRadius: "5px", marginBottom: "10px" }}>{successMessage}</div>}
       {tripDays.map((day, index) => (
         <div key={index}>
           <h3>Dag {index + 1}</h3>
@@ -106,7 +115,12 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
             </button>
             <ul>
               {day.activities.map((activity, i) => (
-                <li key={i}>{activity}</li>
+                <li key={i}>
+                  {activity}
+                  <button type="button" onClick={() => handleRemoveActivity(index, i)}>
+                    Verwijder
+                  </button>
+                </li>
               ))}
             </ul>
           </div>
