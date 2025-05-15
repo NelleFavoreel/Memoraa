@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ShareTripButton from "./ShareTripButton";
 import ClickableMap from "../maps/ClickableMap";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 function TravelDetail() {
   const { id } = useParams();
@@ -30,25 +31,39 @@ function TravelDetail() {
 
     fetchTripDetails();
   }, [id]);
-  const handleCitySearch = (dayIndex, searchQuery) => {
-    if (!searchQuery) return;
+  useEffect(() => {
+    const fetchCoordinatesForPlaces = async () => {
+      const fetchedCoordinates = [];
 
-    fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(searchQuery)}.json?access_token=YOUR_MAPBOX_ACCESS_TOKEN`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.features.length > 0) {
-          const [lng, lat] = data.features[0].center;
-          setCoordinates((prevCoordinates) => [...prevCoordinates, { dayIndex, coordinates: [lng, lat] }]);
-        } else {
-          alert("Geen locatie gevonden.");
+      for (let i = 0; i < tripDays.length; i++) {
+        const place = tripDays[i].place;
+        if (!place) continue;
+
+        try {
+          const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(place)}.json?access_token=pk.eyJ1IjoibmVsZmF2byIsImEiOiJjbWFtamdjaTIwOHRoMmtzOGpuOGUwbjNiIn0.ug7nfrbMOWZ6FuGsKNq4YQ`);
+          const data = await response.json();
+
+          if (data.features.length > 0) {
+            const [lng, lat] = data.features[0].center;
+            fetchedCoordinates.push({ dayIndex: i, coordinates: [lng, lat] });
+          }
+        } catch (error) {
+          console.error("Fout bij ophalen locatie:", error);
         }
-      })
-      .catch((error) => console.error("Fout bij zoeken:", error));
-  };
+      }
+
+      setCoordinates(fetchedCoordinates);
+    };
+
+    if (tripDays.length > 0) {
+      fetchCoordinatesForPlaces();
+    }
+  }, [tripDays]);
   if (loading) return <p>De reisgegevens worden geladen...</p>;
 
   return (
     <div>
+      <ClickableMap coordinates={coordinates} />
       <ShareTripButton tripId={trip._id} />
       <h1>
         {trip.place} - {trip.country}
@@ -80,8 +95,6 @@ function TravelDetail() {
                   <li key={activityIndex}>{activity}</li>
                 ))}
               </ul>
-              {/* Zoekbalk voor elke dag */}
-              <input type="text" placeholder="Zoek een stad..." onChange={(e) => handleCitySearch(index, e.target.value)} />
             </li>
           ))}
         </ul>
@@ -91,9 +104,7 @@ function TravelDetail() {
 
       <h3>Familie: {trip.familyId}</h3>
 
-      <div>
-        <ClickableMap coordinates={coordinates} />
-      </div>
+      <div></div>
     </div>
   );
 }

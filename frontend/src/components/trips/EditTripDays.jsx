@@ -146,9 +146,7 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
                       height: "20px",
                       cursor: "pointer",
                     }}
-                  >
-                    ×
-                  </button>
+                  ></button>
                 </div>
               ))}
             </div>
