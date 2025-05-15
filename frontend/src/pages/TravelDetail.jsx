@@ -13,8 +13,6 @@ function TravelDetail() {
       <Link to={`/edit-trip/${id}`}>
         <button>Bewerk reis</button>
       </Link>
-      <h2>TravelDetail</h2>
-      <p>Comming soon... 👉</p>
     </div>
   );
 }

@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 function EditTripDays({ tripDays, setTripDays, tripId }) {
   const token = localStorage.getItem("token");
   const handleDayChange = (index, key, value) => {
@@ -13,6 +11,51 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
       const updatedTripDays = [...tripDays];
       updatedTripDays[index].activities.push(activity.trim());
       setTripDays(updatedTripDays);
+    }
+  };
+
+  const resizeImageToBase64 = (file, maxWidth = 800, quality = 0.7) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const scale = maxWidth / img.width;
+          canvas.width = maxWidth;
+          canvas.height = img.height * scale;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const compressedBase64 = canvas.toDataURL("image/jpeg", quality);
+          resolve(compressedBase64);
+        };
+        img.onerror = reject;
+        img.src = event.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+  const handlePhotoDelete = (dayIndex, photoIndex) => {
+    const updatedTripDays = [...tripDays];
+    updatedTripDays[dayIndex].photos.splice(photoIndex, 1);
+    setTripDays(updatedTripDays);
+  };
+
+  const handlePhotoUpload = async (index, files) => {
+    if (!files || files.length === 0) return;
+
+    try {
+      const compressedImages = await Promise.all(Array.from(files).map((file) => resizeImageToBase64(file)));
+
+      const updatedTripDays = [...tripDays];
+      if (!updatedTripDays[index].photos) {
+        updatedTripDays[index].photos = [];
+      }
+      updatedTripDays[index].photos.push(...compressedImages);
+      setTripDays(updatedTripDays);
+    } catch (err) {
+      console.error("Fout bij verkleinen van foto's:", err);
     }
   };
 
@@ -65,6 +108,35 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
                 <li key={i}>{activity}</li>
               ))}
             </ul>
+          </div>
+          <div>
+            <label>Foto toevoegen</label>
+            <input type="file" accept="image/*" multiple onChange={(e) => handlePhotoUpload(index, e.target.files)} />
+
+            <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+              {day.photos?.map((photo, i) => (
+                <div key={i} style={{ position: "relative" }}>
+                  <img src={photo} alt="upload preview" width={80} />
+                  <button
+                    onClick={() => handlePhotoDelete(index, i)}
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      right: 0,
+                      background: "red",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "50%",
+                      width: "20px",
+                      height: "20px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       ))}
