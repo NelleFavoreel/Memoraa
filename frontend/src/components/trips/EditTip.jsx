@@ -36,11 +36,26 @@ function EditTrip() {
   const [tripDays, setTripDays] = useState([]);
   const [loading, setLoading] = useState(true);
   const [familyMembers, setFamilyMembers] = useState([]);
-
+  const [selectedFamilyMembers, setSelectedFamilyMembers] = useState([]);
   const [originalTrip, setOriginalTrip] = useState(null);
   const [originalTripDays, setOriginalTripDays] = useState(null);
 
   const token = localStorage.getItem("token");
+  useEffect(() => {
+    const fetchFriends = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/family/friends", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await response.json();
+        setFamilyMembers(data);
+      } catch (error) {
+        console.error("Fout bij het ophalen van vrienden:", error);
+      }
+    };
+
+    fetchFriends();
+  }, []);
 
   useEffect(() => {
     const fetchTripDetails = async () => {
@@ -59,6 +74,14 @@ function EditTrip() {
     };
     fetchTripDetails();
   }, [id]);
+  useEffect(() => {
+    if (trip && !trip.travelers.includes(currentUserId)) {
+      setTrip((prevTrip) => ({
+        ...prevTrip,
+        travelers: [...prevTrip.travelers, currentUserId],
+      }));
+    }
+  }, [trip, currentUserId]);
 
   const handleTravelerToggle = (userId) => {
     if (!trip) return;
@@ -77,6 +100,16 @@ function EditTrip() {
       travelers: updatedTravelers,
     }));
   };
+  const handleCheckboxChange = (memberId) => {
+    setSelectedFamilyMembers((prevSelected) => {
+      if (prevSelected.includes(memberId)) {
+        return prevSelected.filter((id) => id !== memberId);
+      } else {
+        return [...prevSelected, memberId];
+      }
+    });
+  };
+
   const handleSaveChanges = async (e) => {
     e.preventDefault();
     const updatedTrip = {};
@@ -116,10 +149,6 @@ function EditTrip() {
 
   if (loading || !trip) return <p>De reisgegevens worden geladen...</p>;
 
-  if (!trip.travelers.includes(currentUserId)) {
-    trip.travelers.push(currentUserId);
-  }
-
   return (
     <div>
       <h1>Bewerk reis</h1>
@@ -142,11 +171,11 @@ function EditTrip() {
         <div>
           <label>Reizigers</label>
           <ul style={{ listStyle: "none", paddingLeft: 0 }}>
-            {trip.travelers.map((userId) => (
-              <li key={userId}>
+            {familyMembers.map((member) => (
+              <li key={member._id}>
                 <label>
-                  <input type="checkbox" checked={trip.travelers.includes(userId)} onChange={() => handleTravelerToggle(userId)} />
-                  <FetchUserInfo userId={userId} /> {/* Haal gebruikersinfo op */}
+                  <input type="checkbox" checked={trip.travelers.includes(member._id)} onChange={() => handleTravelerToggle(member._id)} />
+                  {member.name} ({member.screenName})
                 </label>
               </li>
             ))}

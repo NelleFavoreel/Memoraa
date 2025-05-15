@@ -1,5 +1,6 @@
 function EditTripDays({ tripDays, setTripDays, tripId }) {
   const token = localStorage.getItem("token");
+
   const handleDayChange = (index, key, value) => {
     const updatedTripDays = [...tripDays];
     updatedTripDays[index][key] = value;
