@@ -16,9 +16,9 @@ function TravelDetail() {
           throw new Error("Kon tripdetails niet ophalen.");
         }
         const data = await response.json();
-        console.log("Gehaalde trip data:", data); // Log de opgehaalde data
-        setTrip(data.trip); // Zet tripgegevens
-        setTripDays(data.tripDays); // Zet tripdagen
+        console.log("Gehaalde trip data:", data);
+        setTrip(data.trip);
+        setTripDays(data.tripDays);
       } catch (error) {
         console.error("Fout bij ophalen van trip details:", error);
       } finally {
@@ -27,7 +27,7 @@ function TravelDetail() {
     };
 
     fetchTripDetails();
-  }, [id]); // Herlaad de data als tripId verandert
+  }, [id]);
 
   if (loading) return <p>De reisgegevens worden geladen...</p>;
 
@@ -43,13 +43,23 @@ function TravelDetail() {
         {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
       </p>
       <h3>Familie: {trip.familyId}</h3>
+      <h2>Alle foto's</h2>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+        {tripDays
+          .flatMap((day) => day.photos || [])
+          .map((photo, index) => (
+            <img key={index} src={photo} alt={`Foto ${index + 1}`} width={100} />
+          ))}
+      </div>
 
       <h2>Dagen van de reis:</h2>
       {tripDays.length > 0 ? (
         <ul>
           {tripDays.map((day) => (
             <li key={day._id}>
-              <strong>{new Date(day.date).toLocaleDateString()}</strong>
+              <strong>
+                {new Date(day.date).toLocaleDateString()} {day.place}
+              </strong>
               <p>{day.description}</p>
               <ul>
                 {day.activities.map((activity, index) => (
