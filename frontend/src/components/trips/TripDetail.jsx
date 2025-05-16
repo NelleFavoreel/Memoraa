@@ -3,8 +3,10 @@ import { useParams } from "react-router-dom";
 import ShareTripButton from "./ShareTripButton";
 import ClickableMap from "../maps/ClickableMap";
 import "mapbox-gl/dist/mapbox-gl.css";
+import mapboxgl from "mapbox-gl";
 
 function TravelDetail() {
+  mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
   const { id } = useParams();
   const [trip, setTrip] = useState(null);
   const [tripDays, setTripDays] = useState([]);
@@ -40,7 +42,7 @@ function TravelDetail() {
         if (!place) continue;
 
         try {
-          const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(place)}.json?access_token=pk.eyJ1IjoibmVsZmF2byIsImEiOiJjbWFtamdjaTIwOHRoMmtzOGpuOGUwbjNiIn0.ug7nfrbMOWZ6FuGsKNq4YQ`);
+          const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(place)}.json?access_token=${mapboxgl.accessToken}`);
           const data = await response.json();
 
           if (data.features.length > 0) {
