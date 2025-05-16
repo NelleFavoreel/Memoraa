@@ -1,0 +1,43 @@
+.custom-button {
+  padding: 10px 20px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 120px;
+}
+
+.custom-button.default {
+  background-color: #d5dfff;
+  color: #373737;
+}
+
+.custom-button.default:hover {
+  background-color: #d5dfff54;
+  color: #d5dfff;
+}
+
+.custom-button.secondary {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.custom-button.secondary:hover {
+  background-color: #cfcfcf;
+}
+
+@media (max-width: 768px) {
+  .custom-button {
+    width: 90px;
+    font-size: 13px;
+    padding: 10px;
+    cursor: pointer;
+    transition: none;
+  }
+
+  .custom-button.default:hover,
+  .custom-button.secondary:hover {
+    background-color: inherit;
+    color: inherit;
+  }
+}
