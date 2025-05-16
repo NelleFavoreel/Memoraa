@@ -1,8 +1,6 @@
 import mapboxgl from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 
-mapboxgl.accessToken = "pk.eyJ1IjoibmVsZmF2byIsImEiOiJjbWFtamdjaTIwOHRoMmtzOGpuOGUwbjNiIn0.ug7nfrbMOWZ6FuGsKNq4YQ";
-
 function ClickableMap({ coordinates }) {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
@@ -11,16 +9,18 @@ function ClickableMap({ coordinates }) {
   const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
+    mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v11",
       center: [4.5, 50.8],
-      zoom: 6, // start iets verder uitgezoomd
+      zoom: 6,
       pitch: 0,
       bearing: 0,
       antialias: true,
-      minZoom: 4, // voorkom te ver uitzoomen
-      maxZoom: 16, // voorkom te ver inzoomen
+      minZoom: 4,
+      maxZoom: 16,
     });
 
     mapRef.current = map;
@@ -32,15 +32,13 @@ function ClickableMap({ coordinates }) {
     const map = mapRef.current;
     if (!map) return;
 
-    // Verwijder oude markers
     markersRef.current.forEach((marker) => marker.remove());
     markersRef.current = [];
-
-    // Voeg nieuwe markers toe
     coordinates.forEach((coord) => {
       const marker = new mapboxgl.Marker()
         .setLngLat(coord.coordinates)
         .setPopup(new mapboxgl.Popup().setText(`Dag ${coord.dayIndex + 1}`))
+
         .addTo(map);
 
       markersRef.current.push(marker);
@@ -49,7 +47,7 @@ function ClickableMap({ coordinates }) {
     if (coordinates.length > 0) {
       const bounds = new mapboxgl.LngLatBounds();
       coordinates.forEach((coord) => bounds.extend(coord.coordinates));
-      map.fitBounds(bounds, { padding: 50, maxZoom: 12 }); // maxZoom voorkomt dat ie te ver inzoomt
+      map.fitBounds(bounds, { padding: 0, maxZoom: 12 });
     }
   }, [coordinates]);
 
@@ -67,13 +65,10 @@ function ClickableMap({ coordinates }) {
       const map = mapRef.current;
       if (!map) return;
 
-      // Voeg marker toe voor zoekresultaat
       const searchMarker = new mapboxgl.Marker({ color: "red" }).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup().setText(searchInput)).addTo(map);
 
-      // Verplaats kaart naar de locatie
       map.flyTo({ center: [lng, lat] });
 
-      // Voeg deze marker toe aan je markersRef zodat je ze later kan verwijderen als nodig
       markersRef.current.push(searchMarker);
     } catch (error) {
       console.error("Fout bij zoeken:", error);
