@@ -1,34 +1,43 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
-
-//import pages
 import Home from "./pages/Home";
 import Calendar from "./pages/Calendar";
 import Account from "./pages/Account";
 import TravelOverview from "./pages/TravelOverview";
 import TravelDetail from "./pages/TravelDetail";
 import LogIn from "./pages/LogIn";
-import InfoForm from "./components/account/InfoForm";
 import Notifications from "./pages/Notifications";
 import EditTrip from "./components/trips/EditTip";
+import BeforeHome from "./pages/BeforeHome";
+
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+
+  return (
+    <BrowserRouter>
+      <MainApp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+    </BrowserRouter>
+  );
+}
+
+function MainApp({ isLoggedIn, setIsLoggedIn }) {
   return (
     <>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/trips" element={<TravelOverview />} />
-          <Route path="/trips/:id" element={<TravelDetail />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/account" element={<Account />} />
-          {/* <Route path="/account" element={<Account />} /> */}
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/users" element={<Account />} />
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/edit-trip/:id" element={<EditTrip />} />
-        </Routes>
-      </BrowserRouter>
+      {isLoggedIn && <Navbar />}
+
+      <Routes>
+        <Route path="/" element={<BeforeHome />} />
+        <Route path="/login" element={<LogIn setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />} />
+        <Route path="/home" element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/trips" element={<TravelOverview />} />
+        <Route path="/trips/:id" element={<TravelDetail />} />
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/users" element={<Account />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/edit-trip/:id" element={<EditTrip />} />
+      </Routes>
     </>
   );
 }

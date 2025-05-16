@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LogIn() {
   const [email, setEmail] = useState("");
@@ -8,6 +9,7 @@ function LogIn() {
   const [error, setError] = useState("");
   const [isRegistering, setIsRegistering] = useState(false); // Voor registratie of login
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const navigate = useNavigate();
 
   // Functie voor het inloggen
   const handleLogin = async (e) => {
@@ -36,7 +38,8 @@ function LogIn() {
           localStorage.setItem("userId", data.userId);
           console.log("Token opgeslagen:", data.token);
           setIsLoggedIn(true);
-          alert("Inloggen succesvol!");
+          navigate("/home");
+          window.location.reload();
         } else {
           console.error("❌ Geen token ontvangen:", data);
           setError("Er is iets mis met het ontvangen van het token.");
@@ -120,6 +123,7 @@ function LogIn() {
             onClick={() => {
               localStorage.removeItem("token");
               setIsLoggedIn(false);
+              window.location.reload();
             }}
           >
             Uitloggen
