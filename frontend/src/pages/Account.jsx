@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ChangingPassword from "../components/account/ChangePassword";
 import InfoForm from "../components/account/InfoForm";
 import AddFamilyMembers from "../components/account/AddFamilyMembers";
+import LogIn from "./LogIn";
 function Account() {
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,6 +28,7 @@ function Account() {
 
             {showChangePassword && <ChangingPassword onClose={() => setShowChangePassword(false)} />}
           </div>
+          <LogIn></LogIn>
         </>
       ) : (
         <p>Je moet inloggen om toegang te krijgen tot je account.</p>
