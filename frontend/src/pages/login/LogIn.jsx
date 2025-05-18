@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import "./Login.css";
+import FullButton from "../../components/button/FullButton";
 function LogIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -119,7 +120,7 @@ function LogIn() {
       {isLoggedIn ? (
         <div>
           <h2>Welkom terug!</h2>
-          <button
+          <FullButton
             onClick={() => {
               localStorage.removeItem("token");
               setIsLoggedIn(false);
@@ -127,11 +128,11 @@ function LogIn() {
             }}
           >
             Uitloggen
-          </button>
+          </FullButton>
         </div>
       ) : (
         <>
-          <h2>{isRegistering ? "Registreren" : "Inloggen"}</h2>
+          <h1 className="title-header"> {isRegistering ? "Registreren" : "Inloggen"}</h1>
           <form onSubmit={isRegistering ? handleRegister : handleLogin}>
             {isRegistering && (
               <>
@@ -154,16 +155,16 @@ function LogIn() {
               <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </div>
             {error && <p style={{ color: "red" }}>{error}</p>}
-            <button type="submit">{isRegistering ? "Registreren" : "Inloggen"}</button>
+            <FullButton type="submit">{isRegistering ? "Registreren" : "Inloggen"}</FullButton>
           </form>
           <p>
             {isRegistering ? (
               <span>
-                Heb je al een account? <button onClick={() => setIsRegistering(false)}>Inloggen</button>
+                Heb je al een account? <FullButton onClick={() => setIsRegistering(false)}>Inloggen</FullButton>
               </span>
             ) : (
               <span>
-                Nog geen account? <button onClick={() => setIsRegistering(true)}>Registreren</button>
+                Nog geen account? <FullButton onClick={() => setIsRegistering(true)}>Registreren</FullButton>
               </span>
             )}
           </p>

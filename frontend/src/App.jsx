@@ -6,7 +6,7 @@ import Calendar from "./pages/Calendar";
 import Account from "./pages/Account";
 import TravelOverview from "./pages/TravelOverview";
 import TravelDetail from "./pages/TravelDetail";
-import LogIn from "./pages/LogIn";
+import LogIn from "./pages/login/LogIn";
 import Notifications from "./pages/Notifications";
 import EditTrip from "./components/trips/EditTip";
 import BeforeHome from "./pages/beforeHome/BeforeHome";
