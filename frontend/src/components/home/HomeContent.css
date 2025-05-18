@@ -66,6 +66,14 @@ img {
   .home-content-box {
     width: 50%;
   }
+  .home-content-container {
+    width: 100%;
+  }
+  .home-content-box-1 {
+    width: 50%;
+    align-items: flex-end;
+    margin-left: 50%;
+  }
   .home-content-box-1 {
     width: 50%;
     align-items: flex-end;
@@ -76,5 +84,38 @@ img {
   .home-content-container {
     display: flex;
     flex-direction: column;
+  }
+  .image1 {
+    margin-top: 30px;
+    width: 25%;
+    margin-left: 0;
+  }
+  .image2 {
+    width: 50%;
+    margin-top: -30%;
+    margin-left: 50%;
+  }
+  .image3 {
+    width: 40%;
+    margin-right: 9%;
+  }
+  .image4 {
+    width: 45%;
+    height: 40%;
+    margin-left: 4%;
+    margin-top: -20px;
+  }
+
+  .image6 {
+    display: none;
+  }
+  .image5 {
+    width: 50%;
+  }
+  .image7 {
+    width: 50%;
+  }
+  .image8 {
+    display: none;
   }
 }

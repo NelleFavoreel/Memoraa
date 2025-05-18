@@ -15,19 +15,23 @@ function BeforeHome() {
   }, []);
 
   return (
-    <div className="before-home-container">
-      <FullButton className="header-button" onClick={() => setShowLogin(true)}>
-        Log in
-      </FullButton>
-      <div>
+    <div className="before-home">
+      <div className="before-home-button">
+        <FullButton className="header-button" onClick={() => setShowLogin(true)}>
+          Log in
+        </FullButton>
+      </div>
+      <div className="before-home-header">
         <h1>Start hier je familie reisavonturen</h1>
         <h3>Log in en ontdek het zelf</h3>
         <FullButton onClick={() => setShowLogin(true)}>Log in</FullButton>
       </div>
-      <HomeContent />
-      <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)}>
-        <LogIn />
-      </LoginModal>
+      <div className="before-home-container">
+        <HomeContent />
+        <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)}>
+          <LogIn />
+        </LoginModal>
+      </div>
     </div>
   );
 }
