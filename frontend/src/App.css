@@ -1,0 +1,56 @@
+body {
+  background-color: #373737;
+  color: white;
+  margin: 0px 100px;
+}
+
+h1 {
+  font-family: "myriad-pro", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 70px;
+}
+
+h2 {
+  font-family: "myriad-pro", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 40px;
+}
+
+h3 {
+  font-family: "myriad-pro", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+  font-size: 20px;
+}
+
+p {
+  font-family: "myriad-pro", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+  font-size: 14px;
+}
+
+/* Mobiele versie */
+@media (max-width: 768px) {
+  body {
+    margin: 0px 40px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  h3 {
+    font-size: 14px;
+  }
+
+  p {
+    font-size: 10px;
+  }
+}

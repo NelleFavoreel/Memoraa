@@ -9,8 +9,11 @@ import TravelDetail from "./pages/TravelDetail";
 import LogIn from "./pages/LogIn";
 import Notifications from "./pages/Notifications";
 import EditTrip from "./components/trips/EditTip";
-import BeforeHome from "./pages/BeforeHome";
+import BeforeHome from "./pages/beforeHome/BeforeHome";
+import "./App.css";
 
+// styles
+<link rel="stylesheet" href="https://use.typekit.net/wte5uxn.css"></link>;
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
 
