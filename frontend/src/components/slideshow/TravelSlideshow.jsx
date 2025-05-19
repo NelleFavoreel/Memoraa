@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
+import "./TravelSlideshow.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./TravelSlideshow.css";
 
 const TravelSlideshow = () => {
   const [trips, setTrips] = useState([]);
@@ -34,22 +34,23 @@ const TravelSlideshow = () => {
   const settings = {
     className: "center",
     centerMode: true,
-    centerPadding: "100px",
-
+    centerPadding: "0px",
     slidesToShow: 3,
     autoplay: false,
     autoplaySpeed: 3000,
-    dots: true,
+    dots: false,
     arrows: false,
     infinite: true,
     pauseOnHover: true,
+
+    speed: 500,
     afterChange: (current) => setCenterSlide(current),
   };
 
   if (trips.length === 0) return null;
 
   return (
-    <div>
+    <div className="travel-slideshow-container">
       <Slider {...settings}>
         {trips.map((trip, index) => (
           <div key={index} style={{ padding: "0 20px", cursor: "pointer", position: "relative" }} onClick={() => navigate(`/trips/${trip._id}`)}>

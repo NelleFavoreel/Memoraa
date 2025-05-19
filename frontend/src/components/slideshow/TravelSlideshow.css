@@ -1,45 +1,76 @@
-.slick-slide {
-  transform: scale(0.85);
-  opacity: 0.5;
-  filter: brightness(60%);
-  transition: all 0.3s ease;
-  padding: 60px 0px;
+/* Container vult volledige breedte */
+.travel-slideshow-container {
+  margin: 0vh 0vh;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Slide wrapper */
+.slide-item {
+  padding: 0px;
+  cursor: pointer;
+  position: relative;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  overflow: auto;
 }
 
-/* Actieve (middelste) slide */
-.slick-center {
-  transform: scale(1.4);
-  opacity: 1;
-  filter: brightness(100%);
-  z-index: 10;
-  width: 600px;
-}
-
-/* Afbeeldingen */
+/* Basisbeeld */
 .slick-slide img {
-  width: 300px; /* Kleiner maken dan de center */
-  height: 400px;
+  width: 300px;
+  height: 200px;
   object-fit: cover;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
+  filter: brightness(60%);
+  transform: scale(0.85);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Middelste afbeelding */
+.slick-center img {
+  width: 400px;
+  height: 300px;
+  filter: brightness(100%);
+  transform: scale(1);
+  z-index: 10;
 }
 
 /* Tekst onder afbeelding */
 .hover-info {
-  background-color: #484848;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(72, 72, 72, 0.85);
   color: white;
-  padding: 12px;
-  text-align: center;
+  padding: 10px 20px;
+  border-radius: 8px;
   font-family: "Myriad Pro", sans-serif;
   font-weight: 100;
-  max-width: 90%;
+  text-align: center;
+  width: auto;
+  max-width: 90vw;
 }
+
+/* Slider track height */
 .slick-track {
-  height: 500px;
+  height: 400px;
 }
-.slick-list {
-  overflow: visible;
+
+/* Noodzakelijke basisstijl voor slick */
+.slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.slick-track {
+  display: flex;
+}
+
+.slick-slide {
+  flex: 0 0 auto;
 }
