@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DeleteTrip from "./DeleteTrip";
 import FullButton from "../button/FullButton";
-function TravelInfo() {
+
+function TravelInfo({ refresh, onRefreshed }) {
   const [trips, setTrips] = useState([]);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token"); // Haal je JWT-token op
-
+  const fetchTrips = () => {
+    const token = localStorage.getItem("token");
     fetch("http://localhost:3001/trips", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -19,11 +19,24 @@ function TravelInfo() {
       })
       .then((data) => {
         setTrips(data);
+        if (onRefreshed) onRefreshed();
       })
       .catch((err) => {
         console.error("❌ Fout bij ophalen van trips:", err);
       });
+  };
+
+  // Eerste keer laden
+  useEffect(() => {
+    fetchTrips();
   }, []);
+
+  // Herladen als refresh verandert naar true
+  useEffect(() => {
+    if (refresh) {
+      fetchTrips();
+    }
+  }, [refresh]);
 
   const handleDelete = (id) => {
     setTrips((prevTrips) => prevTrips.filter((trip) => trip._id !== id));
@@ -39,7 +52,10 @@ function TravelInfo() {
             <div className="trip-info">
               <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
               <p>
-                <strong>Bestemming:</strong> {trip.place} - {trip.country}
+                <strong>Bestemming:</strong> {trip.tripType === "roadtrip" && trip.countries && trip.countries.length > 0 ? trip.countries.join(" - ") : `${trip.place}${trip.country ? ` - ${trip.country}` : ""}`}
+              </p>
+              <p>
+                <strong>Type:</strong> {trip.tripType}
               </p>
               <p>
                 <strong>Datum:</strong> {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}

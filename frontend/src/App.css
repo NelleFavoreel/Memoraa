@@ -38,6 +38,10 @@ form {
   font-style: normal;
   font-size: 14px;
 }
+label {
+  font-weight: 600;
+  margin: 5px 0px;
+}
 .title {
   text-align: center;
 }
@@ -53,7 +57,7 @@ form {
   }
 
   h2 {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   h3 {
@@ -62,5 +66,9 @@ form {
 
   p {
     font-size: 10px;
+  }
+  label {
+    font-size: 14px;
+    font-weight: 500;
   }
 }
