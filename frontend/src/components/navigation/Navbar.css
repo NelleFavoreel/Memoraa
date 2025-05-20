@@ -1,0 +1,41 @@
+.navbar {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: flex-end;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.nav-link {
+  position: relative;
+  color: #eee;
+  margin: 0 1.5rem;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.3rem 0;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+/* Underline animatie: een lijntje dat van links naar rechts verschijnt */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #d5dfff; /* fris blauw accent */
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: #d5dfff;
+}
+
+.nav-link:hover::after,
+.nav-link:focus::after {
+  width: 100%;
+}

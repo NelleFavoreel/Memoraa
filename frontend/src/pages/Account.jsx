@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ChangingPassword from "../components/account/ChangePassword";
 import InfoForm from "../components/account/InfoForm";
 import AddFamilyMembers from "../components/account/AddFamilyMembers";
-import LogIn from "./LogIn";
+import LogIn from "./login/LogIn";
 function Account() {
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);

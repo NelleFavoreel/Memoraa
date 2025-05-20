@@ -1,0 +1,28 @@
+.before-home-container {
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.before-home-button {
+  align-items: end;
+  display: flex;
+  margin-left: 80%;
+}
+.before-home {
+  margin-top: 20px;
+}
+
+@media (min-width: 1162px) {
+  .before-home-container {
+    align-items: flex-start;
+    /* margin: 50px 100px; */
+  }
+  .before-home-button {
+    margin-left: 90%;
+  }
+  .before-home-header {
+    width: 60%;
+    margin-left: 1%;
+  }
+}

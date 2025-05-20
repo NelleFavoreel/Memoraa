@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DeleteTrip from "./DeleteTrip";
-
+import FullButton from "../button/FullButton";
 function TravelInfo() {
   const [trips, setTrips] = useState([]);
 
@@ -31,7 +31,7 @@ function TravelInfo() {
 
   return (
     <div>
-      <h2>Alle reizen</h2>
+      <h1 className="title">Alle reizen</h1>
       <ul>
         {trips.map((trip) => (
           <li key={trip._id} className="trip-item">
@@ -44,7 +44,9 @@ function TravelInfo() {
               <p>
                 <strong>Type:</strong> {trip.tripType}
               </p>
-
+              <p>
+                <strong>Datum:</strong> {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
+              </p>
               <p>
                 <strong>Reizigers:</strong>
               </p>
