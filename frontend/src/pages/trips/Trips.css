@@ -27,6 +27,7 @@ ul {
   justify-content: center;
   align-items: center;
   z-index: 999; /* Zelfde als je andere modal */
+  background-color: #484848;
 }
 
 .modal-content {
@@ -50,7 +51,7 @@ ul {
 }
 
 .modal-content button {
-  color: #d5dfff;
+  margin-bottom: 20px;
 }
 .model-form {
   display: flex;
@@ -63,6 +64,20 @@ ul {
   margin-top: 10px;
 }
 select {
-  margin: 20px 0px;
-  padding: 5px;
+  margin: 10px 0px 20px 0px;
+  padding: 5px 10px;
+  background-color: #484848;
+  color: white;
+  border: 0.5px #d5dfff solid;
+}
+.model-form-AddButton {
+  margin-top: 40px;
+}
+@media (max-width: 600px) {
+  .modal-content input {
+    margin: 10px;
+  }
+  .modal-content form {
+    padding: 9% 5%;
+  }
 }
