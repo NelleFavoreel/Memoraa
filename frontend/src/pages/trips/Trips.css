@@ -16,3 +16,49 @@
 ul {
   text-decoration: none;
 }
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); /* Toegevoegd voor achtergrondverduistering */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Zelfde als je andere modal */
+}
+
+.modal-content {
+  padding: 2rem;
+  border-radius: 8px; /* Zelfde als jouw andere modal */
+  max-width: 500px; /* Gelijk met je andere */
+  width: 90%;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-content button {
+  color: #d5dfff;
+}
+.model-form {
+  display: flex;
+  flex-direction: column;
+}
+.model-form-checkboxes {
+  display: flex;
+  flex-direction: column;
+  margin-left: -30%;
+  margin-top: 10px;
+}
