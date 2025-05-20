@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DeleteTrip from "./DeleteTrip";
 import FullButton from "../button/FullButton";
-function TravelInfo() {
+
+function TravelInfo({ refresh, onRefreshed }) {
   const [trips, setTrips] = useState([]);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token"); // Haal je JWT-token op
-
+  const fetchTrips = () => {
+    const token = localStorage.getItem("token");
     fetch("http://localhost:3001/trips", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -19,11 +19,24 @@ function TravelInfo() {
       })
       .then((data) => {
         setTrips(data);
+        if (onRefreshed) onRefreshed();
       })
       .catch((err) => {
         console.error("❌ Fout bij ophalen van trips:", err);
       });
+  };
+
+  // Eerste keer laden
+  useEffect(() => {
+    fetchTrips();
   }, []);
+
+  // Herladen als refresh verandert naar true
+  useEffect(() => {
+    if (refresh) {
+      fetchTrips();
+    }
+  }, [refresh]);
 
   const handleDelete = (id) => {
     setTrips((prevTrips) => prevTrips.filter((trip) => trip._id !== id));

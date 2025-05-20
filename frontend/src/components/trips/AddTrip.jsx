@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import "../../pages/trips/Trips.css"; // Zorg dat je de modalstijl toevoegt
 import FullButton from "../button/FullButton";
+import AddButton from "../button/AddButton";
 
-function AddTrip({ show, onClose }) {
+function AddTrip({ show, onClose, onTripAdded }) {
   const [place, setPlace] = useState("");
   const [country, setCountry] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [screenNames, setScreenNames] = useState("");
-  const [familyId, setFamilyId] = useState("");
   const [friends, setFriends] = useState([]);
   const [selectedFriend, setSelectedFriend] = useState([]);
   const token = localStorage.getItem("token");
@@ -17,6 +17,9 @@ function AddTrip({ show, onClose }) {
   const [audience, setAudience] = useState("self");
   const [useAICover, setUseAICover] = useState(true);
   const [countries, setCountries] = useState([""]);
+
+  // Haal de achternaam op van de user uit localStorage (optioneel, blijft als userLastName)
+  const lastName = localStorage.getItem("lastName") || "";
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -58,10 +61,9 @@ function AddTrip({ show, onClose }) {
     if (tripType === "staytrip") {
       imageCountry = country;
     } else if (tripType === "roadtrip") {
-      // Pak eerste niet-lege land uit countries array
       imageCountry = countries.find((c) => c.trim() !== "") || "";
     } else if (tripType === "citytrip") {
-      imageCountry = place; // bij citytrip kan plaats ook een stad zijn
+      imageCountry = place;
     }
 
     if (useAICover && (!finalImageUrl || !finalImageUrl.startsWith("http"))) {
@@ -73,25 +75,25 @@ function AddTrip({ show, onClose }) {
       startDate,
       endDate,
       screenNames: screenNames.split(",").map((name) => name.trim()),
-      familyId,
+      familyId: "Favoreel",
       userId,
       selectedFriend,
       audience,
       useAICover,
       imageUrl: finalImageUrl,
+      userLastName: lastName,
     };
 
-    // Voeg alleen velden toe die relevant zijn per type
     if (tripType === "staytrip") {
       newTrip.place = place;
       newTrip.country = country;
     } else if (tripType === "citytrip") {
-      newTrip.place = place; // stad
-      newTrip.country = ""; // optioneel leeg
+      newTrip.place = place;
+      newTrip.country = "";
     } else if (tripType === "roadtrip") {
       newTrip.countries = countries.filter((c) => c.trim() !== "");
-      newTrip.place = ""; // optioneel leeg
-      newTrip.country = ""; // optioneel leeg
+      newTrip.place = "";
+      newTrip.country = "";
     }
 
     fetch("http://localhost:3001/trips", {
@@ -102,7 +104,7 @@ function AddTrip({ show, onClose }) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data.message || "Reis toegevoegd");
-        onClose(); // Sluit modal na toevoegen
+        if (onTripAdded) onTripAdded();
       })
       .catch((err) => {
         console.error("Fout bij toevoegen van reis:", err);
@@ -118,10 +120,10 @@ function AddTrip({ show, onClose }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <button className="modal-close" onClick={onClose}>
+        <button className="modal-close" onClick={onClose} style={{ float: "right", fontSize: "1.5rem", background: "transparent", border: "none" }}>
           ✖
         </button>
-        <h2 className="title-header">Nieuwe reis toevoegen</h2>
+        <h1 className="title-header">Nieuwe reis toevoegen</h1>
         <form className="model-form" onSubmit={handleSubmit}>
           <label>Type reis:</label>
           <select value={tripType} onChange={(e) => setTripType(e.target.value)}>
@@ -139,7 +141,6 @@ function AddTrip({ show, onClose }) {
             </>
           )}
 
-          {/* Citytrip: alleen plaats verplicht */}
           {tripType === "citytrip" && (
             <div>
               <label>Stad:</label>
@@ -147,7 +148,6 @@ function AddTrip({ show, onClose }) {
             </div>
           )}
 
-          {/* Roadtrip: landen input, minstens 1 land verplicht */}
           {tripType === "roadtrip" && (
             <>
               <label>Landen:</label>
@@ -164,9 +164,11 @@ function AddTrip({ show, onClose }) {
                   required={tripType === "roadtrip" && i === 0}
                 />
               ))}
-              <FullButton type="button" onClick={() => setCountries([...countries, ""])}>
-                +
-              </FullButton>
+              <div className="model-button-add">
+                <AddButton type="button" onClick={() => setCountries([...countries, ""])}>
+                  +
+                </AddButton>
+              </div>
             </>
           )}
 
@@ -195,12 +197,9 @@ function AddTrip({ show, onClose }) {
               </div>
             ))}
           </div>
-          <label>
-            Family ID:
-            <input type="text" value={familyId} onChange={(e) => setFamilyId(e.target.value)} required />
-          </label>
-
-          <FullButton type="submit">Voeg reis toe</FullButton>
+          <div className="model-form-AddButton">
+            <FullButton type="submit">Voeg reis toe</FullButton>
+          </div>
         </form>
       </div>
     </div>
