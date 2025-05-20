@@ -42,7 +42,6 @@ const TravelSlideshow = () => {
     arrows: false,
     infinite: true,
     pauseOnHover: true,
-
     speed: 500,
     afterChange: (current) => setCenterSlide(current),
   };

@@ -1,9 +1,9 @@
-import TripDetail from "../components/trips/TripDetail";
-import EditTrip from "../components/trips/EditTip";
+import TripDetail from "../../components/trips/TripDetail";
+import EditTrip from "../../components/trips/EditTip";
 import { Link } from "react-router-dom";
-
+import "./Trips.css";
 import { useParams } from "react-router-dom";
-
+import FullButton from "../../components/button/FullButton";
 function TravelDetail() {
   const { id } = useParams();
 
@@ -11,7 +11,7 @@ function TravelDetail() {
     <div>
       <TripDetail></TripDetail>
       <Link to={`/edit-trip/${id}`}>
-        <button>Bewerk reis</button>
+        <FullButton>Bewerk reis</FullButton>
       </Link>
     </div>
   );

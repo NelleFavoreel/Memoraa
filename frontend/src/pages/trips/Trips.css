@@ -1,0 +1,18 @@
+.trip-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  cursor: pointer;
+  position: relative;
+}
+.trip-item div {
+  width: 100%;
+}
+.trip-info {
+  background-color: #484848;
+  padding: 30px;
+}
+ul {
+  text-decoration: none;
+}

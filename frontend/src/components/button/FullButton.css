@@ -4,7 +4,11 @@
   font-size: 1rem;
   cursor: pointer;
   transition: 0.3s;
-  width: 120px;
+  min-width: 120px;
+}
+a {
+  text-decoration: none;
+  color: #373737;
 }
 
 .custom-button.default {
