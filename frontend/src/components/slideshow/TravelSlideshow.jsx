@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Slider from "react-slick";
 import "./TravelSlideshow.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
-const TravelSlideshow = () => {
+const CustomSlideshow = () => {
   const [trips, setTrips] = useState([]);
-  const [centerSlide, setCenterSlide] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,66 +23,46 @@ const TravelSlideshow = () => {
         const toekomstigeReizen = data.filter((trip) => new Date(trip.startDate) > new Date() && trip.imageUrl);
         setTrips(toekomstigeReizen);
       })
-      .catch((err) => {
-        console.error("❌ Fout bij ophalen van trips:", err);
-      });
+      .catch((err) => console.error("❌ Fout bij ophalen van trips:", err));
   }, []);
 
-  const settings = {
-    className: "center",
-    centerMode: true,
-    centerPadding: "0px",
-    slidesToShow: 3,
-    autoplay: false,
-    autoplaySpeed: 3000,
-    dots: false,
-    arrows: false,
-    infinite: true,
-    pauseOnHover: true,
-    speed: 500,
-    afterChange: (current) => setCenterSlide(current),
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % trips.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [trips.length]);
 
   if (trips.length === 0) return null;
 
-  return (
-    <div className="travel-slideshow-container">
-      <Slider {...settings}>
-        {trips.map((trip, index) => (
-          <div key={index} style={{ padding: "0 20px", cursor: "pointer", position: "relative" }} onClick={() => navigate(`/trips/${trip._id}`)}>
-            <img src={trip.imageUrl} alt={`Reis naar ${trip.place || trip.country}`} />
+  const leftIndex = (currentIndex - 1 + trips.length) % trips.length;
+  const rightIndex = (currentIndex + 1) % trips.length;
 
-            {centerSlide === index && (
-              <div
-                className="hover-info"
-                style={{
-                  marginLeft: "-50vw",
-                  width: "100vw",
-                  marginRight: "-50vw",
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  backgroundColor: "#484848",
-                  color: "white",
-                  marginBottom: "20px",
-                  textAlign: "center",
-                  fontFamily: "'Myriad Pro', sans-serif",
-                  fontWeight: "100",
-                }}
-              >
-                <div>{trip.country || trip.place}</div>
-                <div>
-                  {new Date(trip.startDate).toLocaleDateString()} - {new Date(trip.endDate).toLocaleDateString()}
-                </div>
-                <div>Aantal reizigers: {trip.travelers?.length || trip.people?.length || "Onbekend"}</div>
-              </div>
-            )}
+  return (
+    <div className="custom-slideshow">
+      <div className="image-wrapper">
+        <div className="side-image left">
+          <img src={trips[leftIndex].imageUrl} alt="Vorige reis" />
+        </div>
+
+        <div className="center-image" onClick={() => navigate(`/trips/${trips[currentIndex]._id}`)}>
+          <img src={trips[currentIndex].imageUrl} alt="Huidige reis" />
+          <div className="hover-info">
+            <div className="slide-place">{trips[currentIndex].country || trips[currentIndex].place}</div>
+            <div className="slide-time">
+              {new Date(trips[currentIndex].startDate).toLocaleDateString()} - {new Date(trips[currentIndex].endDate).toLocaleDateString()}
+            </div>
+            {/* <div>Aantal reizigers: {trips[currentIndex].travelers?.length || trips[currentIndex].people?.length || "Onbekend"}</div> */}
           </div>
-        ))}
-      </Slider>
+        </div>
+
+        <div className="side-image right">
+          <img src={trips[rightIndex].imageUrl} alt="Volgende reis" />
+        </div>
+      </div>
     </div>
   );
 };
 
-export default TravelSlideshow;
+export default CustomSlideshow;
