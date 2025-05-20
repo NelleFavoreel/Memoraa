@@ -27,7 +27,6 @@ ul {
   justify-content: center;
   align-items: center;
   z-index: 999; /* Zelfde als je andere modal */
-  background-color: #484848;
 }
 
 .modal-content {
@@ -73,11 +72,23 @@ select {
 .model-form-AddButton {
   margin-top: 40px;
 }
+.modal-content .title-header {
+  font-size: 60px;
+  margin-top: 10px;
+}
+
 @media (max-width: 600px) {
   .modal-content input {
     margin: 10px;
   }
   .modal-content form {
     padding: 9% 5%;
+  }
+  .modal-overlay {
+    background-color: #484848;
+  }
+  .modal-content .title-header {
+    font-size: 30px;
+    margin-top: 10px;
   }
 }

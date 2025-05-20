@@ -19,3 +19,9 @@ input {
   margin-left: 50px;
   width: 60%;
 }
+@media (min-width: 600px) {
+  .title-header {
+    margin-bottom: 10px;
+    width: 120%;
+  }
+}
