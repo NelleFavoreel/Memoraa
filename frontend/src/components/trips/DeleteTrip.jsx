@@ -1,6 +1,6 @@
 // DeleteTrip.js
 import React from "react";
-
+import DeleteButton from "../button/DeleteButton";
 function DeleteTrip({ tripId, onDelete }) {
   const handleDelete = () => {
     fetch(`http://localhost:3001/trips/${tripId}`, {
@@ -19,7 +19,7 @@ function DeleteTrip({ tripId, onDelete }) {
       });
   };
 
-  return <button onClick={handleDelete}>Verwijder reis</button>;
+  return <DeleteButton onClick={handleDelete}>X</DeleteButton>;
 }
 
 export default DeleteTrip;
