@@ -34,27 +34,32 @@ function TravelInfo() {
       <h2>Alle reizen</h2>
       <ul>
         {trips.map((trip) => (
-          <li key={trip._id} style={{ border: "1px solid #ccc", borderRadius: "10px", padding: "15px", marginBottom: "20px", maxWidth: "600px" }}>
-            {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} style={{ width: "100%", borderRadius: "10px", marginBottom: "10px" }} />}
-            <p>
-              <strong>Bestemming:</strong> {trip.place} - {trip.country}
-            </p>
-            <p>
-              <strong>Datum:</strong> {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
-            </p>
-            <p>
-              <strong>Deelnemende gebruikers:</strong>
-            </p>
-            <ul>
-              {trip.travelers.map((userId) => (
-                <li key={userId}>
-                  <FetchUserInfo userId={userId} />
-                </li>
-              ))}
-            </ul>
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
-              <Link to={`/trips/${trip._id}`}>📄 Bekijk de reisdetails</Link>
+          <li key={trip._id} className="trip-item">
+            {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} />}
+            <div className="trip-info">
               <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
+              <p>
+                <strong>Bestemming:</strong> {trip.tripType === "roadtrip" && trip.countries && trip.countries.length > 0 ? trip.countries.join(" - ") : `${trip.place}${trip.country ? ` - ${trip.country}` : ""}`}
+              </p>
+              <p>
+                <strong>Type:</strong> {trip.tripType}
+              </p>
+
+              <p>
+                <strong>Reizigers:</strong>
+              </p>
+              <ul>
+                {trip.travelers.map((userId) => (
+                  <li key={userId}>
+                    <FetchUserInfo userId={userId} />
+                  </li>
+                ))}
+              </ul>
+              <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
+                <FullButton>
+                  <Link to={`/trips/${trip._id}`}>Bekijk de reisdetails</Link>
+                </FullButton>
+              </div>
             </div>
           </li>
         ))}

@@ -65,12 +65,31 @@ router.post("/", async (req, res) => {
     const collection = db.collection("trips");
     const usersCollection = db.collection("users");
 
-    const { place, country, imageUrl, startDate, endDate, screenNames, familyId, userId, selectedFriend } = req.body;
+    const { tripType, place, country, countries, imageUrl, startDate, endDate, screenNames, familyId, userId, selectedFriend = [] } = req.body;
 
-    if (!place || !country || !startDate || !endDate || !familyId || !userId) {
-      return res.status(400).json({ message: "Fout: Alle velden zijn vereist." });
+    // Basisvalidatie
+    if (!tripType || !startDate || !endDate || !familyId || !userId) {
+      return res.status(400).json({ message: "Fout: Alle verplichte velden moeten ingevuld zijn." });
     }
 
+    // Validatie per tripType
+    if (tripType === "staytrip") {
+      if (!place || !country) {
+        return res.status(400).json({ message: "Plaats en land zijn verplicht voor staytrip." });
+      }
+    } else if (tripType === "citytrip") {
+      if (!place) {
+        return res.status(400).json({ message: "Plaats is verplicht voor citytrip." });
+      }
+    } else if (tripType === "roadtrip") {
+      if (!Array.isArray(countries) || countries.length === 0 || countries.every((c) => !c.trim())) {
+        return res.status(400).json({ message: "Minstens één land is verplicht voor roadtrip." });
+      }
+    } else {
+      return res.status(400).json({ message: "Ongeldig tripType." });
+    }
+
+    // Haal gebruikers op basis van screenNames
     const users = await usersCollection.find({ screenName: { $in: screenNames || [] } }).toArray();
     const travelerIds = users.map((user) => user._id);
 
@@ -83,15 +102,27 @@ router.post("/", async (req, res) => {
       travelerIds.push(currentUserObjectId);
     }
 
+    // Maak nieuw trip object aan
     const newTrip = {
-      place,
-      country,
-      imageUrl,
+      tripType,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
       travelers: travelerIds,
       familyId,
+      imageUrl,
     };
+
+    if (tripType === "staytrip") {
+      newTrip.place = place;
+      newTrip.country = country;
+    } else if (tripType === "citytrip") {
+      newTrip.place = place;
+      newTrip.country = "";
+    } else if (tripType === "roadtrip") {
+      newTrip.countries = countries.filter((c) => c.trim() !== "");
+      newTrip.place = "";
+      newTrip.country = "";
+    }
 
     const result = await collection.insertOne(newTrip);
 
