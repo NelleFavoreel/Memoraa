@@ -132,7 +132,7 @@ function AddTrip({ show, onClose }) {
 
           {tripType === "staytrip" && (
             <>
-              <label>Plaats:</label>
+              <label>Stad:</label>
               <input type="text" value={place} onChange={(e) => setPlace(e.target.value)} required={tripType === "staytrip"} />
               <label>Land:</label>
               <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} required={tripType === "staytrip"} />
@@ -164,9 +164,9 @@ function AddTrip({ show, onClose }) {
                   required={tripType === "roadtrip" && i === 0}
                 />
               ))}
-              <button type="button" onClick={() => setCountries([...countries, ""])}>
-                Voeg land toe
-              </button>
+              <FullButton type="button" onClick={() => setCountries([...countries, ""])}>
+                +
+              </FullButton>
             </>
           )}
 

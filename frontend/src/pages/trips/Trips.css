@@ -62,3 +62,7 @@ ul {
   margin-left: -30%;
   margin-top: 10px;
 }
+select {
+  margin: 20px 0px;
+  padding: 5px;
+}
