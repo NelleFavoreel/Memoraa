@@ -1,4 +1,5 @@
 import React from "react";
+import FullButton from "../button/FullButton";
 
 const ShareTripButton = ({ tripId }) => {
   const handleCopyLink = () => {
@@ -14,7 +15,7 @@ const ShareTripButton = ({ tripId }) => {
       });
   };
 
-  return <button onClick={handleCopyLink}>Deel deze reis</button>;
+  return <FullButton onClick={handleCopyLink}>Deel deze reis</FullButton>;
 };
 
 export default ShareTripButton;

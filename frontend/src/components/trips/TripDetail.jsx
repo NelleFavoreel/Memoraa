@@ -4,6 +4,7 @@ import ShareTripButton from "./ShareTripButton";
 import ClickableMap from "../maps/ClickableMap";
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
+import TripDays from "./TripDays";
 
 function TravelDetail() {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
@@ -12,6 +13,9 @@ function TravelDetail() {
   const [tripDays, setTripDays] = useState([]);
   const [loading, setLoading] = useState(true);
   const [coordinates, setCoordinates] = useState([]);
+  const token = localStorage.getItem("token");
+  const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
+  const [travelerNames, setTravelerNames] = useState([]);
 
   useEffect(() => {
     const fetchTripDetails = async () => {
@@ -33,6 +37,30 @@ function TravelDetail() {
 
     fetchTripDetails();
   }, [id]);
+  useEffect(() => {
+    if (!trip || !trip.travelers || trip.travelers.length === 0) {
+      setTravelerNames([]);
+      return;
+    }
+
+    const fetchTravelerNames = async () => {
+      try {
+        const names = await Promise.all(
+          trip.travelers.map(async (travelerId) => {
+            const response = await fetch(`http://localhost:3001/users/${travelerId}`);
+            if (!response.ok) throw new Error("Kon gebruiker niet ophalen");
+            const data = await response.json();
+            return data.name;
+          })
+        );
+        setTravelerNames(names);
+      } catch (error) {
+        console.error("Fout bij ophalen van reizigersnamen:", error);
+      }
+    };
+
+    fetchTravelerNames();
+  }, [trip]);
   useEffect(() => {
     const fetchCoordinatesForPlaces = async () => {
       const fetchedCoordinates = [];
@@ -65,15 +93,21 @@ function TravelDetail() {
 
   return (
     <div>
-      <ClickableMap coordinates={coordinates} />
-      <ShareTripButton tripId={trip._id} />
-      <h1>
-        {trip.place} - {trip.country}
-      </h1>
-      <p>
-        {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
-      </p>
-      <h3>Familie: {trip.familyId}</h3>
+      <div className="trip-detail-share">
+        <ShareTripButton tripId={trip._id} />
+      </div>
+      <div className="trip-detail-container">
+        <h1>{trip.country}</h1>
+        <div className="trip-detail-general-info">
+          <p>
+            {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
+          </p>
+          <p>{tripDays.length} dagen </p>
+          <p>{travelerNames.length > 0 ? <>Reisgenoten: {travelerNames.join(", ")}</> : "Geen reisgenoten"}</p>
+        </div>
+      </div>
+      <TripDays tripDays={tripDays} />
+
       <h2>Alle foto's</h2>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
         {tripDays
@@ -82,31 +116,8 @@ function TravelDetail() {
             <img key={index} src={photo} alt={`Foto ${index + 1}`} width={100} />
           ))}
       </div>
-
-      <h2>Dagen van de reis:</h2>
-      {tripDays.length > 0 ? (
-        <ul>
-          {tripDays.map((day, index) => (
-            <li key={day._id}>
-              <strong>
-                {new Date(day.date).toLocaleDateString()} {day.place}
-              </strong>
-              <p>{day.description}</p>
-              <ul>
-                {day.activities.map((activity, activityIndex) => (
-                  <li key={activityIndex}>{activity}</li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Er zijn geen dagen voor deze reis.</p>
-      )}
-
-      <h3>Familie: {trip.familyId}</h3>
-
       <div></div>
+      <ClickableMap coordinates={coordinates} />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import TripDetail from "../../components/trips/TripDetail";
 import EditTrip from "../../components/trips/EditTip";
 import { Link } from "react-router-dom";
-import "./Trips.css";
+import "./TripDetail.css";
 import { useParams } from "react-router-dom";
 import FullButton from "../../components/button/FullButton";
 function TravelDetail() {

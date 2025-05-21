@@ -1,0 +1,57 @@
+.trip-detail-general-info {
+  background-color: #484848;
+  padding: 40px;
+  width: 30%;
+  max-width: 350px;
+}
+.trip-detail-container h1 {
+  margin: 40px 0px -20px 40px;
+}
+.trip-days-slider {
+  background-color: #484848;
+  padding: 60px;
+  font-family: "myriad-pro", sans-serif;
+  width: 40%;
+  max-width: 450px;
+}
+.trip-days-slider ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.trip-days-slider li {
+  margin-bottom: 10px;
+  font-weight: 100;
+}
+.trip-days-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.trip-days-container h1 {
+  margin: 0px 0px -20px 40px;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  width: 70%;
+}
+.slick-prev:before,
+.slick-next:before {
+  content: none;
+}
+.slick-dots li button:before {
+  font-size: 7px;
+  color: gray;
+  opacity: 1;
+}
+
+.slick-dots li.slick-active button:before {
+  color: white;
+}
+.slick-dots {
+  margin-bottom: -20px;
+}
+.trip-detail-share {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+}

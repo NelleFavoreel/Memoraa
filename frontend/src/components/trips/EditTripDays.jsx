@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 function EditTripDays({ tripDays, setTripDays, tripId }) {
   const token = localStorage.getItem("token");
   const [successMessage, setSuccessMessage] = useState("");
