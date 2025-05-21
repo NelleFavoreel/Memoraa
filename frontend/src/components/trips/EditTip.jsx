@@ -39,6 +39,7 @@ function EditTrip() {
   const [selectedFamilyMembers, setSelectedFamilyMembers] = useState([]);
   const [originalTrip, setOriginalTrip] = useState(null);
   const [originalTripDays, setOriginalTripDays] = useState(null);
+  const [hasAccess, setHasAccess] = useState(true);
 
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -63,6 +64,9 @@ function EditTrip() {
         const res = await fetch(`http://localhost:3001/trips/${id}`);
         const data = await res.json();
         setTrip(data.trip);
+        if (!data.trip.travelers.includes(currentUserId)) {
+          setHasAccess(false);
+        }
         setOriginalTrip(data.trip);
         setTripDays(data.tripDays);
         setOriginalTripDays(data.tripDays);

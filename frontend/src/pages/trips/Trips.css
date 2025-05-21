@@ -94,7 +94,7 @@ select {
   margin-top: 40px;
 }
 .trip-delete-button {
-  padding-top: 20px;
+  padding-top: 10px;
   margin-bottom: -30px;
   margin-right: 20px;
 }
@@ -110,13 +110,19 @@ select {
 .trip-link a {
   color: #d5dfff;
   font-family: "myriad-pro", sans-serif;
-  font-size: 14px;
+  font-size: 10px;
 }
 .trip-link {
   justify-content: flex-end;
+  display: flex;
 }
 .trips-info-title {
   margin: 0px 0px -12px 30px;
+}
+.trip-link svg {
+  width: 10px;
+  margin-left: 20px;
+  height: 10px;
 }
 
 @media (max-width: 600px) {
