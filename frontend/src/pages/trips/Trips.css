@@ -92,6 +92,8 @@ select {
 }
 .model-form-AddButton {
   margin-top: 40px;
+  display: flex;
+  justify-content: flex-end;
 }
 .trip-delete-button {
   padding-top: 10px;
@@ -124,6 +126,34 @@ select {
   margin-left: 20px;
   height: 10px;
 }
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 100px;
+}
+.filters input {
+  margin: 0;
+  min-width: 50px;
+  margin-left: 100px;
+}
+.searchbar {
+  width: 280px;
+  padding: 12px 10px;
+}
+.filters select {
+  width: 200px;
+  font-size: 15px;
+  background-color: #d5dfff;
+  color: #484848;
+  border-color: #484848;
+  padding: 12px 10px;
+  margin: 0;
+}
+.filters label {
+  font-weight: 100;
+}
 
 @media (max-width: 600px) {
   .modal-content input {
@@ -146,5 +176,93 @@ select {
   .trip-image {
     width: 100%;
     height: auto;
+  }
+  .searchbar {
+    width: 200px;
+    padding: 5px 3px;
+    font-size: 10px;
+  }
+  .filters {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+    flex-direction: column-reverse;
+    margin-bottom: 50px;
+  }
+  .trip-info-container {
+    width: 100%;
+  }
+  .filters select {
+    font-size: 12px;
+    padding: 5px 3px;
+    width: 100%;
+  }
+  .filters input {
+    width: 97%;
+    margin: 0;
+  }
+  .filters-left,
+  .filters-right {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: flex-start;
+    align-items: center;
+  }
+  .filters label {
+    display: flex;
+    margin: 0px;
+    margin-top: 0px;
+    font-size: 10px;
+    align-items: center;
+    width: 200px;
+  }
+  .filters label input {
+    width: 20px;
+    height: 15px;
+  }
+  .trip-item {
+    margin-bottom: 40px;
+  }
+  .trip-info {
+    padding: 0px 0px 10px 10px;
+  }
+  .trip-delete-button {
+    margin-right: 10px;
+    margin-bottom: 0;
+    padding: 0;
+    margin-top: -20px;
+  }
+  .trip-info p {
+    margin: 7px;
+  }
+  .trip-link button {
+    padding: 0;
+  }
+  .trips-info-title {
+    margin: 10px 0px 2px 17px;
+  }
+  .trip-info-container {
+    background-color: #484848;
+  }
+}
+
+@media (min-width: 660px) and (max-width: 1350px) {
+  .filters-right {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+  }
+  .filters label {
+    margin-top: 30px;
+  }
+  .filters {
+    align-items: flex-end;
+  }
+  .searchbar {
+    width: 250px;
+    padding: 5px 10px;
+    font-size: 15px;
   }
 }

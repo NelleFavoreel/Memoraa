@@ -40,6 +40,7 @@ form {
 }
 label {
   font-weight: 600;
+  font-family: "myriad-pro", sans-serif;
   margin: 5px 0px;
 }
 .title {

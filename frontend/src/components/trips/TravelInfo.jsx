@@ -76,7 +76,6 @@ function TravelInfo({ refresh, onRefreshed }) {
   return (
     <div>
       <Filters filters={filters} onFiltersChange={setFilters} />
-      <h1 className="title">Alle reizen</h1>
       {filteredTrips.map((trip, index) => (
         <li key={trip._id} className={`trip-item ${index % 2 !== 0 ? "reverse" : ""}`}>
           <div className="trip-content">
@@ -109,31 +108,6 @@ function TravelInfo({ refresh, onRefreshed }) {
         </li>
       ))}
     </div>
-  );
-}
-
-function FetchUserInfo({ userId }) {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    fetch(`http://localhost:3001/users/${userId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setUser(data);
-      })
-      .catch((err) => {
-        console.error("Fout bij ophalen van gebruiker:", err);
-      });
-  }, [userId]);
-
-  if (!user) {
-    return <span>Laden...</span>;
-  }
-
-  return (
-    <span>
-      {user.name} ({user.screenName})
-    </span>
   );
 }
 

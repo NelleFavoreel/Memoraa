@@ -19,7 +19,9 @@ function TravelOverview() {
 
   return (
     <>
-      <FullButton onClick={() => setShowModal(true)}>Voeg een reis toe</FullButton>
+      <div className="model-form-AddButton">
+        <FullButton onClick={() => setShowModal(true)}>Voeg een reis toe</FullButton>
+      </div>
       <AddTrip show={showModal} onClose={() => setShowModal(false)} onTripAdded={handleTripAdded} />
       <TravelInfo refresh={refresh} onRefreshed={handleRefreshed} />
     </>
