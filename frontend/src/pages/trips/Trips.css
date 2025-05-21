@@ -2,20 +2,34 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0px;
+  padding: 0px 0;
   cursor: pointer;
   position: relative;
-}
-.trip-item div {
   width: 100%;
+}
+
+.trip-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  justify-content: flex-start;
+}
+.trip-info-container {
+  width: 480px;
+}
+.trip-item.reverse .trip-content {
+  flex-direction: row-reverse;
 }
 .trip-info {
   background-color: #484848;
-  padding: 30px;
+  padding: 10px 0px 20px 30px;
 }
 ul {
   text-decoration: none;
 }
+
+/* overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -38,6 +52,11 @@ ul {
   max-height: 90vh;
   overflow-y: auto;
 }
+.trip-image {
+  width: 38%;
+  height: 350px;
+  object-fit: cover;
+}
 
 .modal-close {
   position: absolute;
@@ -48,7 +67,9 @@ ul {
   font-size: 1.5rem;
   cursor: pointer;
 }
-
+li {
+  marker: none;
+}
 .modal-content button {
   margin-bottom: 20px;
 }
@@ -72,9 +93,30 @@ select {
 .model-form-AddButton {
   margin-top: 40px;
 }
+.trip-delete-button {
+  padding-top: 20px;
+  margin-bottom: -30px;
+  margin-right: 20px;
+}
 .modal-content .title-header {
   font-size: 60px;
   margin-top: 10px;
+}
+/* trips overview */
+.trip-delete-button {
+  display: flex;
+  justify-content: flex-end;
+}
+.trip-link a {
+  color: #d5dfff;
+  font-family: "myriad-pro", sans-serif;
+  font-size: 14px;
+}
+.trip-link {
+  justify-content: flex-end;
+}
+.trips-info-title {
+  margin: 0px 0px -12px 30px;
 }
 
 @media (max-width: 600px) {
@@ -90,5 +132,13 @@ select {
   .modal-content .title-header {
     font-size: 30px;
     margin-top: 10px;
+  }
+  .trip-content {
+    flex-direction: column !important;
+    align-items: flex-start;
+  }
+  .trip-image {
+    width: 100%;
+    height: auto;
   }
 }

@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DeleteTrip from "./DeleteTrip";
 import FullButton from "../button/FullButton";
+import Underline from "../button/Underline";
 
 function TravelInfo({ refresh, onRefreshed }) {
   const [trips, setTrips] = useState([]);
+  const token = localStorage.getItem("token");
+  const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
 
   const fetchTrips = () => {
     const token = localStorage.getItem("token");
@@ -45,40 +48,35 @@ function TravelInfo({ refresh, onRefreshed }) {
   return (
     <div>
       <h1 className="title">Alle reizen</h1>
-      <ul>
-        {trips.map((trip) => (
-          <li key={trip._id} className="trip-item">
-            {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} />}
-            <div className="trip-info">
-              <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
-              <p>
-                <strong>Bestemming:</strong> {trip.tripType === "roadtrip" && trip.countries && trip.countries.length > 0 ? trip.countries.join(" - ") : `${trip.place}${trip.country ? ` - ${trip.country}` : ""}`}
-              </p>
-              <p>
-                <strong>Type:</strong> {trip.tripType}
-              </p>
-              <p>
-                <strong>Datum:</strong> {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
-              </p>
-              <p>
-                <strong>Reizigers:</strong>
-              </p>
-              <ul>
-                {trip.travelers.map((userId) => (
-                  <li key={userId}>
-                    <FetchUserInfo userId={userId} />
-                  </li>
-                ))}
-              </ul>
-              <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
-                <FullButton>
-                  <Link to={`/trips/${trip._id}`}>Bekijk de reisdetails</Link>
-                </FullButton>
+      {trips.map((trip, index) => (
+        <li key={trip._id} className={`trip-item ${index % 2 !== 0 ? "reverse" : ""}`}>
+          <div className="trip-content">
+            {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} className="trip-image" />}
+            <div className="trip-info-container">
+              <h2 className="trips-info-title">{trip.tripType === "roadtrip" && trip.countries?.length > 0 ? trip.countries.join(" - ") : `${trip.place}`}</h2>
+
+              <div className="trip-info">
+                {trip.travelers?.includes(userId) && (
+                  <div className="trip-delete-button">
+                    <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
+                  </div>
+                )}
+                <p>
+                  <strong>Type:</strong> {trip.tripType}
+                </p>
+                <p>
+                  <strong>Datum:</strong> {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
+                </p>
+                <div className="trip-link">
+                  <Underline>
+                    <Link to={`/trips/${trip._id}`}>Bekijk de reisdetails</Link>
+                  </Underline>
+                </div>
               </div>
             </div>
-          </li>
-        ))}
-      </ul>
+          </div>
+        </li>
+      ))}
     </div>
   );
 }

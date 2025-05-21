@@ -9,7 +9,7 @@ function DeleteTrip({ tripId, onDelete }) {
       .then((res) => {
         if (res.ok) {
           console.log("Reis succesvol verwijderd.");
-          onDelete(tripId); // Callback om de reis uit de lijst te verwijderen
+          onDelete(tripId);
         } else {
           console.log("Fout bij verwijderen van reis.");
         }
