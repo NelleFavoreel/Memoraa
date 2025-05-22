@@ -120,9 +120,10 @@ function AddTrip({ show, onClose, onTripAdded }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <button className="modal-close" onClick={onClose} style={{ float: "right", fontSize: "1.5rem", background: "transparent", border: "none" }}>
-          ✖
+        <button className="modal-close" onClick={onClose} style={{ float: "right", fontSize: "2rem", background: "transparent", border: "none" }}>
+          <span class="material-symbols-outlined">close</span>
         </button>
+
         <h1 className="title-header">Nieuwe reis toevoegen</h1>
         <form className="model-form" onSubmit={handleSubmit}>
           <label>Type reis:</label>
@@ -188,15 +189,28 @@ function AddTrip({ show, onClose, onTripAdded }) {
             Einddatum:
             <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
           </label>
-          <label>Kies je reisgezelschap:</label>
-          <div className="model-form-checkboxes">
-            {friends.map((friend) => (
-              <div key={friend._id}>
-                <input type="checkbox" id={friend._id} checked={selectedFriend.includes(friend._id)} onChange={() => handleCheckboxChange(friend._id)} />
-                <label htmlFor={friend._id}>{friend.screenName}</label>
-              </div>
-            ))}
+          <div className="traveler-selection" style={{ marginTop: "30px" }}>
+            <label>Kies je reisgezelschap:</label>
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              <thead>
+                <tr className="table-header">
+                  <th style={{ textAlign: "left", padding: "5px" }}>Naam</th>
+                  <th style={{ textAlign: "left", padding: "5px" }}>Toevoegen</th>
+                </tr>
+              </thead>
+              <tbody>
+                {friends.map((friend) => (
+                  <tr key={friend._id}>
+                    <td style={{ padding: "8px" }}>{friend.screenName}</td>
+                    <td style={{ padding: "8px" }}>
+                      <input type="checkbox" checked={selectedFriend.includes(friend._id)} onChange={() => handleCheckboxChange(friend._id)} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+
           <div className="model-form-AddButton">
             <FullButton type="submit">Voeg reis toe</FullButton>
           </div>
