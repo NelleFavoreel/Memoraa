@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 function NextArrow(props) {
   const { className, style, onClick } = props;
   return (
-    <div className={className} style={{ ...style, display: "block", right: -40, zIndex: 1, cursor: "pointer" }} onClick={onClick}>
+    <div className={className} style={{ ...style, display: "block", right: -50, zIndex: 1, cursor: "pointer" }} onClick={onClick}>
       <SlArrowRight size={15} color="white" />
     </div>
   );
@@ -16,7 +16,7 @@ function NextArrow(props) {
 function PrevArrow(props) {
   const { className, style, onClick } = props;
   return (
-    <div className={className} style={{ ...style, display: "block", left: -40, zIndex: 1, cursor: "pointer" }} onClick={onClick}>
+    <div className={className} style={{ ...style, display: "block", left: -50, zIndex: 1, cursor: "pointer" }} onClick={onClick}>
       <SlArrowRight size={15} color="white" style={{ transform: "rotate(180deg)" }} />
     </div>
   );

@@ -151,7 +151,7 @@ function TravelDetail({ setHideNavbar }) {
             {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
           </p>
           <p>{tripDays.length} dagen </p>
-          <p>{travelerNames.length > 0 ? <>Reisgenoten: {travelerNames.join(", ")}</> : "Geen reisgenoten"}</p>
+          <p>{travelerNames.length > 0 ? <>{travelerNames.join(", ")}</> : "Geen reisgenoten"}</p>
           <div>
             <Underline onClick={scrollToPhotos}>Foto's bekijken</Underline>
             <Underline onClick={scrollToMap}>Kaart bekijken</Underline>
