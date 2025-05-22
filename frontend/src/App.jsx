@@ -25,16 +25,17 @@ function App() {
 }
 
 function MainApp({ isLoggedIn, setIsLoggedIn }) {
+  const [hideNavbar, setHideNavbar] = useState(false);
   return (
     <>
-      {isLoggedIn && <Navbar />}
+      {isLoggedIn && <Navbar hidden={hideNavbar} />}
 
       <Routes>
         <Route path="/" element={<BeforeHome />} />
         <Route path="/login" element={<LogIn setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />} />
         <Route path="/home" element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/trips" element={<TravelOverview />} />
-        <Route path="/trips/:id" element={<TravelDetail />} />
+        <Route path="/trips/:id" element={<TravelDetail setHideNavbar={setHideNavbar} />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/account" element={<Account />} />
         <Route path="/users" element={<Account />} />

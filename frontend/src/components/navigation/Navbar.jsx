@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
-export default function Navbar() {
+export default function Navbar({ hidden }) {
   const navStyle = {
     padding: "1rem",
-    display: "flex",
+    display: hidden ? "none" : "flex",
     justifyContent: "flex-end",
   };
 
