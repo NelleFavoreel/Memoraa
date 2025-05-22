@@ -1,22 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import ShareTripButton from "./ShareTripButton";
 import ClickableMap from "../maps/ClickableMap";
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
 import TripDays from "./TripDays";
+import Underline from "../button/Underline";
 
-function TravelDetail() {
+function TravelDetail({ setHideNavbar }) {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
   const { id } = useParams();
   const [trip, setTrip] = useState(null);
   const [tripDays, setTripDays] = useState([]);
   const [loading, setLoading] = useState(true);
   const [coordinates, setCoordinates] = useState([]);
-  const token = localStorage.getItem("token");
-  const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
   const [travelerNames, setTravelerNames] = useState([]);
+  const [backgroundPhotos, setBackgroundPhotos] = useState([]);
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  const scrollToPhotos = () => {
+    photosRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
+  const scrollToMap = () => {
+    mapRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  const photosRef = useRef(null);
+  const mapRef = useRef(null);
+  useEffect(() => {
+    setHideNavbar(true); // navbar verbergen bij laden van detail
+    return () => setHideNavbar(false); // navbar weer tonen bij verlaten
+  }, [setHideNavbar]);
   useEffect(() => {
     const fetchTripDetails = async () => {
       try {
@@ -62,6 +75,30 @@ function TravelDetail() {
     fetchTravelerNames();
   }, [trip]);
   useEffect(() => {
+    if (backgroundPhotos.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentPhotoIndex((prevIndex) => (prevIndex + 1) % backgroundPhotos.length);
+      }, 4000);
+
+      return () => clearInterval(interval);
+    }
+  }, [backgroundPhotos]);
+  useEffect(() => {
+    if (tripDays.length > 0) {
+      handleDayChange(0);
+    }
+  }, [tripDays]);
+
+  const handleDayChange = (index) => {
+    const selectedDayPhotos = tripDays[index]?.photos || [];
+    const fallbackPhoto = trip?.imageUrl ? [trip.imageUrl] : [];
+
+    const allPhotosToUse = selectedDayPhotos.length > 0 ? selectedDayPhotos : fallbackPhoto;
+    setBackgroundPhotos(allPhotosToUse);
+    setCurrentPhotoIndex(0);
+  };
+
+  useEffect(() => {
     const fetchCoordinatesForPlaces = async () => {
       const fetchedCoordinates = [];
 
@@ -96,6 +133,17 @@ function TravelDetail() {
       <div className="trip-detail-share">
         <ShareTripButton tripId={trip._id} />
       </div>
+      <div
+        className="trip-background-image"
+        style={{
+          backgroundImage: backgroundPhotos.length > 0 ? `url(${backgroundPhotos[currentPhotoIndex]})` : "none",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 1,
+          transition: "opacity 0.8s ease-in-out",
+        }}
+      ></div>
+
       <div className="trip-detail-container">
         <h1>{trip.country}</h1>
         <div className="trip-detail-general-info">
@@ -104,20 +152,32 @@ function TravelDetail() {
           </p>
           <p>{tripDays.length} dagen </p>
           <p>{travelerNames.length > 0 ? <>Reisgenoten: {travelerNames.join(", ")}</> : "Geen reisgenoten"}</p>
+          <div>
+            <Underline onClick={scrollToPhotos}>Foto's bekijken</Underline>
+            <Underline onClick={scrollToMap}>Kaart bekijken</Underline>
+          </div>
         </div>
       </div>
-      <TripDays tripDays={tripDays} />
+      <TripDays tripDays={tripDays} onDayChange={handleDayChange} />
 
-      <h2>Alle foto's</h2>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-        {tripDays
-          .flatMap((day) => day.photos || [])
-          .map((photo, index) => (
-            <img key={index} src={photo} alt={`Foto ${index + 1}`} width={100} />
-          ))}
+      <div className="trip-detail-under-content" ref={photosRef}>
+        <div className="photos-container">
+          <h2>Alle foto's</h2>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+            {tripDays
+              .flatMap((day) => day.photos || [])
+              .map((photo, index) => (
+                <img key={index} src={photo} alt={`Foto ${index + 1}`} width={100} />
+              ))}
+          </div>
+        </div>
+        <div className="map-container">
+          <h2>Kaartweergave</h2>
+          <div ref={mapRef}>
+            <ClickableMap coordinates={coordinates} />
+          </div>
+        </div>
       </div>
-      <div></div>
-      <ClickableMap coordinates={coordinates} />
     </div>
   );
 }

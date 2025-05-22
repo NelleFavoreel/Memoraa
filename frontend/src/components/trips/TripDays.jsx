@@ -22,7 +22,7 @@ function PrevArrow(props) {
   );
 }
 
-function TripDays({ tripDays }) {
+function TripDays({ tripDays, onDayChange }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const settings = {
@@ -31,7 +31,10 @@ function TripDays({ tripDays }) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    afterChange: (current) => setActiveIndex(current),
+    afterChange: (current) => {
+      setActiveIndex(current);
+      if (onDayChange) onDayChange(current);
+    },
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
   };
@@ -40,18 +43,16 @@ function TripDays({ tripDays }) {
     return <p>Er zijn geen dagen voor deze reis.</p>;
   }
 
-  const day = tripDays[activeIndex];
-
   return (
     <div className="trip-days-container">
       <h1>Dag {activeIndex + 1}</h1>
-
       <div className="trip-days-slider">
         <Slider {...settings}>
-          {tripDays.map((day, index) => (
+          {tripDays.map((day) => (
             <div key={day._id} style={{ padding: "10px" }}>
+              <h4>{day.place}</h4>
               <p>{day.description}</p>
-              <ul>{day.activities && day.activities.length > 0 ? day.activities.map((activity, idx) => <li key={idx}>{activity}</li>) : <li>Geen activiteiten</li>}</ul>
+              <ul>{day.activities?.length > 0 ? day.activities.map((activity, idx) => <li key={idx}>{activity}</li>) : <li>Geen activiteiten</li>}</ul>
             </div>
           ))}
         </Slider>
