@@ -42,6 +42,8 @@ label {
   font-weight: 600;
   font-family: "myriad-pro", sans-serif;
   margin: 5px 0px;
+  color: #d5dfff;
+  font-size: 16px;
 }
 .title {
   text-align: center;

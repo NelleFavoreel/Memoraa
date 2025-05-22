@@ -1,0 +1,76 @@
+.edit-trip-container {
+  display: flex;
+  width: 100%;
+  gap: 50px;
+}
+
+.trip-edit-general-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  background-color: #484848;
+}
+.edit-trip-container h2 {
+  margin-top: -30px;
+  z-index: 4;
+  position: relative;
+}
+.edit-trip-slider {
+  width: 40%;
+  background-color: #484848;
+  padding: 0px 80px;
+  display: flex;
+  flex-direction: column;
+}
+.slick-slider .slick-arrow {
+  color: white;
+}
+.edit-trip-slider li {
+  font-family: "myriad-pro", sans-serif;
+  font-size: 14px;
+  font-weight: 100;
+  text-decoration: none;
+}
+.photo-upload {
+  margin-top: 35px;
+}
+.edit-trip-slider .slick-dots {
+  margin-top: -40px;
+}
+
+.traveler-selection table input {
+  margin: O !important;
+  min-width: 30px;
+}
+.traveler-selection table {
+  width: 100% !important;
+  margin-top: 10px;
+  text-align: none;
+}
+.table-header th {
+  margin-top: 50px;
+  font-weight: 500;
+  font-size: 16px;
+  color: #d5dfff;
+  font-family: "myriad-pro", sans-serif;
+}
+.traveler-selection td {
+  color: white;
+  margin: 30px;
+  height: 20px;
+  font-family: "myriad-pro", sans-serif;
+  font-weight: 100;
+  font-size: 14px;
+}
+.button-container-edit {
+  margin-top: 70px;
+}
+.new-activity-input {
+  margin: 0;
+  margin-top: 30px;
+}
+.button-container-edit-days {
+  margin-top: -50px;
+  margin-bottom: 40px;
+}

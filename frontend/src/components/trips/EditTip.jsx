@@ -1,31 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import EditTripDays from "./EditTripDays";
-
-function FetchUserInfo({ userId }) {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    fetch(`http://localhost:3001/users/${userId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setUser(data);
-      })
-      .catch((err) => {
-        console.error("Fout bij ophalen van gebruiker:", err);
-      });
-  }, [userId]);
-
-  if (!user) {
-    return <span>Laden...</span>;
-  }
-
-  return (
-    <span>
-      {user.name} ({user.screenName})
-    </span>
-  );
-}
+import "./EditTrip.css";
+import FullButton from "../button/FullButton";
 
 function EditTrip() {
   const { id } = useParams();
@@ -154,42 +131,56 @@ function EditTrip() {
   if (loading || !trip) return <p>De reisgegevens worden geladen...</p>;
 
   return (
-    <div>
+    <>
       <h1>Bewerk reis</h1>
-      <form onSubmit={handleSaveChanges}>
-        <div>
-          <label>Land</label>
-          <input type="text" value={trip.country} onChange={(e) => setTrip({ ...trip, country: e.target.value })} />
-        </div>
+      <div className="edit-trip-container">
+        <div className="trip-edit-general-info">
+          <h2>Bewerk reis</h2>
+          <form onSubmit={handleSaveChanges}>
+            <div>
+              <label>Land</label>
+              <input type="text" value={trip.country} onChange={(e) => setTrip({ ...trip, country: e.target.value })} />
+            </div>
 
-        <div>
-          <label>Startdatum</label>
-          <input type="date" value={new Date(trip.startDate).toISOString().split("T")[0]} onChange={(e) => setTrip({ ...trip, startDate: e.target.value })} />
-        </div>
+            <div>
+              <label>Startdatum</label>
+              <input type="date" value={new Date(trip.startDate).toISOString().split("T")[0]} onChange={(e) => setTrip({ ...trip, startDate: e.target.value })} />
+            </div>
 
-        <div>
-          <label>Einddatum</label>
-          <input type="date" value={new Date(trip.endDate).toISOString().split("T")[0]} onChange={(e) => setTrip({ ...trip, endDate: e.target.value })} />
-        </div>
+            <div>
+              <label>Einddatum</label>
+              <input type="date" value={new Date(trip.endDate).toISOString().split("T")[0]} onChange={(e) => setTrip({ ...trip, endDate: e.target.value })} />
+            </div>
 
-        <div>
-          <label>Reizigers</label>
-          <ul style={{ listStyle: "none", paddingLeft: 0 }}>
-            {familyMembers.map((member) => (
-              <li key={member._id}>
-                <label>
-                  <input type="checkbox" checked={trip.travelers.includes(member._id)} onChange={() => handleTravelerToggle(member._id)} />
-                  {member.name} ({member.screenName})
-                </label>
-              </li>
-            ))}
-          </ul>
+            <div className="traveler-selection">
+              <label>Reizigers</label>
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                  <tr className="table-header">
+                    <th style={{ textAlign: "left", padding: " 5px" }}>Naam</th>
+                    <th style={{ textAlign: "left", padding: "5px" }}>Meereizend</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {familyMembers.map((member) => (
+                    <tr key={member._id}>
+                      <td style={{ padding: "8px" }}>{member.screenName}</td>
+                      <td style={{ padding: "8px" }}>
+                        <input type="checkbox" checked={trip.travelers.includes(member._id)} onChange={() => handleTravelerToggle(member._id)} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="button-container-edit">
+              <FullButton type="submit">Opslaan</FullButton>
+            </div>
+          </form>
         </div>
-
-        <button type="submit">Opslaan</button>
-      </form>
-      <EditTripDays tripDays={tripDays} setTripDays={setTripDays} tripId={id} />
-    </div>
+        <EditTripDays tripDays={tripDays} setTripDays={setTripDays} tripId={id} />
+      </div>
+    </>
   );
 }
 

@@ -89,7 +89,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.334); /* zwarte tint met 50% transparantie */
+  background-color: rgba(0, 0, 0, 0.229); /* zwarte tint met 50% transparantie */
   pointer-events: none; /* zorgt dat de overlay geen interacties blokkeert */
 }
 .trip-detail-general-info div {
