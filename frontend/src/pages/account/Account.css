@@ -1,0 +1,53 @@
+.add-family-members th {
+  margin-top: 50px;
+  font-weight: 500;
+  font-size: 16px;
+  color: #d5dfff;
+  font-family: "myriad-pro", sans-serif;
+}
+.account-container h2 {
+  width: 80%;
+  margin-top: -55px;
+}
+.account-info-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 130px;
+  margin-top: 100px;
+}
+.add-family-members h3 {
+  font-size: 15px;
+}
+.add-family-members td {
+  color: white;
+  font-family: "myriad-pro", sans-serif;
+  font-weight: 100;
+  font-size: 14px;
+}
+.add-family-members {
+  margin: 0px 20px 20px 20px;
+}
+.account-info {
+  background-color: #484848;
+  padding: 20px 80px 40px 30px;
+  width: 40%;
+}
+.account-family {
+  background-color: #484848;
+  padding: 20px 30px 40px 30px;
+  width: 40%;
+}
+.account-user-trips {
+  padding: -30px 30px 40px 30px;
+}
+
+.account-family-container {
+  background-color: #484848;
+}
+.account-user-trips h2 {
+  margin-top: 30px;
+}
+.account-family-container {
+  height: 400px;
+}

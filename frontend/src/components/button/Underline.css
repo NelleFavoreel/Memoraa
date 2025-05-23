@@ -11,6 +11,8 @@
   cursor: pointer;
   font-family: inherit;
   transition: color 0.3s ease;
+  font-family: "myriad-pro", sans-serif;
+  font-size: 14px;
 }
 
 .underline-link::after {
@@ -33,4 +35,9 @@
 .underline-link:hover::after,
 .underline-link:focus::after {
   width: 100%;
+}
+@media (max-width: 768px) {
+  .underline-link {
+    font-size: 11px;
+  }
 }

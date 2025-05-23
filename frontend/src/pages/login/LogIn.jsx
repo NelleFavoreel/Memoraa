@@ -119,7 +119,6 @@ function LogIn() {
     <div>
       {isLoggedIn ? (
         <div>
-          <h2>Welkom terug!</h2>
           <FullButton
             onClick={() => {
               localStorage.removeItem("token");

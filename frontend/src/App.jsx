@@ -3,7 +3,7 @@ import { useState } from "react";
 import Navbar from "./components/navigation/Navbar";
 import Home from "./pages/home/Home";
 import Calendar from "./pages/Calendar";
-import Account from "./pages/Account";
+import Account from "./pages/account/Account";
 import TravelOverview from "./pages/Trips/TravelOverview";
 import TravelDetail from "./pages/Trips/TravelDetail";
 import LogIn from "./pages/login/LogIn";

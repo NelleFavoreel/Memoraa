@@ -49,10 +49,9 @@ function InfoForm() {
 
   return (
     <>
-      <div>
-        <h2>Welkom, {user.screenName}</h2>
+      <h2> {user.screenName}</h2>
+      <div className="info-form-user">
         <p>Email: {user.email}</p>
-        <p>Familie-ID: {user.familyId}</p>
       </div>
     </>
   );
