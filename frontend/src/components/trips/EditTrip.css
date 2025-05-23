@@ -1,0 +1,151 @@
+.edit-trip-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.trip-edit-general-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 40%;
+  background-color: #484848;
+  margin-right: 10%;
+}
+.edit-trip-container h2 {
+  z-index: 4;
+  position: relative;
+  color: white;
+}
+.edit-trip-slider {
+  width: 35%;
+  background-color: #484848;
+  padding: 0px 80px;
+  display: flex;
+  flex-direction: column;
+}
+.slick-slider .slick-arrow {
+  color: white;
+}
+.trip-day-title {
+  position: absolute;
+  z-index: 9999;
+  color: white;
+  font-size: 24px;
+}
+.edit-trip-slider li {
+  font-family: "myriad-pro", sans-serif;
+  font-size: 14px;
+  font-weight: 100;
+  text-decoration: none;
+}
+.photo-upload {
+  margin-top: 35px;
+}
+
+.edit-trip-slider .slick-dots {
+  margin-top: -40px;
+}
+.edit-trip-slider h2 {
+  position: relative;
+  z-index: 10;
+  color: white;
+}
+.traveler-selection table input {
+  margin: O !important;
+  min-width: 30px;
+}
+.traveler-selection table {
+  width: 100% !important;
+  margin-top: 10px;
+  text-align: none;
+}
+.table-header th {
+  margin-top: 50px;
+  font-weight: 500;
+  font-size: 16px;
+  color: #d5dfff;
+  font-family: "myriad-pro", sans-serif;
+}
+.traveler-selection td {
+  color: white;
+  margin: 30px;
+  height: 20px;
+  font-family: "myriad-pro", sans-serif;
+  font-weight: 100;
+  font-size: 14px;
+}
+.button-container-edit {
+  margin-top: 40px;
+}
+.new-activity-input {
+  margin: 0;
+  margin-top: 10px;
+}
+.button-container-edit-days {
+  margin-bottom: 40px;
+  margin-top: 40px;
+  display: block;
+  z-index: 4;
+}
+.slick-track1 {
+  height: 610px;
+}
+
+/* overlay */
+.modal-content1 {
+  padding: 2rem;
+  border-radius: 8px;
+  width: 80%;
+  position: absolute;
+}
+.modal-content1 .modal-close {
+  margin-bottom: 20px;
+  margin-top: -20px;
+  position: absolute;
+  margin-right: 1%;
+}
+@media (max-width: 600px) {
+  .edit-trip-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .edit-trip-slider input {
+    background-color: #373737;
+  }
+  .edit-trip-slider {
+    width: 85%;
+    padding: 0px 50px;
+    margin-left: -0%;
+    background-color: #373737;
+    margin-bottom: -100px;
+  }
+  .trip-edit-general-info {
+    max-width: fit-content;
+    margin: 0;
+    margin-bottom: 30px;
+  }
+  .edit-trip-container form {
+    padding: 0;
+    margin-top: 10px;
+  }
+  .edit-trip-container th {
+    font-size: 13px;
+  }
+  .edit-trip-container td {
+    font-size: 12px;
+  }
+  .modal-content1 {
+    max-height: 90vh;
+    overflow-x: hidden;
+  }
+  .modal-content1 .modal-close {
+    margin: 0;
+  }
+  .traveler-selection input {
+    margin: 0;
+  }
+  .trip-day-content {
+    margin-top: 30px;
+  }
+}

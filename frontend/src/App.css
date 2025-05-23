@@ -1,7 +1,7 @@
 body {
   background-color: #373737;
   color: white;
-  margin: 0px 10%;
+  margin: 100px 10%;
   overflow-x: hidden;
 }
 
@@ -40,16 +40,22 @@ form {
 }
 label {
   font-weight: 600;
+  font-family: "myriad-pro", sans-serif;
   margin: 5px 0px;
+  color: #d5dfff;
+  font-size: 16px;
 }
 .title {
   text-align: center;
 }
-
+button {
+  background-color: transparent;
+  border: none;
+}
 /* Mobiele versie */
 @media (max-width: 768px) {
   body {
-    margin: 0px 40px;
+    margin: 100px 40px;
   }
 
   h1 {

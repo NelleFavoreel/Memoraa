@@ -1,33 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import EditTripDays from "./EditTripDays";
+import "./EditTrip.css";
+import FullButton from "../button/FullButton";
 
-function FetchUserInfo({ userId }) {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    fetch(`http://localhost:3001/users/${userId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setUser(data);
-      })
-      .catch((err) => {
-        console.error("Fout bij ophalen van gebruiker:", err);
-      });
-  }, [userId]);
-
-  if (!user) {
-    return <span>Laden...</span>;
-  }
-
-  return (
-    <span>
-      {user.name} ({user.screenName})
-    </span>
-  );
-}
-
-function EditTrip() {
+function EditTrip({ onClose }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const currentUserId = localStorage.getItem("userId");
@@ -39,6 +16,7 @@ function EditTrip() {
   const [selectedFamilyMembers, setSelectedFamilyMembers] = useState([]);
   const [originalTrip, setOriginalTrip] = useState(null);
   const [originalTripDays, setOriginalTripDays] = useState(null);
+  const [hasAccess, setHasAccess] = useState(true);
 
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -56,6 +34,28 @@ function EditTrip() {
 
     fetchFriends();
   }, []);
+  const regenerateTripDays = (start, end) => {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    const newDays = [];
+
+    const daysCount = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+
+    for (let i = 0; i < daysCount; i++) {
+      const date = new Date(startDate);
+      date.setDate(startDate.getDate() + i);
+
+      newDays.push({
+        dayNumber: i + 1,
+        date: date.toISOString(),
+        activities: [],
+        place: "",
+        photos: [],
+      });
+    }
+
+    setTripDays(newDays);
+  };
 
   useEffect(() => {
     const fetchTripDetails = async () => {
@@ -63,6 +63,9 @@ function EditTrip() {
         const res = await fetch(`http://localhost:3001/trips/${id}`);
         const data = await res.json();
         setTrip(data.trip);
+        if (!data.trip.travelers.includes(currentUserId)) {
+          setHasAccess(false);
+        }
         setOriginalTrip(data.trip);
         setTripDays(data.tripDays);
         setOriginalTripDays(data.tripDays);
@@ -100,15 +103,6 @@ function EditTrip() {
       travelers: updatedTravelers,
     }));
   };
-  const handleCheckboxChange = (memberId) => {
-    setSelectedFamilyMembers((prevSelected) => {
-      if (prevSelected.includes(memberId)) {
-        return prevSelected.filter((id) => id !== memberId);
-      } else {
-        return [...prevSelected, memberId];
-      }
-    });
-  };
 
   const handleSaveChanges = async (e) => {
     e.preventDefault();
@@ -140,7 +134,8 @@ function EditTrip() {
 
       const data = await response.json();
       alert(data.message || "Reis opgeslagen!");
-      navigate(`/trips/${id}`);
+      if (onClose) onClose();
+      else navigate(`/trips/${id}`);
     } catch (error) {
       console.error("Fout bij opslaan:", error);
       alert("Er is een fout opgetreden bij het opslaan van de reis.");
@@ -150,42 +145,73 @@ function EditTrip() {
   if (loading || !trip) return <p>De reisgegevens worden geladen...</p>;
 
   return (
-    <div>
-      <h1>Bewerk reis</h1>
-      <form onSubmit={handleSaveChanges}>
-        <div>
-          <label>Land</label>
-          <input type="text" value={trip.country} onChange={(e) => setTrip({ ...trip, country: e.target.value })} />
-        </div>
+    <>
+      <div className="edit-trip-modal">
+        <div className="edit-trip-container">
+          <div className="trip-edit-general-info">
+            <h2>Algemene info</h2>
+            <form onSubmit={handleSaveChanges}>
+              <div>
+                <label>Land</label>
+                <input type="text" value={trip.country} onChange={(e) => setTrip({ ...trip, country: e.target.value })} />
+              </div>
 
-        <div>
-          <label>Startdatum</label>
-          <input type="date" value={new Date(trip.startDate).toISOString().split("T")[0]} onChange={(e) => setTrip({ ...trip, startDate: e.target.value })} />
-        </div>
+              <div>
+                <label>Startdatum</label>
+                <input
+                  type="date"
+                  value={new Date(trip.startDate).toISOString().split("T")[0]}
+                  onChange={(e) => {
+                    const newStartDate = e.target.value;
+                    setTrip({ ...trip, startDate: newStartDate });
+                    regenerateTripDays(newStartDate, trip.endDate);
+                  }}
+                />
+              </div>
 
-        <div>
-          <label>Einddatum</label>
-          <input type="date" value={new Date(trip.endDate).toISOString().split("T")[0]} onChange={(e) => setTrip({ ...trip, endDate: e.target.value })} />
-        </div>
+              <div>
+                <label>Einddatum</label>
+                <input
+                  type="date"
+                  value={new Date(trip.endDate).toISOString().split("T")[0]}
+                  onChange={(e) => {
+                    const newEndDate = e.target.value;
+                    setTrip({ ...trip, endDate: newEndDate });
+                    regenerateTripDays(trip.startDate, newEndDate);
+                  }}
+                />
+              </div>
 
-        <div>
-          <label>Reizigers</label>
-          <ul style={{ listStyle: "none", paddingLeft: 0 }}>
-            {familyMembers.map((member) => (
-              <li key={member._id}>
-                <label>
-                  <input type="checkbox" checked={trip.travelers.includes(member._id)} onChange={() => handleTravelerToggle(member._id)} />
-                  {member.name} ({member.screenName})
-                </label>
-              </li>
-            ))}
-          </ul>
+              <div className="traveler-selection">
+                <label>Reizigers</label>
+                <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                  <thead>
+                    <tr className="table-header">
+                      <th style={{ textAlign: "left", padding: " 5px" }}>Naam</th>
+                      <th style={{ textAlign: "left", padding: "5px" }}>Meereizend</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {familyMembers.map((member) => (
+                      <tr key={member._id}>
+                        <td style={{ padding: "8px" }}>{member.screenName}</td>
+                        <td style={{ padding: "8px" }}>
+                          <input type="checkbox" checked={trip.travelers.includes(member._id)} onChange={() => handleTravelerToggle(member._id)} />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <div className="button-container-edit">
+                  <FullButton type="submit">Opslaan</FullButton>
+                </div>
+              </div>
+            </form>
+          </div>
+          <EditTripDays tripDays={tripDays} setTripDays={setTripDays} tripId={id} />
         </div>
-
-        <button type="submit">Opslaan</button>
-      </form>
-      <EditTripDays tripDays={tripDays} setTripDays={setTripDays} tripId={id} />
-    </div>
+      </div>
+    </>
   );
 }
 

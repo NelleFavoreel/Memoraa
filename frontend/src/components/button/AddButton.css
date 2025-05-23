@@ -1,5 +1,17 @@
 .add {
-  background-color: #d5dfff;
+  background-color: #969db3;
+  display: flex;
   border: none;
-  color: black;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  width: 20px;
+}
+@media (min-width: 768px) {
+  .add {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+  }
 }

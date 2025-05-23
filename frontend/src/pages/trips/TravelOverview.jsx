@@ -3,7 +3,7 @@ import TravelInfo from "../../components/trips/TravelInfo";
 import AddTrip from "../../components/trips/AddTrip";
 import "./Trips.css";
 import FullButton from "../../components/button/FullButton";
-
+import AddButton from "../../components/button/AddButton";
 function TravelOverview() {
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
@@ -19,7 +19,9 @@ function TravelOverview() {
 
   return (
     <>
-      <FullButton onClick={() => setShowModal(true)}>Voeg een reis toe</FullButton>
+      <div className="model-form-AddButton">
+        <AddButton onClick={() => setShowModal(true)}>+</AddButton>
+      </div>
       <AddTrip show={showModal} onClose={() => setShowModal(false)} onTripAdded={handleTripAdded} />
       <TravelInfo refresh={refresh} onRefreshed={handleRefreshed} />
     </>
