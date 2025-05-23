@@ -17,6 +17,7 @@ function TravelDetail({ setHideNavbar }) {
   const [travelerNames, setTravelerNames] = useState([]);
   const [backgroundPhotos, setBackgroundPhotos] = useState([]);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+
   const scrollToPhotos = () => {
     photosRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -27,8 +28,8 @@ function TravelDetail({ setHideNavbar }) {
   const photosRef = useRef(null);
   const mapRef = useRef(null);
   useEffect(() => {
-    setHideNavbar(true); // navbar verbergen bij laden van detail
-    return () => setHideNavbar(false); // navbar weer tonen bij verlaten
+    setHideNavbar(true);
+    return () => setHideNavbar(false);
   }, [setHideNavbar]);
   useEffect(() => {
     const fetchTripDetails = async () => {

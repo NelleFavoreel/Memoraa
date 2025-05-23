@@ -5,12 +5,14 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import "./TripDetail.css";
 import FullButton from "../../components/button/FullButton";
 import { SlArrowRight } from "react-icons/sl";
+import { SlClose } from "react-icons/sl";
 
 function TravelDetail({ setHideNavbar }) {
   const { id } = useParams();
   const [trip, setTrip] = useState(null);
   const currentUserId = localStorage.getItem("userId");
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setHideNavbar(true);
@@ -35,9 +37,30 @@ function TravelDetail({ setHideNavbar }) {
       </div>
       <div className="trip-detail-edit-trip">
         {isTraveler && (
-          <Link to={`/edit-trip/${id}`}>
-            <FullButton>Bewerk reis</FullButton>
-          </Link>
+          // <Link to={`/edit-trip/${id}`}>
+          <FullButton onClick={() => setShowModal(true)}>Bewerk reis</FullButton>
+          // </Link>
+        )}
+
+        {showModal && (
+          <div className="modal-overlay">
+            <div className="modal-content1">
+              <EditTrip onClose={() => setShowModal(false)} />{" "}
+              <button
+                className="modal-close"
+                onClick={() => setShowModal(false)}
+                style={{
+                  float: "right",
+                  fontSize: "2rem",
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+          </div>
         )}
       </div>
       <TripDetail trip={trip} setHideNavbar={setHideNavbar} />

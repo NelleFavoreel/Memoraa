@@ -6,10 +6,11 @@ import "slick-carousel/slick/slick-theme.css";
 import FullButton from "../button/FullButton";
 import DeleteButton from "../button/DeleteButton";
 import AddButton from "../button/AddButton";
+import { div } from "three/tsl";
 function NextArrow(props) {
   const { className, style, onClick } = props;
   return (
-    <div className={className} style={{ ...style, display: "block", right: -50, zIndex: 1, cursor: "pointer", top: "0" }} onClick={onClick}>
+    <div className={className} style={{ ...style, display: "block", right: -50, zIndex: 1, cursor: "pointer", top: "60px" }} onClick={onClick}>
       <SlArrowRight size={15} color="white" />
     </div>
   );
@@ -18,7 +19,7 @@ function NextArrow(props) {
 function PrevArrow(props) {
   const { className, style, onClick } = props;
   return (
-    <div className={className} style={{ ...style, display: "block", left: -50, zIndex: 1, cursor: "pointer", top: "0" }} onClick={onClick}>
+    <div className={className} style={{ ...style, display: "block", left: -50, zIndex: 1, cursor: "pointer", top: "60px" }} onClick={onClick}>
       <SlArrowRight size={15} color="white" style={{ transform: "rotate(180deg)" }} />
     </div>
   );
@@ -157,7 +158,7 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
 
         <Slider {...settings}>
           {tripDays.map((day, index) => (
-            <div key={index}>
+            <div key={index} className="trip-day">
               <h2>Dag {index + 1}</h2>
 
               <div>
@@ -165,7 +166,7 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
                 <input type="text" value={day.place || ""} onChange={(e) => handleDayChange(index, "place", e.target.value)} />
               </div>
 
-              <div className="traveler-selection" style={{ marginTop: "30px" }}>
+              <div className="traveler-selection">
                 <label>Activiteiten</label>
                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
                   <thead>
