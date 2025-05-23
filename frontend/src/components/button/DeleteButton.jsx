@@ -4,7 +4,7 @@ import "./DeleteButton.css";
 const DeleteButton = ({ children, onClick, variant = "default" }) => {
   return (
     <button className={"delete"} onClick={onClick}>
-      <span class="material-symbols-outlined">close</span>
+      <span className="material-symbols-outlined">close</span>
     </button>
   );
 };

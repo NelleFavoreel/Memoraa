@@ -120,12 +120,10 @@ function AddTrip({ show, onClose, onTripAdded }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <button className="modal-close" onClick={onClose} style={{ float: "right", fontSize: "2rem", background: "transparent", border: "none" }}>
-          <span class="material-symbols-outlined">close</span>
-        </button>
-
-        <h1 className="title-header">Nieuwe reis toevoegen</h1>
         <form className="model-form" onSubmit={handleSubmit}>
+          <button className="modal-close" onClick={onClose} style={{ float: "right", fontSize: "2rem", background: "transparent", border: "none" }}>
+            <span class="material-symbols-outlined">close</span>
+          </button>
           <label>Type reis:</label>
           <select value={tripType} onChange={(e) => setTripType(e.target.value)}>
             <option value="staytrip">Staytrip</option>

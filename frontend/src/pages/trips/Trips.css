@@ -11,19 +11,18 @@
 .trip-content {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  justify-content: flex-start;
+  width: 91%;
+  justify-content: space-around;
 }
 .trip-info-container {
-  width: 480px;
+  width: 50%;
 }
 .trip-item.reverse .trip-content {
   flex-direction: row-reverse;
 }
 .trip-info {
   background-color: #484848;
-  padding: 10px 0px 20px 30px;
+  padding: 30px 30px;
 }
 ul {
   text-decoration: none;
@@ -51,11 +50,14 @@ ul {
   position: relative;
   max-height: 90vh;
   overflow-y: auto;
+  margin-top: 90px;
 }
 .trip-image {
-  width: 38%;
-  height: 350px;
+  width: 50%;
+  height: 30%;
   object-fit: cover;
+  margin-left: -10%;
+  margin-right: -10%;
 }
 
 .modal-close {
@@ -98,7 +100,6 @@ select {
 .trip-delete-button {
   padding-top: 10px;
   margin-bottom: -30px;
-  margin-right: 20px;
 }
 .modal-content .title-header {
   font-size: 60px;
@@ -107,6 +108,7 @@ select {
 /* trips overview */
 .trip-delete-button {
   display: flex;
+  margin-right: 8px;
   justify-content: flex-end;
 }
 .trip-link a {
@@ -154,13 +156,16 @@ select {
 .filters label {
   font-weight: 100;
 }
+.material-symbols-outlined {
+  font-size: 20px;
+}
 
 @media (max-width: 600px) {
   .modal-content input {
     margin: 10px;
   }
   .modal-content form {
-    padding: 9% 5%;
+    padding: 9% 7%;
   }
   .modal-overlay {
     background-color: #484848;
@@ -172,6 +177,7 @@ select {
   .trip-content {
     flex-direction: column !important;
     align-items: flex-start;
+    width: 100%;
   }
   .trip-image {
     width: 100%;
@@ -225,15 +231,7 @@ select {
   .trip-item {
     margin-bottom: 40px;
   }
-  .trip-info {
-    padding: 0px 0px 10px 10px;
-  }
-  .trip-delete-button {
-    margin-right: 10px;
-    margin-bottom: 0;
-    padding: 0;
-    margin-top: -20px;
-  }
+
   .trip-info p {
     margin: 7px;
   }
@@ -245,6 +243,12 @@ select {
   }
   .trip-info-container {
     background-color: #484848;
+  }
+  .trip-image {
+    margin: 0;
+  }
+  .material-symbols-outlined {
+    font-size: 15px;
   }
 }
 

@@ -1,5 +1,7 @@
 import React from "react";
 import FullButton from "../button/FullButton";
+import { SlCursor } from "react-icons/sl";
+import AddButton from "../button/AddButton";
 
 const ShareTripButton = ({ tripId }) => {
   const handleCopyLink = () => {
@@ -15,7 +17,11 @@ const ShareTripButton = ({ tripId }) => {
       });
   };
 
-  return <FullButton onClick={handleCopyLink}>Deel deze reis</FullButton>;
+  return (
+    <AddButton onClick={handleCopyLink}>
+      <SlCursor />
+    </AddButton>
+  );
 };
 
 export default ShareTripButton;

@@ -6,6 +6,8 @@ import "./TripDetail.css";
 import FullButton from "../../components/button/FullButton";
 import { SlArrowRight } from "react-icons/sl";
 import { SlClose } from "react-icons/sl";
+import { SlPencil } from "react-icons/sl";
+import AddButton from "../../components/button/AddButton";
 
 function TravelDetail({ setHideNavbar }) {
   const { id } = useParams();
@@ -38,7 +40,9 @@ function TravelDetail({ setHideNavbar }) {
       <div className="trip-detail-edit-trip">
         {isTraveler && (
           // <Link to={`/edit-trip/${id}`}>
-          <FullButton onClick={() => setShowModal(true)}>Bewerk reis</FullButton>
+          <AddButton onClick={() => setShowModal(true)}>
+            <SlPencil />
+          </AddButton>
           // </Link>
         )}
 

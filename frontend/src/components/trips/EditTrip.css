@@ -76,15 +76,15 @@
   font-size: 14px;
 }
 .button-container-edit {
-  margin-top: 90px;
+  margin-top: 40px;
 }
 .new-activity-input {
   margin: 0;
   margin-top: 10px;
 }
 .button-container-edit-days {
-  margin-top: -15%;
   margin-bottom: 40px;
+  margin-top: 40px;
   display: block;
   z-index: 4;
 }
@@ -103,5 +103,49 @@
   margin-bottom: 20px;
   margin-top: -20px;
   position: absolute;
-  margin-right: 2%;
+  margin-right: 1%;
+}
+@media (max-width: 600px) {
+  .edit-trip-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .edit-trip-slider input {
+    background-color: #373737;
+  }
+  .edit-trip-slider {
+    width: 85%;
+    padding: 0px 50px;
+    margin-left: -0%;
+    background-color: #373737;
+    margin-bottom: -100px;
+  }
+  .trip-edit-general-info {
+    max-width: fit-content;
+    margin: 0;
+    margin-bottom: 30px;
+  }
+  .edit-trip-container form {
+    padding: 0;
+    margin-top: 10px;
+  }
+  .edit-trip-container th {
+    font-size: 13px;
+  }
+  .edit-trip-container td {
+    font-size: 12px;
+  }
+  .modal-content1 {
+    max-height: 90vh;
+    overflow-x: hidden;
+  }
+  .modal-content1 .modal-close {
+    margin: 0;
+  }
+  .traveler-selection input {
+    margin: 0;
+  }
+  .trip-day-content {
+    margin-top: 30px;
+  }
 }

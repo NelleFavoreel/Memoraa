@@ -6,11 +6,11 @@ import "slick-carousel/slick/slick-theme.css";
 import FullButton from "../button/FullButton";
 import DeleteButton from "../button/DeleteButton";
 import AddButton from "../button/AddButton";
-import { div } from "three/tsl";
+
 function NextArrow(props) {
   const { className, style, onClick } = props;
   return (
-    <div className={className} style={{ ...style, display: "block", right: -50, zIndex: 1, cursor: "pointer", top: "60px" }} onClick={onClick}>
+    <div className={className} style={{ ...style, display: "block", right: "-0vh", zIndex: 1, cursor: "pointer", top: "30px" }} onClick={onClick}>
       <SlArrowRight size={15} color="white" />
     </div>
   );
@@ -19,7 +19,7 @@ function NextArrow(props) {
 function PrevArrow(props) {
   const { className, style, onClick } = props;
   return (
-    <div className={className} style={{ ...style, display: "block", left: -50, zIndex: 1, cursor: "pointer", top: "60px" }} onClick={onClick}>
+    <div className={className} style={{ ...style, display: "block", left: "-0vh", zIndex: 1, cursor: "pointer", top: "30px" }} onClick={onClick}>
       <SlArrowRight size={15} color="white" style={{ transform: "rotate(180deg)" }} />
     </div>
   );
@@ -160,88 +160,91 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
           {tripDays.map((day, index) => (
             <div key={index} className="trip-day">
               <h2>Dag {index + 1}</h2>
+              <div className="trip-day-content">
+                <div>
+                  <label>Plaats</label>
+                  <input type="text" value={day.place || ""} onChange={(e) => handleDayChange(index, "place", e.target.value)} />
+                </div>
 
-              <div>
-                <label>Plaats</label>
-                <input type="text" value={day.place || ""} onChange={(e) => handleDayChange(index, "place", e.target.value)} />
-              </div>
-
-              <div className="traveler-selection">
-                <label>Activiteiten</label>
-                <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                  <thead>
-                    <tr className="table-header">
-                      <th style={{ textAlign: "left", padding: "5px" }}>Activiteit</th>
-                      <th style={{ textAlign: "left", padding: "5px" }}>Verwijderen</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {day.activities?.length > 0 ? (
-                      day.activities.map((activity, i) => (
-                        <tr key={i}>
-                          <td style={{ padding: "8px", color: "white" }}>{activity}</td>
-                          <td style={{ padding: "8px" }}>
-                            <DeleteButton type="button" onClick={() => handleRemoveActivity(index, i)} className="delete-button" style={{ marginLeft: "10px" }}>
-                              x
-                            </DeleteButton>
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td style={{ padding: "8px", color: "white" }}>Geen activiteiten</td>
-                        <td></td>
+                <div className="traveler-selection">
+                  <label>Activiteiten</label>
+                  <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                    <thead>
+                      <tr className="table-header">
+                        <th style={{ textAlign: "left", padding: "5px" }}>Activiteit</th>
+                        <th style={{ textAlign: "left", padding: "5px" }}>Verwijderen</th>
                       </tr>
-                    )}
-                    <tr>
-                      <td colSpan="2" style={{ padding: "8px" }}>
-                        <input
-                          className="new-activity-input"
-                          type="text"
-                          value={day.newActivity || ""}
-                          onChange={(e) => handleDayChange(index, "newActivity", e.target.value)}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                              e.preventDefault();
-                              handleAddActivity(index);
-                            }
-                          }}
-                          style={{ width: "80%", marginRight: "10px" }}
-                        />
-                        <AddButton type="button" onClick={() => handleAddActivity(index)}>
-                          +
-                        </AddButton>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody>
+                      {day.activities?.length > 0 ? (
+                        day.activities.map((activity, i) => (
+                          <tr key={i}>
+                            <td style={{ padding: "8px", color: "white" }}>{activity}</td>
+                            <td style={{ padding: "8px" }}>
+                              <DeleteButton type="button" onClick={() => handleRemoveActivity(index, i)} className="delete-button" style={{ marginLeft: "10px" }}>
+                                x
+                              </DeleteButton>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td style={{ padding: "8px", color: "white" }}>Geen activiteiten</td>
+                          <td></td>
+                        </tr>
+                      )}
+                      <tr>
+                        <td colSpan="2" style={{ padding: "8px" }}>
+                          <input
+                            className="new-activity-input"
+                            type="text"
+                            value={day.newActivity || ""}
+                            onChange={(e) => handleDayChange(index, "newActivity", e.target.value)}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();
+                                handleAddActivity(index);
+                              }
+                            }}
+                            style={{ width: "80%", marginRight: "10px" }}
+                          />
+                          <AddButton type="button" onClick={() => handleAddActivity(index)}>
+                            +
+                          </AddButton>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-              <div className="photo-upload">
-                <label>Foto toevoegen</label>
-                <input type="file" accept="image/*" multiple onChange={(e) => handlePhotoUpload(index, e.target.files)} />
-                <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
-                  {day.photos?.map((photo, i) => (
-                    <div key={i} style={{ position: "relative" }}>
-                      <img src={photo} alt="upload preview" width={80} />
-                      <DeleteButton
-                        onClick={() => handlePhotoDelete(index, i)}
-                        style={{
-                          position: "absolute",
-                          top: 0,
-                          right: 0,
-                          background: "red",
-                          color: "white",
-                          border: "none",
-                          width: "20px",
-                          height: "20px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        ×
-                      </DeleteButton>
-                    </div>
-                  ))}
+                <div className="photo-upload">
+                  <label>Foto toevoegen</label>
+                  <input type="file" accept="image/*" multiple onChange={(e) => handlePhotoUpload(index, e.target.files)} />
+                  <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+                    {day.photos?.map((photo, i) => (
+                      <div key={i} style={{ position: "relative" }}>
+                        <img src={photo} alt="upload preview" width={80} />
+                        <DeleteButton
+                          onClick={() => handlePhotoDelete(index, i)}
+                          style={{
+                            position: "absolute",
+                            top: "5px",
+                            right: "5px",
+                            background: "red !important",
+                            color: "white !important",
+                            border: "none !important",
+                            width: "20px !important",
+                            height: "20px !important",
+                            borderRadius: "50% !important",
+                            fontWeight: "bold",
+                            cursor: "pointer",
+                          }}
+                        >
+                          ×
+                        </DeleteButton>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

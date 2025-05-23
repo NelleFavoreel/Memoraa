@@ -96,11 +96,11 @@ function TravelInfo({ refresh, onRefreshed }) {
                   <strong>Datum:</strong> {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
                 </p>
                 <div className="trip-link">
-                  <Underline>
+                  <button>
                     <Link to={`/trips/${trip._id}`}>
-                      Bekijk de reisdetails <SlArrowRight />
+                      <SlArrowRight />
                     </Link>
-                  </Underline>
+                  </button>
                 </div>
               </div>
             </div>

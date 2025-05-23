@@ -13,9 +13,7 @@
 .navbar-content {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
   margin-right: 10%;
-  width: 100%;
 }
 
 .hamburger {
