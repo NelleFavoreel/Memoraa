@@ -1,14 +1,41 @@
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #373737;
   padding: 1rem 2rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-content {
   display: flex;
   justify-content: flex-end;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  align-items: center;
+  margin-right: 10%;
+  width: 100%;
+}
+
+.hamburger {
+  display: none;
+  font-size: 1.5rem;
+  background: none;
+  color: #eee;
+  border: none;
+  cursor: pointer;
+}
+
+/* standaard desktop weergave */
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
 }
 
 .nav-link {
   position: relative;
   color: #eee;
-  margin: 0 1.5rem;
   text-decoration: none;
   font-weight: 500;
   font-size: 1rem;
@@ -17,7 +44,6 @@
   cursor: pointer;
 }
 
-/* Underline animatie: een lijntje dat van links naar rechts verschijnt */
 .nav-link::after {
   content: "";
   position: absolute;
@@ -25,7 +51,7 @@
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #d5dfff; /* fris blauw accent */
+  background-color: #d5dfff;
   transition: width 0.3s ease;
   border-radius: 2px;
 }
@@ -38,4 +64,40 @@
 .nav-link:hover::after,
 .nav-link:focus::after {
   width: 100%;
+}
+
+/* mobiele weergave */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block !important;
+    font-size: 1.5rem;
+    color: white;
+    z-index: 2000;
+  }
+  .navbar {
+    width: 100%;
+  }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    width: 50%;
+    background-color: #373737;
+    padding: 1rem;
+  }
+  .navbar {
+    box-shadow: none;
+    border-bottom: 0.5px solid #d5dfff;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+  .navbar-content {
+    width: 85%;
+  }
+  .nav-link {
+    margin: 0.5rem 0;
+  }
 }

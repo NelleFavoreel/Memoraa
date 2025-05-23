@@ -1,30 +1,36 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 export default function Navbar({ hidden }) {
-  const navStyle = {
-    padding: "1rem",
-    display: hidden ? "none" : "flex",
-    justifyContent: "flex-end",
-  };
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <nav style={navStyle} className="navbar">
-      <Link to="/" className="nav-link">
-        Home
-      </Link>
-      <Link to="/trips" className="nav-link">
-        Reizen
-      </Link>
-      <Link to="/calendar" className="nav-link">
-        Kalender
-      </Link>
-      <Link to="/notifications" className="nav-link">
-        Meldingen
-      </Link>
-      <Link to="/users" className="nav-link">
-        Account
-      </Link>
+    <nav className={`navbar ${hidden ? "hidden" : ""}`}>
+      <div className="navbar-content">
+        <button className="hamburger" onClick={toggleMenu}>
+          ☰
+        </button>
+        <div className={`nav-links ${menuOpen ? "open" : ""}`}>
+          <Link to="/" className="nav-link" onClick={() => setMenuOpen(false)}>
+            Home
+          </Link>
+          <Link to="/trips" className="nav-link" onClick={() => setMenuOpen(false)}>
+            Reizen
+          </Link>
+          <Link to="/calendar" className="nav-link" onClick={() => setMenuOpen(false)}>
+            Kalender
+          </Link>
+          <Link to="/notifications" className="nav-link" onClick={() => setMenuOpen(false)}>
+            Meldingen
+          </Link>
+          <Link to="/users" className="nav-link" onClick={() => setMenuOpen(false)}>
+            Account
+          </Link>
+        </div>
+      </div>
     </nav>
   );
 }
