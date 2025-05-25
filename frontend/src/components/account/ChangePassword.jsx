@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { div } from "three/tsl";
 import FullButton from "../button/FullButton";
 import Underline from "../button/Underline";
+import { toast } from "react-toastify";
 
 function ChangingPassword({ onClose }) {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -31,14 +32,14 @@ function ChangingPassword({ onClose }) {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Wachtwoord succesvol gewijzigd!");
+        toast.success("Wachtwoord is aangepast!");
         onClose(); // Sluit formulier
       } else {
-        setError(data.message || "Wachtwoord wijzigen mislukt.");
+        toast.error("Wachtwoord veranderen niet gelukt");
       }
     } catch (err) {
       console.error("❌ Fout bij wachtwoord wijzigen:", err);
-      setError("Er is een fout opgetreden.");
+      toast.error("Wachtwoord veranderen niet gelukt");
     }
   };
 

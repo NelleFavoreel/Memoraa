@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import EditTripDays from "./EditTripDays";
 import "./EditTrip.css";
 import FullButton from "../button/FullButton";
+import { toast } from "react-toastify";
 
 function EditTrip({ onClose }) {
   const { id } = useParams();
@@ -133,12 +134,12 @@ function EditTrip({ onClose }) {
       if (!response.ok) throw new Error("Fout bij het bijwerken van de reis");
 
       const data = await response.json();
-      alert(data.message || "Reis opgeslagen!");
+      toast.success(data.message || "Reis opgeslagen!");
       if (onClose) onClose();
       else navigate(`/trips/${id}`);
     } catch (error) {
       console.error("Fout bij opslaan:", error);
-      alert("Er is een fout opgetreden bij het opslaan van de reis.");
+      toast.error("Er is een fout opgetreden bij het opslaan van de reis.");
     }
   };
 

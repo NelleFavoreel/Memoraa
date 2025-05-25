@@ -1,0 +1,58 @@
+:root {
+  --toastify-toast-background: #484848;
+  --toastify-toast-bd-radius: 0px;
+  --toastify-font-family: "myriad-pro", sans-serif;
+}
+
+.Toastify__toast-container {
+  background-color: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.Toastify__toast,
+.Toastify__toast--success,
+.Toastify__toast--error,
+.Toastify__toast--info,
+.Toastify__toast--warning {
+  border-radius: 0 !important;
+  background-color: #484848 !important;
+  font-family: "myriad-pro", sans-serif !important;
+  font-weight: 100 !important;
+  font-style: normal !important;
+  font-size: 14px !important;
+  color: white !important;
+  box-shadow: none !important;
+  padding: 1rem !important;
+  margin: 1rem !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.Toastify__toast-body {
+  background-color: transparent !important;
+  color: white !important;
+  font-family: "myriad-pro", sans-serif !important;
+  font-weight: 100 !important;
+  font-size: 14px !important;
+  font-style: normal !important;
+  margin-left: 0.5rem;
+}
+
+/* Icon kleuren */
+.Toastify__toast--success .Toastify__toast-icon svg {
+  fill: #2ecc71 !important;
+}
+
+.Toastify__toast--error .Toastify__toast-icon svg {
+  fill: #e74c3c !important;
+}
+.Toastify__close-button svg {
+  fill: white !important;
+}
+.Toastify__toast--info .Toastify__toast-icon svg {
+  fill: #d5dfff !important;
+}
+.Toastify__progress-bar--info {
+  background: #d5dfff !important;
+}
