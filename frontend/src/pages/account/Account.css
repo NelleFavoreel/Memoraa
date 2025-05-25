@@ -1,6 +1,5 @@
 .add-family-members th {
   margin-top: 50px;
-  font-weight: 500;
   font-size: 16px;
   color: #d5dfff;
   font-family: "myriad-pro", sans-serif;
@@ -26,12 +25,19 @@
   font-size: 14px;
 }
 .add-family-members {
-  margin: 0px 20px 20px 20px;
+  margin: -10px 20px 20px 20px;
+}
+.add-family-members table {
+  margin-left: -10px;
 }
 .account-info {
   background-color: #484848;
   padding: 20px 80px 40px 30px;
-  width: 40%;
+  width: 35%;
+  font-size: 16px;
+}
+.account-info button {
+  margin-top: 20px;
 }
 .account-family {
   background-color: #484848;
@@ -50,4 +56,67 @@
 }
 .account-family-container {
   height: 400px;
+}
+
+.changing-password-form h3 {
+  font-size: 16px;
+}
+
+.changing-password-form {
+  margin-top: 30px;
+}
+.changing-password-form form {
+  padding: 20px 0px;
+}
+.button-container-account {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 20px;
+}
+.change-passord-button {
+  margin: 0;
+}
+.title-label {
+  margin-top: 20px;
+}
+.info-form-text {
+  display: flex;
+  align-items: center;
+}
+.info-form-text p {
+  margin-left: 10px;
+}
+@media (max-width: 955px) {
+  .account-info-container {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+  }
+  .account-info {
+    width: 90%;
+    padding: 40px 20px 20px 20px;
+  }
+  .info-form-user {
+  }
+  .account-family {
+    width: 90%;
+    margin-top: 60px;
+    padding: 40px 20px 20px 20px;
+  }
+  .add-family-members {
+    margin: 0;
+  }
+  .info-form-text p {
+    margin-left: 6px;
+  }
+  .info-form-text {
+    align-items: baseline;
+  }
+  .add-family-members td {
+    font-size: 11px;
+  }
+  .add-family-members th {
+    font-size: 14px;
+  }
 }

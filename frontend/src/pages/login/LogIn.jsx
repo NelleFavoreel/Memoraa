@@ -118,7 +118,7 @@ function LogIn() {
   return (
     <div>
       {isLoggedIn ? (
-        <div>
+        <div className="logged-in-container">
           <FullButton
             onClick={() => {
               localStorage.removeItem("token");

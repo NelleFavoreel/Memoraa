@@ -71,10 +71,17 @@ button {
   }
 
   p {
-    font-size: 10px;
+    font-size: 11px;
   }
   label {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
+  }
+  td {
+    font-size: 11px;
+  }
+  th {
+    font-size: 14px;
+    font-weight: 600;
   }
 }

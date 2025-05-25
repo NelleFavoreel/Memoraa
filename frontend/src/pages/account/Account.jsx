@@ -5,6 +5,7 @@ import AddFamilyMembers from "../../components/account/AddFamilyMembers";
 import LogIn from "../login/LogIn";
 import Underline from "../../components/button/Underline";
 import "./Account.css";
+import FullButton from "../../components/button/FullButton";
 function Account() {
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -25,9 +26,9 @@ function Account() {
             <div className="account-info-container">
               <div className="account-info">
                 <InfoForm />
-                <Underline type="button" onClick={() => setShowChangePassword(!showChangePassword)}>
+                <FullButton className="change-passord-button" type="button" onClick={() => setShowChangePassword(!showChangePassword)}>
                   Wachtwoord wijzigen?
-                </Underline>
+                </FullButton>
                 <div>{showChangePassword && <ChangingPassword onClose={() => setShowChangePassword(false)} />}</div>
                 <LogIn></LogIn>
               </div>
@@ -37,11 +38,12 @@ function Account() {
                 </div>
               </div>
             </div>
-            <div className="account-family-container">
+            {/* Latere feature */}
+            {/* <div className="account-family-container">
               <div className="account-user-trips">
                 <h2>Je geplande reizen</h2>
               </div>
-            </div>
+            </div> */}
           </>
         ) : (
           <p>Je moet inloggen om toegang te krijgen tot je account.</p>
