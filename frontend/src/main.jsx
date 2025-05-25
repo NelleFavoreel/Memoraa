@@ -6,11 +6,29 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import "./components/notifications/Notification.css";
 
-createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+function Root() {
+  const [showToast, setShowToast] = React.useState(true);
+
+  React.useEffect(() => {
+    function checkWidth() {
+      setShowToast(window.innerWidth >= 900);
+    }
+
+    checkWidth(); // direct checken
+    window.addEventListener("resize", checkWidth);
+    return () => window.removeEventListener("resize", checkWidth);
+  }, []);
+
+  return (
     <>
       <App />
-      <ToastContainer toastClassName="notification-toast" bodyClassName="notification-toast-body" position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover draggable />
+      {showToast && <ToastContainer toastClassName="notification-toast" bodyClassName="notification-toast-body" position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover draggable />}
     </>
+  );
+}
+
+createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <Root />
   </React.StrictMode>
 );
