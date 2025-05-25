@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import "../../pages/trips/Trips.css"; // Zorg dat je de modalstijl toevoegt
+import "../../pages/trips/Trips.css";
 import FullButton from "../button/FullButton";
 import AddButton from "../button/AddButton";
+import { toast } from "react-toastify";
 
 function AddTrip({ show, onClose, onTripAdded }) {
   const [place, setPlace] = useState("");
@@ -56,7 +57,6 @@ function AddTrip({ show, onClose, onTripAdded }) {
 
     let finalImageUrl = imageUrl.trim();
 
-    // Kies het juiste land voor de afbeelding
     let imageCountry = "";
     if (tripType === "staytrip") {
       imageCountry = country;
@@ -103,11 +103,11 @@ function AddTrip({ show, onClose, onTripAdded }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.message || "Reis toegevoegd");
+        toast.success(data.message || "Reis succesvol toegevoegd!");
         if (onTripAdded) onTripAdded();
       })
       .catch((err) => {
-        console.error("Fout bij toevoegen van reis:", err);
+        toast.error("Fout bij toevoegen van reis, probeer het later opnieuw.");
       });
   };
 

@@ -10,20 +10,16 @@ import LogIn from "./pages/login/LogIn";
 import Notifications from "./pages/Notifications";
 import EditTrip from "./components/trips/EditTip";
 import BeforeHome from "./pages/beforeHome/BeforeHome";
-import NotificationProvider from "./components/notifications/Notification";
+import "./components/notifications/Notification.css";
 import "./App.css";
 
-// styles
-<link rel="stylesheet" href="https://use.typekit.net/wte5uxn.css"></link>;
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
 
   return (
-    <NotificationProvider>
-      <BrowserRouter>
-        <MainApp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-      </BrowserRouter>
-    </NotificationProvider>
+    <BrowserRouter>
+      <MainApp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+    </BrowserRouter>
   );
 }
 

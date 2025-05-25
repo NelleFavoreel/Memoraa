@@ -42,7 +42,6 @@ function InfoForm() {
         const futureTrips = tripsData.filter((trip) => new Date(trip.startDate) > now);
         const pastTrips = tripsData.filter((trip) => new Date(trip.endDate) < now);
         const nextTrip = futureTrips.sort((a, b) => new Date(a.startDate) - new Date(b.startDate))[0];
-        console.log("Toekomstige reizen:", futureTrips);
         setUser({
           ...userData,
           futureTrips,

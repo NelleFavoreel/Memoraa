@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import FullButton from "../button/FullButton";
 import DeleteButton from "../button/DeleteButton";
 import AddButton from "../button/AddButton";
+import { toast } from "react-toastify";
 
 function NextArrow(props) {
   const { className, style, onClick } = props;
@@ -27,17 +28,14 @@ function PrevArrow(props) {
 
 function EditTripDays({ tripDays, setTripDays, tripId }) {
   const token = localStorage.getItem("token");
-  const [successMessage, setSuccessMessage] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Update een veld van een dag (plaats, newActivity, etc)
   const handleDayChange = (index, key, value) => {
     const updatedTripDays = [...tripDays];
     updatedTripDays[index][key] = value;
     setTripDays(updatedTripDays);
   };
 
-  // Voeg activiteit toe en maak het invoerveld leeg
   const handleAddActivity = (index) => {
     const updatedTripDays = [...tripDays];
     const newActivity = updatedTripDays[index].newActivity?.trim();
@@ -49,14 +47,12 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
     }
   };
 
-  // Verwijder activiteit
   const handleRemoveActivity = (dayIndex, activityIndex) => {
     const updatedTripDays = [...tripDays];
     updatedTripDays[dayIndex].activities.splice(activityIndex, 1);
     setTripDays(updatedTripDays);
   };
 
-  // Verklein en converteer foto naar base64
   const resizeImageToBase64 = (file, maxWidth = 800, quality = 0.7) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -102,6 +98,7 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
       setTripDays(updatedTripDays);
     } catch (err) {
       console.error("Fout bij verkleinen van foto's:", err);
+      toast.error("Fout bij verkleinen van foto's.");
     }
   };
 
@@ -121,10 +118,10 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
 
       const result = await response.json();
       console.log("Wijzigingen opgeslagen:", result);
-      setSuccessMessage("Wijzigingen succesvol opgeslagen! ✅");
-      setTimeout(() => setSuccessMessage(""), 4000);
+      toast.success("Wijzigingen succesvol opgeslagen!");
     } catch (error) {
       console.error("Fout bij het opslaan van wijzigingen:", error);
+      toast.error("Er is een fout opgetreden bij het opslaan.");
     }
   };
 
@@ -142,20 +139,6 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
   return (
     <>
       <div className="edit-trip-slider">
-        {successMessage && (
-          <div
-            style={{
-              backgroundColor: "#d4edda",
-              color: "#155724",
-              padding: "10px",
-              borderRadius: "5px",
-              marginBottom: "10px",
-            }}
-          >
-            {successMessage}
-          </div>
-        )}
-
         <Slider {...settings}>
           {tripDays.map((day, index) => (
             <div key={index} className="trip-day">

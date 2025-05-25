@@ -1,24 +1,13 @@
-// src/hooks/useNotification.js
-import { useToastStore } from "@heroui/toast";
+import { toast } from "react-toastify";
 
-export function useNotification() {
-  const { addToast } = useToastStore();
+export default function useNotification() {
+  const notifySuccess = (message) => {
+    toast.success(message);
+  };
 
-  function notifySuccess(title, description = "") {
-    addToast({
-      title,
-      description,
-      type: "success",
-    });
-  }
-
-  function notifyError(title, description = "") {
-    addToast({
-      title,
-      description,
-      type: "error",
-    });
-  }
+  const notifyError = (message) => {
+    toast.error(message);
+  };
 
   return { notifySuccess, notifyError };
 }
