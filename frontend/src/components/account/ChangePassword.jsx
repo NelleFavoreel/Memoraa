@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { div } from "three/tsl";
+import FullButton from "../button/FullButton";
+import Underline from "../button/Underline";
 
 function ChangingPassword({ onClose }) {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -40,25 +43,29 @@ function ChangingPassword({ onClose }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Huidig wachtwoord:</label>
-        <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required />
-      </div>
-      <div>
-        <label>Nieuw wachtwoord:</label>
-        <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
-      </div>
-      <div>
-        <label>Bevestig nieuw wachtwoord:</label>
-        <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-      </div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <button type="submit">Wachtwoord wijzigen</button>
-      <button type="button" onClick={onClose}>
-        Annuleren
-      </button>
-    </form>
+    <div className="changing-password-form">
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Huidig wachtwoord:</label>
+          <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required />
+        </div>
+        <div>
+          <label>Nieuw wachtwoord:</label>
+          <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+        </div>
+        <div>
+          <label>Bevestig nieuw wachtwoord:</label>
+          <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+        </div>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <div className="button-container-account">
+          <FullButton type="submit">Wachtwoord wijzigen</FullButton>
+          <Underline type="button" onClick={onClose}>
+            Annuleren
+          </Underline>
+        </div>
+      </form>
+    </div>
   );
 }
 

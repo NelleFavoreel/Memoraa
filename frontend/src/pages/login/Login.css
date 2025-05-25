@@ -25,3 +25,8 @@ input {
     width: 120%;
   }
 }
+.logged-in-container button {
+  background-color: red !important;
+  color: white !important;
+  margin-top: 40px;
+}

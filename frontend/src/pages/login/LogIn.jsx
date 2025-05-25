@@ -118,13 +118,13 @@ function LogIn() {
   return (
     <div>
       {isLoggedIn ? (
-        <div>
-          <h2>Welkom terug!</h2>
+        <div className="logged-in-container">
           <FullButton
             onClick={() => {
               localStorage.removeItem("token");
+              localStorage.removeItem("userId");
               setIsLoggedIn(false);
-              window.location.reload();
+              navigate("/");
             }}
           >
             Uitloggen
