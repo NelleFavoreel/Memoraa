@@ -82,7 +82,7 @@
 }
 .info-form-text {
   display: flex;
-  align-items: center;
+  align-items: baseline;
 }
 .info-form-text p {
   margin-left: 10px;

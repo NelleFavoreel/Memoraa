@@ -122,8 +122,9 @@ function LogIn() {
           <FullButton
             onClick={() => {
               localStorage.removeItem("token");
+              localStorage.removeItem("userId");
               setIsLoggedIn(false);
-              window.location.reload();
+              navigate("/");
             }}
           >
             Uitloggen
