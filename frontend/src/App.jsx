@@ -10,6 +10,7 @@ import LogIn from "./pages/login/LogIn";
 import Notifications from "./pages/Notifications";
 import EditTrip from "./components/trips/EditTip";
 import BeforeHome from "./pages/beforeHome/BeforeHome";
+import NotificationProvider from "./components/notifications/Notification";
 import "./App.css";
 
 // styles
@@ -18,9 +19,11 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
 
   return (
-    <BrowserRouter>
-      <MainApp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-    </BrowserRouter>
+    <NotificationProvider>
+      <BrowserRouter>
+        <MainApp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      </BrowserRouter>
+    </NotificationProvider>
   );
 }
 

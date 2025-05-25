@@ -1,0 +1,16 @@
+/* src/styles/Notification.css */
+
+.notification-toast {
+  border-radius: 0 !important;
+  padding: 1rem;
+  color: white;
+  font-weight: bold;
+}
+
+.notification-toast.success {
+  background-color: #4caf50; /* Groen */
+}
+
+.notification-toast.error {
+  background-color: #f44336; /* Rood */
+}
