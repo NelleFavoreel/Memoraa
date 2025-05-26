@@ -1,19 +1,30 @@
+.logo a {
+  font-weight: 900;
+  color: #3c4b64;
+  font-size: 20px;
+}
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #373737;
+  background-color: #ffffff;
   padding: 1rem 2rem;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px rgba(147, 139, 116, 0.2);
+}
+.navbar-content-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .navbar-content {
   display: flex;
-  justify-content: flex-end;
-  margin-right: 10%;
+  justify-content: space-between;
+  margin-right: 13%;
+  margin-left: 7%;
 }
 
 .hamburger {
@@ -23,23 +34,28 @@
   color: #eee;
   border: none;
   cursor: pointer;
+  color: #3c4b64;
+  position: relative;
+  z-index: 9999;
 }
 
 /* standaard desktop weergave */
 .nav-links {
   display: flex;
   gap: 1.5rem;
+  align-items: center;
 }
 
 .nav-link {
   position: relative;
-  color: #eee;
+  color: #3c4b64;
+  font-weight: 100;
   text-decoration: none;
-  font-weight: 500;
   font-size: 1rem;
   padding: 0.3rem 0;
   transition: color 0.3s ease;
   cursor: pointer;
+  align-items: center;
 }
 
 .nav-link::after {
@@ -49,14 +65,14 @@
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #d5dfff;
+  background-color: #3c4b64;
   transition: width 0.3s ease;
-  border-radius: 2px;
+  border-radius: 0px;
 }
 
 .nav-link:hover,
 .nav-link:focus {
-  color: #d5dfff;
+  color: #3c4b64;
 }
 
 .nav-link:hover::after,
@@ -67,10 +83,13 @@
 /* mobiele weergave */
 @media (max-width: 768px) {
   .hamburger {
-    display: block !important;
+    /* display: block !important; */
     font-size: 1.5rem;
-    color: white;
+    display: block;
+    align-items: end;
     z-index: 2000;
+  }
+  .navbar-content {
   }
   .navbar {
     width: 100%;
@@ -80,20 +99,33 @@
     flex-direction: column;
     position: absolute;
     top: 100%;
-    width: 50%;
-    background-color: #373737;
+    right: 60px;
+    left: auto;
+    width: 20%;
+    background-color: #ffffff;
     padding: 1rem;
-  }
-  .navbar {
-    box-shadow: none;
-    border-bottom: 0.5px solid #d5dfff;
+    box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.1);
+    border-left: 1px solid #ccc;
   }
 
   .nav-links.open {
     display: flex;
+    align-items: flex-start;
+    gap: 1rem;
   }
+  .navbar {
+    box-shadow: none;
+  }
+  .navbar-content-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
   .navbar-content {
-    width: 85%;
+    margin-left: 0%;
+    margin-right: 10%;
   }
   .nav-link {
     margin: 0.5rem 0;

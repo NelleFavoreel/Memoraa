@@ -10,9 +10,15 @@ export default function Navbar({ hidden }) {
   return (
     <nav className={`navbar ${hidden ? "hidden" : ""}`}>
       <div className="navbar-content">
-        <button className="hamburger" onClick={toggleMenu}>
-          ☰
-        </button>
+        <div className="navbar-content-inner">
+          <div className="logo">
+            <Link to="/">FamilyTrips</Link>
+          </div>
+          <button className="hamburger" onClick={toggleMenu}>
+            ☰
+          </button>
+        </div>
+
         <div className={`nav-links ${menuOpen ? "open" : ""}`}>
           <Link to="/" className="nav-link" onClick={() => setMenuOpen(false)}>
             Home
