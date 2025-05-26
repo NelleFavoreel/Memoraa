@@ -9,4 +9,7 @@
 - https://chatgpt.com/share/68272242-d780-8004-91af-5bbe9436bc07
 - https://react-slick.neostack.com/docs/example/center-mode
 - https://github.com/akiran/react-slick/blob/master/examples/__tests__/CentreMode.test.js
--
+- https://github.com/fkhadra/react-toastify/blob/main/src/style.css
+- https://fkhadra.github.io/react-toastify/how-to-style
+- https://www.heroui.com/docs/components/toast
+- 

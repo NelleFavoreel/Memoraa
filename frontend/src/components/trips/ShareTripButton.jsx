@@ -1,4 +1,8 @@
 import React from "react";
+import FullButton from "../button/FullButton";
+import { SlCursor } from "react-icons/sl";
+import AddButton from "../button/AddButton";
+import { toast } from "react-toastify";
 
 const ShareTripButton = ({ tripId }) => {
   const handleCopyLink = () => {
@@ -6,15 +10,19 @@ const ShareTripButton = ({ tripId }) => {
     navigator.clipboard
       .writeText(shareUrl)
       .then(() => {
-        alert("🔗 Link gekopieerd!");
+        toast.success("Link goed gekopieerd!");
       })
       .catch((err) => {
         console.error("❌ Fout bij kopiëren:", err);
-        alert("Kon link niet kopiëren.");
+        toast.error("Link niet gekopieerd, probeer opnieuw!");
       });
   };
 
-  return <button onClick={handleCopyLink}>Deel deze reis</button>;
+  return (
+    <AddButton onClick={handleCopyLink}>
+      <SlCursor />
+    </AddButton>
+  );
 };
 
 export default ShareTripButton;

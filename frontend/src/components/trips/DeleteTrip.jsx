@@ -1,5 +1,6 @@
 // DeleteTrip.js
 import React from "react";
+import { toast } from "react-toastify";
 import DeleteButton from "../button/DeleteButton";
 function DeleteTrip({ tripId, onDelete }) {
   const handleDelete = () => {
@@ -8,13 +9,14 @@ function DeleteTrip({ tripId, onDelete }) {
     })
       .then((res) => {
         if (res.ok) {
-          console.log("Reis succesvol verwijderd.");
-          onDelete(tripId); // Callback om de reis uit de lijst te verwijderen
+          toast.success("Reis succesvol verwijderd.");
+          onDelete(tripId);
         } else {
-          console.log("Fout bij verwijderen van reis.");
+          toast.error("Fout bij verwijderen van reis.");
         }
       })
       .catch((err) => {
+        toast.error("Fout bij verwijderen van reis, probeer het later opnieuw.");
         console.error("Fout bij verwijderen van reis:", err);
       });
   };

@@ -10,4 +10,17 @@ input {
 }
 .title-header {
   margin-left: 50px;
+  width: 60%;
+}
+
+@media (min-width: 600px) {
+  .title-header {
+    margin-bottom: 10px;
+    width: 120%;
+  }
+}
+.logged-in-container button {
+  background-color: red !important;
+  color: white !important;
+  margin-top: 40px;
 }

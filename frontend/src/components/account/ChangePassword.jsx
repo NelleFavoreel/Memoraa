@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { div } from "three/tsl";
+import FullButton from "../button/FullButton";
+import Underline from "../button/Underline";
+import { toast } from "react-toastify";
 
 function ChangingPassword({ onClose }) {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -28,37 +32,41 @@ function ChangingPassword({ onClose }) {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Wachtwoord succesvol gewijzigd!");
+        toast.success("Wachtwoord is aangepast!");
         onClose(); // Sluit formulier
       } else {
-        setError(data.message || "Wachtwoord wijzigen mislukt.");
+        toast.error("Wachtwoord veranderen niet gelukt");
       }
     } catch (err) {
       console.error("❌ Fout bij wachtwoord wijzigen:", err);
-      setError("Er is een fout opgetreden.");
+      toast.error("Wachtwoord veranderen niet gelukt");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Huidig wachtwoord:</label>
-        <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required />
-      </div>
-      <div>
-        <label>Nieuw wachtwoord:</label>
-        <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
-      </div>
-      <div>
-        <label>Bevestig nieuw wachtwoord:</label>
-        <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-      </div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <button type="submit">Wachtwoord wijzigen</button>
-      <button type="button" onClick={onClose}>
-        Annuleren
-      </button>
-    </form>
+    <div className="changing-password-form">
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Huidig wachtwoord:</label>
+          <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required />
+        </div>
+        <div>
+          <label>Nieuw wachtwoord:</label>
+          <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+        </div>
+        <div>
+          <label>Bevestig nieuw wachtwoord:</label>
+          <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+        </div>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <div className="button-container-account">
+          <FullButton type="submit">Wachtwoord wijzigen</FullButton>
+          <Underline type="button" onClick={onClose}>
+            Annuleren
+          </Underline>
+        </div>
+      </form>
+    </div>
   );
 }
 
