@@ -2,6 +2,7 @@ import Modal from "react-modal";
 import "./LoginModal.css";
 Modal.setAppElement("#root");
 import FullButton from "../button/FullButton";
+import DeleteButton from "../button/DeleteButton";
 function LoginModal({ isOpen, onClose, children }) {
   return (
     <Modal
@@ -19,16 +20,16 @@ function LoginModal({ isOpen, onClose, children }) {
           border: "none",
           width: "80%",
           padding: "20px",
-          backgroundColor: "rgba(28, 28, 28, 0)",
+          backgroundColor: "rgba(249, 249, 249, 0)",
         },
         overlay: {
-          backgroundColor: "rgba(28, 28, 28, 0.81)",
+          backgroundColor: "rgba(249, 249, 249, 0.9)",
           zIndex: 9999,
         },
       }}
     >
-      <button onClick={onClose} style={{ float: "right", fontSize: "1.5rem", background: "transparent", border: "none" }}>
-        ×
+      <button onClick={onClose} style={{ float: "right", fontSize: "1rem", background: "transparent", border: "none" }}>
+        ✖️
       </button>
       {children}
     </Modal>

@@ -6,16 +6,8 @@ form {
   margin-top: -30px;
 }
 input {
-  background-color: #484848;
-  margin-left: 20px;
   border: #484848;
-  border-bottom: 0.5px solid #d5dfff;
-  margin-bottom: 20px;
-  margin-top: 10px;
-  min-width: 210px;
-  color: white;
 }
 .title-header {
   margin-left: 50px;
-  margin-bottom: 10px;
 }

@@ -41,6 +41,22 @@ form {
   font-weight: 100;
   font-style: normal;
   font-size: 14px;
+  background-color: #c9bfb1;
+}
+input {
+  background-color: #c9bfb1;
+  border-bottom: 0.5px solid #3c4b64;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  min-width: 210px;
+  margin-left: 20px;
+  color: #3c4b64;
+}
+label {
+  font-family: "myriad-pro", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #3c4b64;
 }
 .title {
   text-align: center;
