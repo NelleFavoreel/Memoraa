@@ -12,21 +12,51 @@
   align-items: end;
   display: flex;
   margin-left: 80%;
+  justify-content: flex-end;
 }
 .before-home {
-  margin-top: -50px;
+  margin-top: 20px;
 }
-
-@media (min-width: 1162px) {
+.before-home-header {
+  width: 60%;
+}
+@media (max-width: 768px) {
+  .before-home-header {
+    width: 70%;
+  }
+  .before-home-container {
+    margin-top: -40px;
+  }
+}
+@media (max-width: 555px) {
+  .before-home-header {
+    width: 100%;
+  }
+  .before-home-container {
+    margin-top: 20px;
+  }
+}
+@media (min-width: 1380px) {
   .before-home-container {
     align-items: flex-start;
-    /* margin: 50px 100px; */
   }
   .before-home-button {
     margin-left: 90%;
   }
+  .before-home {
+    margin-top: -40px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1380px) {
   .before-home-header {
-    width: 60%;
-    margin-left: 1%;
+    width: 100%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1380px) {
+  .before-home-container {
+    margin-top: -20px;
+  }
+  .before-home {
+    margin-top: -40px;
   }
 }
