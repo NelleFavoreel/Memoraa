@@ -14,6 +14,7 @@
   z-index: 1000;
   box-shadow: 0 1px 3px rgba(147, 139, 116, 0.2);
 }
+
 .navbar-content-inner {
   display: flex;
   align-items: center;
@@ -52,26 +53,15 @@
   font-weight: 100;
   text-decoration: none;
   font-size: 1rem;
-  padding: 0.3rem 0;
+  padding: 0.4rem 15px;
   transition: color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
   cursor: pointer;
   align-items: center;
 }
-
-.nav-link::after {
-  content: "";
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #3c4b64;
-  transition: width 0.3s ease;
-  border-radius: 0px;
-}
-
 .nav-link:hover,
 .nav-link:focus {
+  background-color: #c9bfb13c;
   color: #3c4b64;
 }
 
@@ -83,16 +73,22 @@
 /* mobiele weergave */
 @media (max-width: 768px) {
   .hamburger {
-    /* display: block !important; */
     font-size: 1.5rem;
     display: block;
     align-items: end;
     z-index: 2000;
   }
-  .navbar-content {
+  .navbar a {
+    font-size: 12px;
+  }
+  .logo a {
+    font-weight: 900;
+    color: #3c4b64;
+    font-size: 15px;
   }
   .navbar {
     width: 100%;
+    position: fixed;
   }
   .nav-links {
     display: none;
@@ -121,6 +117,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    margin-right: 7%;
   }
 
   .navbar-content {
@@ -128,6 +125,17 @@
     margin-right: 10%;
   }
   .nav-link {
-    margin: 0.5rem 0;
+    background-color: transparent !important;
+    padding: 0.3rem 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus {
+    background-color: transparent !important;
+  }
+
+  .nav-link::after {
+    display: none !important;
   }
 }

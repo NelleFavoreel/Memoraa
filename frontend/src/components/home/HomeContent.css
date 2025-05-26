@@ -65,6 +65,9 @@ img {
 .image9 {
   display: none;
 }
+.home-content-text {
+  font-weight: 600;
+}
 @media (min-width: 1380px) {
   .home-content-box {
     display: flex;
