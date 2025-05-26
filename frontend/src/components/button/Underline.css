@@ -1,0 +1,43 @@
+.underline-link {
+  position: relative;
+  color: white;
+  margin: 0 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.3rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.3s ease;
+  font-family: "myriad-pro", sans-serif;
+  font-size: 14px;
+}
+
+.underline-link::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #3c4b64;
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.underline-link:hover,
+.underline-link:focus {
+  color: #3c4b64;
+}
+
+.underline-link:hover::after,
+.underline-link:focus::after {
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .underline-link {
+    font-size: 11px;
+  }
+}
