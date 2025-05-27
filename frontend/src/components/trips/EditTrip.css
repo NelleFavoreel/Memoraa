@@ -51,25 +51,43 @@
   z-index: 10;
   color: white;
 }
+.add-trip-modal {
+  margin-top: 100px;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+}
+.model-form-left {
+  display: flex;
+  flex-direction: column;
+  margin-right: 140px;
+}
+.add-trip-modal .model-form {
+  flex-direction: row;
+  align-items: center;
+}
+.add-trip-modal form {
+  width: 100vw;
+  height: auto;
+  max-width: 800px;
+}
+
 .traveler-selection table input {
   margin: O !important;
   min-width: 30px;
 }
 .traveler-selection table {
-  width: 100% !important;
+  width: 300% !important;
   margin-top: 10px;
   text-align: none;
 }
 .table-header th {
   margin-top: 50px;
-  font-weight: 500;
-  font-size: 16px;
-  color: #d5dfff;
+  font-weight: 600;
+  font-size: 14px;
   font-family: "myriad-pro", sans-serif;
 }
 .traveler-selection td {
-  color: white;
-  margin: 30px;
   height: 20px;
   font-family: "myriad-pro", sans-serif;
   font-weight: 100;

@@ -3,6 +3,8 @@ import "../../pages/trips/Trips.css";
 import FullButton from "../button/FullButton";
 import AddButton from "../button/AddButton";
 import { toast } from "react-toastify";
+import LoginModal from "../modal/LoginModal";
+import { div } from "three/tsl";
 
 function AddTrip({ show, onClose, onTripAdded }) {
   const [place, setPlace] = useState("");
@@ -118,75 +120,75 @@ function AddTrip({ show, onClose, onTripAdded }) {
   if (!show) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
+    <LoginModal isOpen={show} onClose={onClose} className="add-trip-modal1">
+      <div className="add-trip-modal">
         <form className="model-form" onSubmit={handleSubmit}>
-          <button className="modal-close" onClick={onClose} style={{ float: "right", fontSize: "2rem", background: "transparent", border: "none" }}>
-            <span class="material-symbols-outlined">close</span>
-          </button>
-          <label>Type reis:</label>
-          <select value={tripType} onChange={(e) => setTripType(e.target.value)}>
-            <option value="staytrip">Staytrip</option>
-            <option value="citytrip">Citytrip</option>
-            <option value="roadtrip">Roadtrip</option>
-          </select>
+          <button className="modal-close" onClick={onClose} style={{ float: "right" }}></button>
+          <div className="model-form-left">
+            <label>Type reis:</label>
+            <select value={tripType} onChange={(e) => setTripType(e.target.value)}>
+              <option value="staytrip">Staytrip</option>
+              <option value="citytrip">Citytrip</option>
+              <option value="roadtrip">Roadtrip</option>
+            </select>
 
-          {tripType === "staytrip" && (
-            <>
-              <label>Stad:</label>
-              <input type="text" value={place} onChange={(e) => setPlace(e.target.value)} required={tripType === "staytrip"} />
-              <label>Land:</label>
-              <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} required={tripType === "staytrip"} />
-            </>
-          )}
+            {tripType === "staytrip" && (
+              <>
+                <label>Stad:</label>
+                <input type="text" value={place} onChange={(e) => setPlace(e.target.value)} required={tripType === "staytrip"} />
+                <label>Land:</label>
+                <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} required={tripType === "staytrip"} />
+              </>
+            )}
 
-          {tripType === "citytrip" && (
-            <div>
-              <label>Stad:</label>
-              <input type="text" value={place} onChange={(e) => setPlace(e.target.value)} required={tripType === "citytrip"} />
-            </div>
-          )}
-
-          {tripType === "roadtrip" && (
-            <>
-              <label>Landen:</label>
-              {countries.map((c, i) => (
-                <input
-                  key={i}
-                  type="text"
-                  value={c}
-                  onChange={(e) => {
-                    const newCountries = [...countries];
-                    newCountries[i] = e.target.value;
-                    setCountries(newCountries);
-                  }}
-                  required={tripType === "roadtrip" && i === 0}
-                />
-              ))}
-              <div className="model-button-add">
-                <AddButton type="button" onClick={() => setCountries([...countries, ""])}>
-                  +
-                </AddButton>
+            {tripType === "citytrip" && (
+              <div>
+                <label>Stad:</label>
+                <input type="text" value={place} onChange={(e) => setPlace(e.target.value)} required={tripType === "citytrip"} />
               </div>
-            </>
-          )}
+            )}
 
-          <label>Coverafbeelding:</label>
-          <select value={useAICover ? "ai" : "manual"} onChange={(e) => setUseAICover(e.target.value === "ai")}>
-            <option value="ai">Genereer automatisch</option>
-            <option value="manual">Zelf uploaden</option>
-          </select>
+            {tripType === "roadtrip" && (
+              <>
+                <label>Landen:</label>
+                {countries.map((c, i) => (
+                  <input
+                    key={i}
+                    type="text"
+                    value={c}
+                    onChange={(e) => {
+                      const newCountries = [...countries];
+                      newCountries[i] = e.target.value;
+                      setCountries(newCountries);
+                    }}
+                    required={tripType === "roadtrip" && i === 0}
+                  />
+                ))}
+                <div className="model-button-add">
+                  <AddButton type="button" onClick={() => setCountries([...countries, ""])}>
+                    +
+                  </AddButton>
+                </div>
+              </>
+            )}
 
-          {!useAICover && <input type="text" placeholder="URL van je afbeelding" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />}
+            <label>Coverafbeelding:</label>
+            <select value={useAICover ? "ai" : "manual"} onChange={(e) => setUseAICover(e.target.value === "ai")}>
+              <option value="ai">Genereer automatisch</option>
+              <option value="manual">Zelf uploaden</option>
+            </select>
 
-          <label>
-            Startdatum:
-            <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
-          </label>
-          <label>
-            Einddatum:
-            <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
-          </label>
+            {!useAICover && <input type="text" placeholder="URL van je afbeelding" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />}
+
+            <label>
+              Startdatum:
+              <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
+            </label>
+            <label>
+              Einddatum:
+              <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
+            </label>
+          </div>
           <div className="traveler-selection" style={{ marginTop: "30px" }}>
             <label>Kies je reisgezelschap:</label>
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -208,13 +210,12 @@ function AddTrip({ show, onClose, onTripAdded }) {
               </tbody>
             </table>
           </div>
-
-          <div className="model-form-AddButton">
-            <FullButton type="submit">Voeg reis toe</FullButton>
-          </div>
         </form>
       </div>
-    </div>
+      <div className="model-form-AddButton">
+        <FullButton type="submit">Voeg reis toe</FullButton>
+      </div>
+    </LoginModal>
   );
 }
 

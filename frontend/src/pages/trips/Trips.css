@@ -85,17 +85,14 @@ li {
   margin-left: -30%;
   margin-top: 10px;
 }
-select {
-  margin: 10px 0px 20px 0px;
-  padding: 5px 10px;
-  background-color: #484848;
-  color: white;
-  border: 0.5px #d5dfff solid;
-}
+
 .model-form-AddButton {
-  margin-top: 40px;
+  margin-top: -80px;
   display: flex;
+  width: auto;
   justify-content: flex-end;
+  margin-left: 11%;
+  margin-right: 300px;
 }
 .trip-delete-button {
   padding-top: 10px;
@@ -159,7 +156,10 @@ select {
 .material-symbols-outlined {
   font-size: 20px;
 }
-
+.model-form-container {
+  display: flex;
+  justify-content: flex-end;
+}
 @media (max-width: 600px) {
   .modal-content input {
     margin: 10px;

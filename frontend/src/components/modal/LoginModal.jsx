@@ -11,16 +11,14 @@ function LoginModal({ isOpen, onClose, children }) {
       contentLabel="Login Modal"
       style={{
         content: {
-          top: "250px",
-          left: "50%",
           right: "auto",
           bottom: "auto",
-          transform: "translate(-50%, -50%)",
-          maxWidth: "500px",
+          minWidth: "30%",
           border: "none",
-          width: "80%",
           padding: "20px",
           backgroundColor: "rgba(249, 249, 249, 0)",
+          overflow: "hidden",
+          position: "static",
         },
         overlay: {
           backgroundColor: "rgba(249, 249, 249, 0.9)",

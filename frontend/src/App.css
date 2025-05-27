@@ -61,9 +61,22 @@ label {
 .title {
   text-align: center;
 }
+select {
+  margin: 10px 0px 20px 0px;
+  padding: 5px 10px;
+  background-color: #3c4b64;
+  color: white;
+  border: 0.5px #3c4b64 solid;
+}
 button {
   background-color: transparent;
   border: none;
+}
+td {
+  color: #3c4b64;
+}
+th {
+  color: #3c4b64;
 }
 /* Mobiele versie */
 @media (max-width: 768px) {
