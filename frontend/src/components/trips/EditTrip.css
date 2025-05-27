@@ -66,6 +66,9 @@
   flex-direction: row;
   align-items: center;
 }
+.model-form {
+  padding-top: 80px;
+}
 .add-trip-modal form {
   width: 100vw;
   height: auto;
@@ -165,5 +168,37 @@
   }
   .trip-day-content {
     margin-top: 30px;
+  }
+  .add-trip-modal form {
+    width: 100% !important;
+  }
+  .add-trip-modal .model-form {
+    flex-direction: column !important;
+    overflow: auto !important;
+    margin-top: 0px;
+  }
+  .model-form {
+    padding-bottom: 40px;
+    padding-top: 40px;
+  }
+  .model-form-left {
+    margin: 0 !important;
+  }
+  .traveler-selection {
+    width: 100% !important;
+    padding-bottom: 100px;
+  }
+  .add-trip-modal {
+    overflow: auto !important;
+    height: 90vh !important;
+    margin-top: 50px;
+  }
+  .traveler-selection table {
+    width: 100% !important;
+  }
+  .model-form-AddButton {
+    margin-right: 5% !important;
+    margin-left: 5% !important;
+    justify-content: flex-start;
   }
 }

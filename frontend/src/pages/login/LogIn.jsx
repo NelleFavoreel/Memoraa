@@ -120,42 +120,46 @@ function LogIn() {
         </div>
       ) : (
         <>
-          <h1 className="title-header">{isRegistering ? "Registreren" : "Inloggen"}</h1>
-          <form onSubmit={isRegistering ? handleRegister : handleLogin}>
-            {isRegistering && (
-              <>
+          <div className="login-background">
+            <div className="login-container">
+              <h1 className="title-header">{isRegistering ? "Registreren" : "Inloggen"}</h1>
+              <form onSubmit={isRegistering ? handleRegister : handleLogin}>
+                {isRegistering && (
+                  <>
+                    <div>
+                      <label htmlFor="firstName">Voornaam:</label>
+                      <input type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+                    </div>
+                    <div>
+                      <label htmlFor="lastName">Achternaam:</label>
+                      <input type="text" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+                    </div>
+                  </>
+                )}
                 <div>
-                  <label htmlFor="firstName">Voornaam:</label>
-                  <input type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+                  <label htmlFor="email">E-mail:</label>
+                  <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 <div>
-                  <label htmlFor="lastName">Achternaam:</label>
-                  <input type="text" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+                  <label htmlFor="password">Wachtwoord:</label>
+                  <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
-              </>
-            )}
-            <div>
-              <label htmlFor="email">E-mail:</label>
-              <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                {error && <p style={{ color: "red" }}>{error}</p>}
+                <FullButton type="submit">{isRegistering ? "Registreren" : "Inloggen"}</FullButton>
+              </form>
+              <p>
+                {isRegistering ? (
+                  <span>
+                    Heb je al een account? <FullButton onClick={() => setIsRegistering(false)}>Inloggen</FullButton>
+                  </span>
+                ) : (
+                  <span>
+                    Nog geen account? <FullButton onClick={() => setIsRegistering(true)}>Registreren</FullButton>
+                  </span>
+                )}
+              </p>
             </div>
-            <div>
-              <label htmlFor="password">Wachtwoord:</label>
-              <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-            </div>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <FullButton type="submit">{isRegistering ? "Registreren" : "Inloggen"}</FullButton>
-          </form>
-          <p>
-            {isRegistering ? (
-              <span>
-                Heb je al een account? <FullButton onClick={() => setIsRegistering(false)}>Inloggen</FullButton>
-              </span>
-            ) : (
-              <span>
-                Nog geen account? <FullButton onClick={() => setIsRegistering(true)}>Registreren</FullButton>
-              </span>
-            )}
-          </p>
+          </div>
         </>
       )}
     </div>
