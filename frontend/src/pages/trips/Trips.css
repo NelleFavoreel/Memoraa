@@ -29,7 +29,7 @@
   margin-top: 0px;
 }
 .trip-content {
-  margin-top: 180px;
+  margin-top: 120px;
   margin-left: -4%;
 }
 .trip-info {
@@ -70,7 +70,7 @@ ul {
 .trip-image {
   width: 60%;
   z-index: 1;
-  height: 550px;
+  height: 500px;
   object-fit: cover;
   margin-left: -10%;
   margin-right: -13%;
@@ -133,7 +133,7 @@ li {
   gap: 10px;
   align-items: flex-end;
   margin-left: 10%;
-  height: 550px;
+  height: 500px;
   align-items: flex-start;
 }
 .trip-image-little img {

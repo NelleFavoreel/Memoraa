@@ -1,17 +1,17 @@
 .underline-link {
   position: relative;
-  color: white;
+  color: #3c4b64;
   margin: 0 1rem;
   text-decoration: none;
-  font-weight: 500;
   font-size: 1rem;
-  padding: 0.3rem 0;
-  background: none;
+  padding: 0.4rem 15px;
+  background-color: #c9bfb1;
   border: none;
   cursor: pointer;
   font-family: inherit;
   transition: color 0.3s ease;
   font-family: "myriad-pro", sans-serif;
+  font-weight: 400;
   font-size: 14px;
 }
 
@@ -27,15 +27,6 @@
   border-radius: 2px;
 }
 
-.underline-link:hover,
-.underline-link:focus {
-  color: #3c4b64;
-}
-
-.underline-link:hover::after,
-.underline-link:focus::after {
-  width: 100%;
-}
 @media (max-width: 768px) {
   .underline-link {
     font-size: 11px;

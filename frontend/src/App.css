@@ -18,7 +18,7 @@ h2 {
   font-weight: 1600;
   font-style: normal;
   font-size: 40px;
-  color: black;
+  color: #3c4b64;
 }
 
 h3 {
@@ -71,6 +71,8 @@ select {
 button {
   background-color: transparent;
   border: none;
+  cursor: pointer;
+  color: #3c4b64;
 }
 td {
   color: #3c4b64;

@@ -19,9 +19,10 @@ const ShareTripButton = ({ tripId }) => {
   };
 
   return (
-    <AddButton onClick={handleCopyLink}>
-      <SlCursor />
-    </AddButton>
+    <button onClick={handleCopyLink}>
+      {" "}
+      <SlCursor></SlCursor>
+    </button>
   );
 };
 

@@ -8,6 +8,7 @@ import { SlArrowRight } from "react-icons/sl";
 import { SlClose } from "react-icons/sl";
 import { SlPencil } from "react-icons/sl";
 import AddButton from "../../components/button/AddButton";
+import Underline from "../../components/button/Underline";
 
 function TravelDetail({ setHideNavbar }) {
   const { id } = useParams();
@@ -40,9 +41,7 @@ function TravelDetail({ setHideNavbar }) {
       <div className="trip-detail-edit-trip">
         {isTraveler && (
           // <Link to={`/edit-trip/${id}`}>
-          <AddButton onClick={() => setShowModal(true)}>
-            <SlPencil />
-          </AddButton>
+          <Underline onClick={() => setShowModal(true)}>Bewerk reis</Underline>
           // </Link>
         )}
 

@@ -8,7 +8,7 @@ function NextArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div className={className} style={{ ...style, display: "block", right: -50, zIndex: 1, cursor: "pointer" }} onClick={onClick}>
-      <SlArrowRight size={15} color="white" />
+      <SlArrowRight size={15} color="black" />
     </div>
   );
 }
@@ -17,7 +17,7 @@ function PrevArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div className={className} style={{ ...style, display: "block", left: -50, zIndex: 1, cursor: "pointer" }} onClick={onClick}>
-      <SlArrowRight size={15} color="white" style={{ transform: "rotate(180deg)" }} />
+      <SlArrowRight size={15} color="black" style={{ transform: "rotate(180deg)" }} />
     </div>
   );
 }
@@ -26,7 +26,7 @@ function TripDays({ tripDays, onDayChange }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
@@ -45,12 +45,14 @@ function TripDays({ tripDays, onDayChange }) {
 
   return (
     <div className="trip-days-container">
-      <h1>Dag {activeIndex + 1}</h1>
       <div className="trip-days-slider">
+        <h1>Dag {activeIndex + 1}</h1>
         <Slider {...settings}>
           {tripDays.map((day) => (
             <div key={day._id} style={{ padding: "10px" }}>
-              <h4>{day.place}</h4>
+              <div className="days-place">
+                <label>{day.place}</label>
+              </div>
               <p>{day.description}</p>
               <ul>{day.activities?.length > 0 ? day.activities.map((activity, idx) => <li key={idx}>{activity}</li>) : <li>Geen activiteiten</li>}</ul>
             </div>
