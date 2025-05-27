@@ -13,7 +13,6 @@ router.get("/", authenticateToken, async (req, res) => {
     const usersCollection = db.collection("users");
 
     const userId = new ObjectId(req.user.userId);
-
     const user = await usersCollection.findOne({ _id: userId });
 
     if (!user) {
@@ -28,13 +27,25 @@ router.get("/", authenticateToken, async (req, res) => {
       })
       .toArray();
 
-    res.json(trips);
+    const tripDaysCollection = db.collection("tripDays");
+
+    const tripsWithPhotos = await Promise.all(
+      trips.map(async (trip) => {
+        const tripDays = await tripDaysCollection.find({ tripId: trip._id }).toArray();
+        const allPhotos = tripDays.flatMap((day) => day.photos || []);
+        const shuffled = allPhotos.sort(() => 0.5 - Math.random());
+        const randomPhotos = shuffled.slice(0, 2);
+        return { ...trip, randomPhotos };
+      })
+    );
+
+    // ✅ Alleen deze mag overblijven
+    res.json(tripsWithPhotos);
   } catch (err) {
     console.error("❌ Fout bij ophalen van trips:", err);
     res.status(500).send("Fout bij ophalen van reizen.");
   }
 });
-
 // Reis verwijderen
 router.delete("/:id", async (req, res) => {
   try {
