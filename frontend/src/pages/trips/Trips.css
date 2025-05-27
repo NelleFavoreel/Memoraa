@@ -11,18 +11,33 @@
 .trip-content {
   display: flex;
   align-items: center;
-  width: 91%;
-  justify-content: space-around;
+  width: 95%;
+  align-items: flex-end;
 }
 .trip-info-container {
-  width: 50%;
+  width: 400px;
+  background-color: #d7d3cd;
+  margin-left: -60%;
 }
 .trip-item.reverse .trip-content {
   flex-direction: row-reverse;
 }
+.trip-item.reverse .trip-info-container {
+  margin-right: -70%;
+}
+.trip-item.reverse {
+  margin-top: 0px;
+}
+.trip-content {
+  margin-top: 180px;
+  margin-left: -4%;
+}
 .trip-info {
-  background-color: #484848;
-  padding: 30px 30px;
+  background-color: #d7d3cd;
+  padding: 40px 40px;
+  z-index: 5;
+  position: relative;
+  margin-bottom: -80px;
 }
 ul {
   text-decoration: none;
@@ -53,11 +68,12 @@ ul {
   margin-top: 90px;
 }
 .trip-image {
-  width: 50%;
-  height: 30%;
+  width: 60%;
+  z-index: 1;
+  height: 550px;
   object-fit: cover;
   margin-left: -10%;
-  margin-right: -10%;
+  margin-right: -13%;
 }
 
 .modal-close {
@@ -105,20 +121,46 @@ li {
 /* trips overview */
 .trip-delete-button {
   display: flex;
-  margin-right: 8px;
+  margin-top: -40px;
+  margin-bottom: 20px;
+  cursor: pointer;
   justify-content: flex-end;
 }
+.trip-image-little {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  margin-left: 10%;
+  height: 550px;
+  align-items: flex-start;
+}
+.trip-image-little img {
+  height: 30%;
+  object-fit: cover;
+  width: 250px;
+}
+.trip-item.reverse .trip-image-little {
+  align-items: flex-end;
+  margin-right: 8%;
+}
+.trips-list {
+  margin-top: -90px;
+}
 .trip-link a {
-  color: #d5dfff;
+  color: #3c4b64;
   font-family: "myriad-pro", sans-serif;
   font-size: 10px;
 }
 .trip-link {
   justify-content: flex-end;
   display: flex;
+  margin-top: -42px;
+  padding: 10px 0px;
 }
 .trips-info-title {
-  margin: 0px 0px -12px 30px;
+  margin: 0px;
 }
 .trip-link svg {
   width: 10px;
@@ -140,13 +182,23 @@ li {
 .searchbar {
   width: 280px;
   padding: 12px 10px;
+  background-color: #3c4b64;
+  color: white !important;
 }
+.searchbar::placeholder {
+  color: rgba(255, 255, 255, 0.85);
+  padding: 5px;
+}
+.filters select::placeholder {
+  padding: 5px;
+}
+
 .filters select {
   width: 200px;
   font-size: 15px;
-  background-color: #d5dfff;
-  color: #484848;
-  border-color: #484848;
+  background-color: #3c4b64;
+  color: white;
+  border-color: white;
   padding: 12px 10px;
   margin: 0;
 }
@@ -160,7 +212,11 @@ li {
   display: flex;
   justify-content: flex-end;
 }
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
+  .trip-info {
+    padding: 10px 20px;
+    padding-bottom: 40px;
+  }
   .modal-content input {
     margin: 10px;
   }
@@ -168,7 +224,7 @@ li {
     padding: 9% 7%;
   }
   .modal-overlay {
-    background-color: #484848;
+    background-color: #c9bfb1;
   }
   .modal-content .title-header {
     font-size: 30px;
@@ -176,7 +232,7 @@ li {
   }
   .trip-content {
     flex-direction: column !important;
-    align-items: flex-start;
+    align-items: flex-end;
     width: 100%;
   }
   .trip-image {
@@ -194,9 +250,6 @@ li {
     align-items: stretch;
     flex-direction: column-reverse;
     margin-bottom: 50px;
-  }
-  .trip-info-container {
-    width: 100%;
   }
   .filters select {
     font-size: 12px;
@@ -228,9 +281,6 @@ li {
     width: 20px;
     height: 15px;
   }
-  .trip-item {
-    margin-bottom: 40px;
-  }
 
   .trip-info p {
     margin: 7px;
@@ -238,11 +288,12 @@ li {
   .trip-link button {
     padding: 0;
   }
-  .trips-info-title {
-    margin: 10px 0px 2px 17px;
+  .trip-link svg {
+    margin-left: -30px;
+    margin-top: -90px;
   }
-  .trip-info-container {
-    background-color: #484848;
+  .trips-info-title {
+    margin: 10px 0px 8px 5px;
   }
   .trip-image {
     margin: 0;
@@ -250,8 +301,39 @@ li {
   .material-symbols-outlined {
     font-size: 15px;
   }
+  .trip-link {
+    margin: -30px -10px;
+  }
+  .trip-delete-button {
+    margin: 0;
+    margin-bottom: 10px;
+    margin-top: -35px;
+    margin-right: -10px;
+  }
+  .trip-image-little {
+    display: none;
+  }
+  .trip-item.reverse .trip-info-container {
+    margin: 0;
+    margin-top: -30px;
+  }
+  .trip-info-container {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    display: flex;
+    margin-top: -30px;
+    justify-content: center;
+  }
+  .trip-content {
+    margin: 90px 0px 20px 0px;
+  }
 }
-
+@media (max-width: 1000px) {
+  .trip-image-little {
+    display: none;
+  }
+}
 @media (min-width: 660px) and (max-width: 1350px) {
   .filters-right {
     display: flex;
