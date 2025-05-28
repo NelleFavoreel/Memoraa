@@ -39,6 +39,7 @@ router.post("/add-friend", authenticateToken, async (req, res) => {
   const { friendId } = req.body;
   const db = getDB();
   const collection = db.collection("users");
+  const notifications = db.collection("notifications");
 
   try {
     const userId = new ObjectId(req.user.userId);
@@ -50,12 +51,19 @@ router.post("/add-friend", authenticateToken, async (req, res) => {
     if (!user || !friend) {
       return res.status(404).json({ message: "Gebruiker of vriend niet gevonden." });
     }
+    if (friend.familyRequests?.includes(userId) || friend.familyMembers?.includes(userId)) {
+      return res.status(400).json({ message: "Je hebt al een verzoek gestuurd of bent al verbonden." });
+    }
 
     // Voeg een verzoek toe bij de andere gebruiker
-    await collection.updateOne(
-      { _id: friendObjectId },
-      { $addToSet: { familyRequests: userId } } // gebruiker stuurt verzoek
-    );
+    await collection.updateOne({ _id: friendObjectId }, { $addToSet: { familyRequests: userId } });
+    await notifications.insertOne({
+      userId: friendObjectId,
+      type: "familyRequest",
+      sender: userId,
+      date: new Date(),
+      read: false,
+    });
 
     res.json({ message: "Familieverzoek verzonden." });
   } catch (err) {
@@ -154,6 +162,38 @@ router.delete("/remove-friend", authenticateToken, async (req, res) => {
   } catch (err) {
     console.error("❌ Fout bij verwijderen familielid:", err);
     res.status(500).json({ message: "Verwijderen mislukt." });
+  }
+});
+// Voorbeeld route voor acceptatie familieverzoek (in bv routes/family.js)
+router.post("/accept", authenticateToken, async (req, res) => {
+  try {
+    const db = getDB();
+    const usersCollection = db.collection("users");
+    const notificationsCollection = db.collection("notifications");
+
+    const { requesterId } = req.body; // wie het verzoek stuurde
+    const currentUserId = new ObjectId(req.user.userId);
+
+    // Update familieleden van beide users (vereist)
+    // Voeg hier je logica toe om familyMembers up te daten, bv:
+    await usersCollection.updateOne({ _id: currentUserId }, { $addToSet: { familyMembers: new ObjectId(requesterId) } });
+    await usersCollection.updateOne({ _id: new ObjectId(requesterId) }, { $addToSet: { familyMembers: currentUserId } });
+
+    // Maak notificatie voor de oorspronkelijke verzoeker
+    const notification = {
+      userId: new ObjectId(requesterId), // die moet dit zien
+      type: "familyAccepted",
+      sender: currentUserId,
+      date: new Date(),
+      read: false,
+    };
+
+    await notificationsCollection.insertOne(notification);
+
+    res.status(200).json({ message: "Familieverzoek geaccepteerd en notificatie verstuurd." });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Fout bij accepteren familieverzoek." });
   }
 });
 

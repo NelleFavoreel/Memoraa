@@ -47,18 +47,38 @@ router.get("/", authenticateToken, async (req, res) => {
   }
 });
 // Reis verwijderen
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticateToken, async (req, res) => {
   try {
     const db = getDB();
     const collection = db.collection("trips");
     const tripDaysCollection = db.collection("tripDays");
+    const notificationsCollection = db.collection("notifications");
+    const usersCollection = db.collection("users");
 
     const tripId = req.params.id;
+    const currentUserId = new ObjectId(req.user.userId);
 
-    const result = await collection.deleteOne({ _id: new ObjectId(tripId) }); // Gebruik 'new ObjectId'
+    const trip = await collection.findOne({ _id: new ObjectId(tripId) });
+    if (!trip) return res.status(404).send("Reis niet gevonden.");
+
+    const result = await collection.deleteOne({ _id: new ObjectId(tripId) });
 
     if (result.deletedCount === 1) {
       await tripDaysCollection.deleteMany({ tripId: new ObjectId(tripId) });
+      const notifications = trip.travelers
+        .filter((id) => !id.equals(currentUserId))
+        .map((travelerId) => ({
+          userId: travelerId,
+          type: "tripDeleted",
+          sender: currentUserId,
+          tripId: new ObjectId(tripId),
+          date: new Date(),
+          read: false,
+        }));
+
+      if (notifications.length > 0) {
+        await notificationsCollection.insertMany(notifications);
+      }
       res.status(200).send("Reis succesvol verwijderd.");
     } else {
       res.status(404).send("Reis niet gevonden.");
@@ -75,6 +95,7 @@ router.post("/", async (req, res) => {
     const db = getDB();
     const collection = db.collection("trips");
     const usersCollection = db.collection("users");
+    const notificationsCollection = db.collection("notifications");
 
     const { tripType, place, country, countries, imageUrl, startDate, endDate, screenNames, familyId, userId, selectedFriend = [] } = req.body;
 
@@ -137,6 +158,20 @@ router.post("/", async (req, res) => {
 
     const result = await collection.insertOne(newTrip);
 
+    const notificationInserts = travelerIds
+      .filter((id) => !id.equals(currentUserObjectId))
+      .map((id) => ({
+        userId: id,
+        type: "tripAdded",
+        sender: currentUserObjectId,
+        tripId: result.insertedId,
+        date: new Date(),
+        read: false,
+      }));
+
+    if (notificationInserts.length > 0) {
+      await notificationsCollection.insertMany(notificationInserts);
+    }
     res.status(201).json({ message: "Reis succesvol toegevoegd.", tripId: result.insertedId });
   } catch (err) {
     console.error("❌ Fout bij toevoegen van reis:", err);
@@ -172,7 +207,7 @@ router.get("/:id", async (req, res) => {
         newTripDays.push({
           tripId: tripObjectId,
           date: new Date(d),
-          description: "", // leeg laten, kan ingevuld worden
+          description: "",
           activities: [],
           photos: [],
         });
@@ -207,6 +242,8 @@ router.put("/:id", authenticateToken, async (req, res) => {
 
     const db = getDB();
     const tripsCollection = db.collection("trips");
+    const notificationsCollection = db.collection("notifications");
+    const currentUserId = new ObjectId(req.user.userId);
     const tripObjectId = new ObjectId(id);
 
     // Zoek de reis op
@@ -245,6 +282,20 @@ router.put("/:id", authenticateToken, async (req, res) => {
       await tripDaysCollection.insertMany(tripDaysInsert);
     }
 
+    const notifications = travelers
+      .filter((id) => !id.equals(currentUserId))
+      .map((travelerId) => ({
+        userId: travelerId,
+        type: "tripUpdated",
+        sender: currentUserId,
+        tripId: tripObjectId,
+        date: new Date(),
+        read: false,
+      }));
+
+    if (notifications.length > 0) {
+      await notificationsCollection.insertMany(notifications);
+    }
     res.status(200).json({ message: "Reis succesvol bijgewerkt." });
   } catch (err) {
     console.error("❌ Fout bij het bijwerken van reis:", err);
