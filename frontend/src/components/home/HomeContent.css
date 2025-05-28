@@ -71,6 +71,31 @@ img {
 .home-content-text {
   font-weight: 600;
 }
+.image1,
+.image2,
+.image3,
+.image4 {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+/* Hover effect per afbeelding */
+.image1:hover {
+  transform: translateX(10px) translateY(-5px) rotate(2deg);
+}
+
+.image2:hover {
+  transform: translateX(-8px) translateY(4px) rotate(-1deg);
+}
+
+.image3:hover {
+  transform: translateX(6px) translateY(3px) rotate(1deg);
+}
+
+.image4:hover {
+  transform: translateX(-5px) translateY(-7px) rotate(-2deg);
+}
+
 @media (min-width: 1380px) {
   .home-content-box {
     display: flex;
