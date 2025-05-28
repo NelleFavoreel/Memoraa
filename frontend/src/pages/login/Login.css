@@ -30,6 +30,15 @@ input {
     width: 120%;
   }
 }
+@media (max-width: 800px) {
+  .login-container {
+    width: 100%;
+    max-width: 100%;
+  }
+  .login-container input {
+    min-width: 30px;
+  }
+}
 .logged-in-container button {
   background-color: red !important;
   color: white !important;

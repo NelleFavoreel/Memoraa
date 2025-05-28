@@ -7,7 +7,7 @@ import Account from "./pages/account/Account";
 import TravelOverview from "./pages/Trips/TravelOverview";
 import TravelDetail from "./pages/Trips/TravelDetail";
 import LogIn from "./pages/login/LogIn";
-import Notifications from "./pages/Notifications";
+import Notifications from "./pages/notifications/Notifications";
 import EditTrip from "./components/trips/EditTip";
 import BeforeHome from "./pages/beforeHome/BeforeHome";
 import "./components/notifications/Notification.css";

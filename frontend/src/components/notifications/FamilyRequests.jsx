@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import DeleteButton from "../button/DeleteButton";
 
 function FamilyRequests() {
   const [requests, setRequests] = useState([]);
@@ -37,25 +38,57 @@ function FamilyRequests() {
       console.error("Fout bij accepteren verzoek:", error);
     }
   };
+  const handleReject = async (requesterId) => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await fetch("http://localhost:3001/family/reject-family-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ requesterId }),
+      });
+      const data = await res.json();
+      setMessage(data.message);
+      fetchRequests();
+    } catch (error) {
+      console.error("Fout bij weigeren verzoek:", error);
+    }
+  };
 
   useEffect(() => {
     fetchRequests();
   }, []);
 
   return (
-    <div>
-      <h3>Openstaande familieverzoeken</h3>
+    <div className="family-requests-container">
       {requests.length === 0 && <p>Geen verzoeken gevonden.</p>}
-      <ul>
-        {requests.map((user) => (
-          <li key={user._id}>
-            {user.screenName}
-            <button onClick={() => handleAccept(user._id)} style={{ marginLeft: "10px" }}>
-              Accepteer
-            </button>
-          </li>
-        ))}
-      </ul>
+      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <thead>
+          <tr>
+            <th style={{ textAlign: "left", padding: "8px" }}>Naam</th>
+            <th style={{ textAlign: "left", padding: "8px" }}>Toevoegen of Verwijderen</th>
+          </tr>
+        </thead>
+        <tbody>
+          {requests.map((user) => (
+            <tr key={user._id}>
+              <td style={{ padding: "8px" }}>{user.screenName}</td>
+              <td style={{ padding: "8px" }}>
+                <td style={{ padding: "8px" }}>
+                  <button onClick={() => handleAccept(user._id)} style={{ marginRight: "8px" }}>
+                    Accepteer
+                  </button>
+                  <DeleteButton onClick={() => handleReject(user._id)} style={{ backgroundColor: "lightcoral" }}>
+                    Weiger
+                  </DeleteButton>
+                </td>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       {message && <p>{message}</p>}
     </div>
   );

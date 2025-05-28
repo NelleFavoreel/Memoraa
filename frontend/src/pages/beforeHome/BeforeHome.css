@@ -24,8 +24,8 @@
   .before-home-header {
     width: 70%;
   }
-  .before-home-container {
-    margin-top: -40px;
+  .before-home {
+    margin-top: -70px;
   }
 }
 @media (max-width: 555px) {

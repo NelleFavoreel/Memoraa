@@ -1,7 +1,10 @@
 .home-content {
-  background-color: #c9bfb1;
+  background-color: #d7d3cd;
   padding: 10px 30px;
   margin-top: -25px;
+}
+.slide-place {
+  color: #3c4b64;
 }
 h2 {
   color: #d5dfff;
