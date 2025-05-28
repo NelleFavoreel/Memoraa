@@ -50,11 +50,11 @@ ul {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6); /* Toegevoegd voor achtergrondverduistering */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999; /* Zelfde als je andere modal */
+  z-index: 999;
+  background-color: #cacaca68;
 }
 
 .modal-content {

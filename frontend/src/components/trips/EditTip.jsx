@@ -18,6 +18,7 @@ function EditTrip({ onClose }) {
   const [originalTrip, setOriginalTrip] = useState(null);
   const [originalTripDays, setOriginalTripDays] = useState(null);
   const [hasAccess, setHasAccess] = useState(true);
+  const [showDaysEditor, setShowDaysEditor] = useState(false);
 
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -146,73 +147,87 @@ function EditTrip({ onClose }) {
   if (loading || !trip) return <p>De reisgegevens worden geladen...</p>;
 
   return (
-    <>
-      <div className="edit-trip-modal">
-        <div className="edit-trip-container">
-          <div className="trip-edit-general-info">
-            <h2>Algemene info</h2>
-            <form onSubmit={handleSaveChanges}>
-              <div>
-                <label>Land</label>
-                <input type="text" value={trip.country} onChange={(e) => setTrip({ ...trip, country: e.target.value })} />
-              </div>
+    <div className="edit-trip-modal">
+      <div className="edit-trip-container">
+        {showDaysEditor ? (
+          <>
+            <FullButton onClick={() => setShowDaysEditor(false)} className="edit-days-toggle-button">
+              Terug naar algemene info
+            </FullButton>
+            <EditTripDays tripDays={tripDays} setTripDays={setTripDays} tripId={id} />
+          </>
+        ) : (
+          <>
+            <div className="trip-edit-general-info">
+              <form onSubmit={handleSaveChanges} className="edit-trip-form">
+                <div>
+                  <div>
+                    <label>Land</label>
+                    <input type="text" value={trip.country} onChange={(e) => setTrip({ ...trip, country: e.target.value })} />
+                  </div>
 
-              <div>
-                <label>Startdatum</label>
-                <input
-                  type="date"
-                  value={new Date(trip.startDate).toISOString().split("T")[0]}
-                  onChange={(e) => {
-                    const newStartDate = e.target.value;
-                    setTrip({ ...trip, startDate: newStartDate });
-                    regenerateTripDays(newStartDate, trip.endDate);
-                  }}
-                />
-              </div>
+                  <div>
+                    <label>Startdatum</label>
+                    <input
+                      type="date"
+                      value={new Date(trip.startDate).toISOString().split("T")[0]}
+                      onChange={(e) => {
+                        const newStartDate = e.target.value;
+                        setTrip({ ...trip, startDate: newStartDate });
+                        regenerateTripDays(newStartDate, trip.endDate);
+                      }}
+                    />
+                  </div>
 
-              <div>
-                <label>Einddatum</label>
-                <input
-                  type="date"
-                  value={new Date(trip.endDate).toISOString().split("T")[0]}
-                  onChange={(e) => {
-                    const newEndDate = e.target.value;
-                    setTrip({ ...trip, endDate: newEndDate });
-                    regenerateTripDays(trip.startDate, newEndDate);
-                  }}
-                />
-              </div>
-
-              <div className="traveler-selection">
-                <label>Reizigers</label>
-                <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                  <thead>
-                    <tr className="table-header">
-                      <th style={{ textAlign: "left", padding: " 5px" }}>Naam</th>
-                      <th style={{ textAlign: "left", padding: "5px" }}>Meereizend</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {familyMembers.map((member) => (
-                      <tr key={member._id}>
-                        <td style={{ padding: "8px" }}>{member.screenName}</td>
-                        <td style={{ padding: "8px" }}>
-                          <input type="checkbox" checked={trip.travelers.includes(member._id)} onChange={() => handleTravelerToggle(member._id)} />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <div className="button-container-edit">
-                  <FullButton type="submit">Opslaan</FullButton>
+                  <div>
+                    <label>Einddatum</label>
+                    <input
+                      type="date"
+                      value={new Date(trip.endDate).toISOString().split("T")[0]}
+                      onChange={(e) => {
+                        const newEndDate = e.target.value;
+                        setTrip({ ...trip, endDate: newEndDate });
+                        regenerateTripDays(trip.startDate, newEndDate);
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
-            </form>
-          </div>
-          <EditTripDays tripDays={tripDays} setTripDays={setTripDays} tripId={id} />
-        </div>
+
+                <div className="traveler-selection">
+                  <label>Reizigers</label>
+                  <table style={{ borderCollapse: "collapse" }}>
+                    <thead>
+                      <tr className="table-header">
+                        <th style={{ textAlign: "left", padding: "5px" }}>Naam</th>
+                        <th style={{ textAlign: "left", padding: "5px" }}>Meereizend</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {familyMembers.map((member) => (
+                        <tr key={member._id}>
+                          <td style={{ padding: "8px" }}>{member.screenName}</td>
+                          <td style={{ padding: "8px" }}>
+                            <input type="checkbox" checked={trip.travelers.includes(member._id)} onChange={() => handleTravelerToggle(member._id)} />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="edit-trip-buttons">
+                  <div className="button-container-edit">
+                    <FullButton type="submit">Opslaan</FullButton>
+                  </div>
+                  <FullButton onClick={() => setShowDaysEditor(true)} className="edit-days-toggle-button">
+                    Bewerk de dagen afzonderlijk
+                  </FullButton>
+                </div>
+              </form>
+            </div>
+          </>
+        )}
       </div>
-    </>
+    </div>
   );
 }
 

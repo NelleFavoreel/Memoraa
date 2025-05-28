@@ -2,27 +2,44 @@
   display: flex;
   width: 100%;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.edit-trip-modal {
+  overflow-y: auto;
+  max-height: 90vh; /* Of 100vh als je alles wil bedekken */
 }
 
 .trip-edit-general-info {
   flex: 1;
   display: flex;
   flex-direction: column;
-  max-width: 40%;
-  background-color: #484848;
-  margin-right: 10%;
+  max-width: 80%;
+  margin-right: 0%;
+  align-items: center;
 }
+.trip-edit-general-info h2 {
+  width: 100%;
+}
+
 .edit-trip-container h2 {
   z-index: 4;
   position: relative;
-  color: white;
 }
+.edit-trip-form {
+  display: flex;
+  width: 100%;
+  margin-top: 40px;
+  flex-direction: column;
+}
+
 .edit-trip-slider {
-  width: 35%;
-  background-color: #484848;
-  padding: 0px 80px;
+  max-width: 500px;
+  padding: 20px 40px;
   display: flex;
   flex-direction: column;
+  background-color: #d7d3cd;
+  height: 600px;
 }
 .slick-slider .slick-arrow {
   color: white;
@@ -40,16 +57,32 @@
   text-decoration: none;
 }
 .photo-upload {
-  margin-top: 35px;
+  margin-top: 20px;
+  width: 140%;
 }
-
+.photo-upload img {
+  width: 80px;
+}
+.photo-upload input {
+  border-bottom: none;
+}
+.new-activity-row {
+  display: flex;
+  align-items: flex-end;
+  width: 150%;
+}
+.new-activity-row button {
+  margin-left: -0px;
+}
+.new-activity-row textarea {
+  background-color: #d7d3cd;
+}
 .edit-trip-slider .slick-dots {
   margin-top: -40px;
 }
 .edit-trip-slider h2 {
   position: relative;
   z-index: 10;
-  color: white;
 }
 .add-trip-modal {
   margin-top: 100px;
@@ -80,7 +113,7 @@
   min-width: 30px;
 }
 .traveler-selection table {
-  width: 300% !important;
+  width: 100% !important;
   margin-top: 10px;
   text-align: none;
 }
@@ -90,8 +123,10 @@
   font-size: 14px;
   font-family: "myriad-pro", sans-serif;
 }
+.table-header {
+  width: 10%;
+}
 .traveler-selection td {
-  height: 20px;
   font-family: "myriad-pro", sans-serif;
   font-weight: 100;
   font-size: 14px;
@@ -104,20 +139,21 @@
   margin-top: 10px;
 }
 .button-container-edit-days {
-  margin-bottom: 40px;
-  margin-top: 40px;
-  display: block;
   z-index: 4;
 }
 .slick-track1 {
   height: 610px;
 }
-
+.trip-day-content {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
 /* overlay */
 .modal-content1 {
   padding: 2rem;
   border-radius: 8px;
-  width: 80%;
+  width: 100%;
   position: absolute;
 }
 .modal-content1 .modal-close {
@@ -125,6 +161,11 @@
   margin-top: -20px;
   position: absolute;
   margin-right: 1%;
+}
+.edit-trip-buttons {
+  display: flex;
+  align-items: flex-end;
+  gap: 30px;
 }
 @media (max-width: 600px) {
   .edit-trip-container {
