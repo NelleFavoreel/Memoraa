@@ -131,9 +131,6 @@ function TravelDetail({ setHideNavbar }) {
 
   return (
     <div>
-      <div className="trip-detail-share">
-        <ShareTripButton tripId={trip._id} />
-      </div>
       <div
         className="trip-background-image"
         style={{
@@ -146,13 +143,26 @@ function TravelDetail({ setHideNavbar }) {
       ></div>
 
       <div className="trip-detail-container">
-        <h1>{trip.country}</h1>
+        <div className="trip-detail-header">
+          <h1>{trip.country}</h1>
+          <div className="trip-detail-share">
+            <ShareTripButton tripId={trip._id} />
+          </div>
+        </div>
         <div className="trip-detail-general-info">
-          <p>
-            {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
-          </p>
-          <p>{tripDays.length} dagen </p>
-          <p>{travelerNames.length > 0 ? <>{travelerNames.join(", ")}</> : "Geen reisgenoten"}</p>
+          <div className="trip-detail-info1">
+            <p>
+              {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
+            </p>
+            <div className="trip-detail-info">
+              <label>Aantal dagen:</label>
+              <p>{tripDays.length} dagen </p>
+            </div>
+            <div className="trip-detail-info">
+              <label>Reizigers:</label>
+              <p>{travelerNames.length > 0 ? <>{travelerNames.join(", ")}</> : "Geen reisgenoten"}</p>
+            </div>
+          </div>
           <div>
             <Underline onClick={scrollToPhotos}>Foto's bekijken</Underline>
             <Underline onClick={scrollToMap}>Kaart bekijken</Underline>

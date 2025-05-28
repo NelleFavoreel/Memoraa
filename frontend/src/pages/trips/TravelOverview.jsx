@@ -19,7 +19,7 @@ function TravelOverview() {
 
   return (
     <>
-      <div className="model-form-AddButton">
+      <div className="model-form-container">
         <AddButton onClick={() => setShowModal(true)}>+</AddButton>
       </div>
       <AddTrip show={showModal} onClose={() => setShowModal(false)} onTripAdded={handleTripAdded} />

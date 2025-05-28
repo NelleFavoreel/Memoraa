@@ -2,27 +2,44 @@
   display: flex;
   width: 100%;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.edit-trip-modal {
+  overflow-y: auto;
+  max-height: 90vh; /* Of 100vh als je alles wil bedekken */
 }
 
 .trip-edit-general-info {
   flex: 1;
   display: flex;
   flex-direction: column;
-  max-width: 40%;
-  background-color: #484848;
-  margin-right: 10%;
+  max-width: 80%;
+  margin-right: 0%;
+  align-items: center;
 }
+.trip-edit-general-info h2 {
+  width: 100%;
+}
+
 .edit-trip-container h2 {
   z-index: 4;
   position: relative;
-  color: white;
 }
+.edit-trip-form {
+  display: flex;
+  width: 100%;
+  margin-top: 40px;
+  flex-direction: column;
+}
+
 .edit-trip-slider {
-  width: 35%;
-  background-color: #484848;
-  padding: 0px 80px;
+  max-width: 500px;
+  padding: 20px 40px;
   display: flex;
   flex-direction: column;
+  background-color: #d7d3cd;
+  height: 600px;
 }
 .slick-slider .slick-arrow {
   color: white;
@@ -40,17 +57,57 @@
   text-decoration: none;
 }
 .photo-upload {
-  margin-top: 35px;
+  margin-top: 20px;
+  width: 140%;
 }
-
+.photo-upload img {
+  width: 80px;
+}
+.photo-upload input {
+  border-bottom: none;
+}
+.new-activity-row {
+  display: flex;
+  align-items: flex-end;
+  width: 150%;
+}
+.new-activity-row button {
+  margin-left: -0px;
+}
+.new-activity-row textarea {
+  background-color: #d7d3cd;
+}
 .edit-trip-slider .slick-dots {
   margin-top: -40px;
 }
 .edit-trip-slider h2 {
   position: relative;
   z-index: 10;
-  color: white;
 }
+.add-trip-modal {
+  margin-top: 100px;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+}
+.model-form-left {
+  display: flex;
+  flex-direction: column;
+  margin-right: 140px;
+}
+.add-trip-modal .model-form {
+  flex-direction: row;
+  align-items: center;
+}
+.model-form {
+  padding-top: 80px;
+}
+.add-trip-modal form {
+  width: 100vw;
+  height: auto;
+  max-width: 800px;
+}
+
 .traveler-selection table input {
   margin: O !important;
   min-width: 30px;
@@ -62,15 +119,14 @@
 }
 .table-header th {
   margin-top: 50px;
-  font-weight: 500;
-  font-size: 16px;
-  color: #d5dfff;
+  font-weight: 600;
+  font-size: 14px;
   font-family: "myriad-pro", sans-serif;
 }
+.table-header {
+  width: 10%;
+}
 .traveler-selection td {
-  color: white;
-  margin: 30px;
-  height: 20px;
   font-family: "myriad-pro", sans-serif;
   font-weight: 100;
   font-size: 14px;
@@ -83,20 +139,21 @@
   margin-top: 10px;
 }
 .button-container-edit-days {
-  margin-bottom: 40px;
-  margin-top: 40px;
-  display: block;
   z-index: 4;
 }
 .slick-track1 {
   height: 610px;
 }
-
+.trip-day-content {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
 /* overlay */
 .modal-content1 {
   padding: 2rem;
   border-radius: 8px;
-  width: 80%;
+  width: 100%;
   position: absolute;
 }
 .modal-content1 .modal-close {
@@ -104,6 +161,11 @@
   margin-top: -20px;
   position: absolute;
   margin-right: 1%;
+}
+.edit-trip-buttons {
+  display: flex;
+  align-items: flex-end;
+  gap: 30px;
 }
 @media (max-width: 600px) {
   .edit-trip-container {
@@ -147,5 +209,37 @@
   }
   .trip-day-content {
     margin-top: 30px;
+  }
+  .add-trip-modal form {
+    width: 100% !important;
+  }
+  .add-trip-modal .model-form {
+    flex-direction: column !important;
+    overflow: auto !important;
+    margin-top: 0px;
+  }
+  .model-form {
+    padding-bottom: 40px;
+    padding-top: 40px;
+  }
+  .model-form-left {
+    margin: 0 !important;
+  }
+  .traveler-selection {
+    width: 100% !important;
+    padding-bottom: 100px;
+  }
+  .add-trip-modal {
+    overflow: auto !important;
+    height: 90vh !important;
+    margin-top: 50px;
+  }
+  .traveler-selection table {
+    width: 100% !important;
+  }
+  .model-form-AddButton {
+    margin-right: 5% !important;
+    margin-left: 5% !important;
+    justify-content: flex-start;
   }
 }

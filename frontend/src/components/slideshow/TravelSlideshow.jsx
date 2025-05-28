@@ -6,6 +6,7 @@ const CustomSlideshow = () => {
   const [trips, setTrips] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
+  const [fade, setFade] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,8 +29,13 @@ const CustomSlideshow = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % trips.length);
-    }, 3000);
+      setFade(true);
+
+      setTimeout(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % trips.length);
+        setFade(false);
+      }, 100);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [trips.length]);
@@ -46,14 +52,13 @@ const CustomSlideshow = () => {
           <img src={trips[leftIndex].imageUrl} alt="Vorige reis" />
         </div>
 
-        <div className="center-image" onClick={() => navigate(`/trips/${trips[currentIndex]._id}`)}>
+        <div className={`center-image ${fade ? "fade" : ""}`} onClick={() => navigate(`/trips/${trips[currentIndex]._id}`)}>
           <img src={trips[currentIndex].imageUrl} alt="Huidige reis" />
           <div className="hover-info">
             <div className="slide-place">{trips[currentIndex].country || trips[currentIndex].place}</div>
             <div className="slide-time">
               {new Date(trips[currentIndex].startDate).toLocaleDateString()} - {new Date(trips[currentIndex].endDate).toLocaleDateString()}
             </div>
-            {/* <div>Aantal reizigers: {trips[currentIndex].travelers?.length || trips[currentIndex].people?.length || "Onbekend"}</div> */}
           </div>
         </div>
 

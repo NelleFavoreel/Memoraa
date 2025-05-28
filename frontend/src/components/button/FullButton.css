@@ -12,18 +12,18 @@ a {
 }
 
 .custom-button.default {
-  background-color: #d5dfff;
-  color: #373737;
+  background-color: #3c4b64;
+  color: white;
 }
 
 .custom-button.default:hover {
-  background-color: #d5dfff54;
-  color: #d5dfff;
+  background-color: #566a8e;
+  color: white;
 }
 
 .custom-button.secondary {
   background-color: #e0e0e0;
-  color: #333;
+  color: #3c4b64;
 }
 
 .custom-button.secondary:hover {
@@ -32,8 +32,8 @@ a {
 
 @media (max-width: 768px) {
   .custom-button {
-    width: 90px;
-    min-width: 20px;
+    width: 70px;
+    min-width: 60px;
     font-size: 10px;
     padding: 5px;
     cursor: pointer;

@@ -1,6 +1,6 @@
 body {
-  background-color: #373737;
-  color: white;
+  background-color: #f6f6f6;
+  color: black;
   margin: 100px 10%;
   overflow-x: hidden;
 }
@@ -10,13 +10,15 @@ h1 {
   font-weight: 700;
   font-style: normal;
   font-size: 70px;
+  color: #3c4b64;
 }
 
 h2 {
   font-family: "myriad-pro", sans-serif;
-  font-weight: 700;
+  font-weight: 1600;
   font-style: normal;
   font-size: 40px;
+  color: #3c4b64;
 }
 
 h3 {
@@ -24,6 +26,7 @@ h3 {
   font-weight: 200;
   font-style: normal;
   font-size: 20px;
+  color: #3c4b64;
 }
 
 p {
@@ -31,26 +34,51 @@ p {
   font-weight: 100;
   font-style: normal;
   font-size: 14px;
+  color: black;
 }
 form {
   font-family: "myriad-pro", sans-serif;
   font-weight: 100;
   font-style: normal;
   font-size: 14px;
+  background-color: #d7d3cd;
+}
+input {
+  background-color: #d7d3cd;
+  border-bottom: 0.5px solid #3c4b64;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  min-width: 210px;
+  margin-left: 20px;
+  color: #3c4b64;
 }
 label {
-  font-weight: 600;
   font-family: "myriad-pro", sans-serif;
-  margin: 5px 0px;
-  color: #d5dfff;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #3c4b64;
 }
 .title {
   text-align: center;
 }
+select {
+  margin: 10px 0px 20px 0px;
+  padding: 5px 10px;
+  background-color: #3c4b64;
+  color: white;
+  border: 0.5px #3c4b64 solid;
+}
 button {
   background-color: transparent;
   border: none;
+  cursor: pointer;
+  color: #3c4b64;
+}
+td {
+  color: #3c4b64;
+}
+th {
+  color: #3c4b64;
 }
 /* Mobiele versie */
 @media (max-width: 768px) {
@@ -74,7 +102,7 @@ button {
     font-size: 11px;
   }
   label {
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 600;
   }
   td {

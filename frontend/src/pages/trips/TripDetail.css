@@ -1,15 +1,16 @@
 .trip-detail-general-info {
-  background-color: #484848;
+  background-color: #d7d3cd;
   opacity: 0.9;
   z-index: 1;
-  padding: 40px;
+  padding: 50px;
+  padding-top: 90px;
   padding-left: 300px;
-  width: 30%;
-  max-width: 350px;
+  width: 50%;
+  max-width: 400px;
   margin-left: -300px;
 }
 .trip-detail-container h1 {
-  margin: 40px 0px -20px 40px;
+  margin: 40px 0px -90px 0px;
   z-index: 3;
   position: relative;
 }
@@ -20,8 +21,8 @@
   font-size: 13px;
 }
 .trip-days-slider {
-  background-color: #484848;
-  padding: 30px 80px 60px 80px;
+  background-color: #d7d3cd;
+  padding: 20px 80px 60px 80px;
   font-family: "myriad-pro", sans-serif;
   width: 40%;
   z-index: 1;
@@ -35,18 +36,22 @@
 .trip-days-slider li {
   margin-bottom: 10px;
   font-weight: 100;
+  font-size: 14px;
 }
 .trip-days-container {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  margin-top: 40px;
 }
 .trip-days-container h1 {
-  margin: 0px 0px -20px 40px;
+  margin: 0px;
   z-index: 2;
   display: flex;
-  justify-content: center;
-  width: 70%;
+  justify-content: flex-start;
+  width: 90%;
+  max-width: 450px;
+  margin-bottom: 15px;
 }
 
 .slick-prev:before,
@@ -60,16 +65,12 @@
 }
 
 .slick-dots li.slick-active button:before {
-  color: white;
+  color: rgb(0, 0, 0);
 }
 .slick-dots {
   margin-bottom: -20px;
 }
-.trip-detail-share {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-}
+
 .trip-background-image {
   position: fixed;
   top: 0;
@@ -89,15 +90,15 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.229); /* zwarte tint met 50% transparantie */
+  background-color: rgba(166, 166, 166, 0.741); /* zwarte tint met 50% transparantie */
   pointer-events: none; /* zorgt dat de overlay geen interacties blokkeert */
 }
-.trip-detail-general-info div {
-  margin-top: 30px;
+.trip-detail-info1 {
+  margin-bottom: 30px;
 }
 .trip-detail-under-content {
   margin-top: 40vh;
-  background-color: #373737;
+  background-color: #f6f6f6;
   margin-left: -13%;
   margin-right: -13%;
   padding: 13%;
@@ -105,6 +106,7 @@
 }
 .map-container {
   height: 80vh;
+  padding-bottom: 50%;
 }
 .photos-container {
   height: 100vh;
@@ -113,13 +115,40 @@
 .trip-detail-edit-trip {
   display: flex;
   justify-content: flex-end;
+  margin-top: -40px;
+  margin-bottom: 50px;
 }
 .trip-detail-general-info button {
-  font-size: 13px;
   font-family: "myriad-pro", sans-serif;
-  font-weight: 100;
-  color: #d5dfff;
-  margin: 0px 40px 0px 0px;
+  margin: 0px 20px 0px 0px;
+}
+.trip-detail-info {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  height: 50px;
+}
+.trip-detail-header {
+  display: flex;
+  align-items: center;
+  align-items: center;
+  width: 45%;
+  max-width: 400px;
+  justify-content: space-between;
+}
+.trip-detail-share {
+  margin: 50px 0px -90px 0;
+  z-index: 3;
+  padding: 8px;
+  cursor: pointer;
+  background-color: #3c4b64;
+  color: white;
+}
+.trip-detail-share button {
+  display: flex;
+}
+.trip-detail-share svg {
+  color: white;
 }
 @media (max-width: 600px) {
   .trip-detail-general-info {
@@ -133,11 +162,14 @@
   }
   .trip-days-slider {
     padding: 20px 70px 20px 70px;
-
     width: 82%;
     margin-top: 10px;
     margin-left: -15%;
     margin-right: -11%;
+  }
+  .days-place {
+    margin-top: 50px !important;
+    color: blue;
   }
   .trip-days-container {
     margin-top: 70px;

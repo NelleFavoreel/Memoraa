@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import { SlArrowRight } from "react-icons/sl";
 import "slick-carousel/slick/slick.css";
@@ -11,8 +12,8 @@ import { toast } from "react-toastify";
 function NextArrow(props) {
   const { className, style, onClick } = props;
   return (
-    <div className={className} style={{ ...style, display: "block", right: "-0vh", zIndex: 1, cursor: "pointer", top: "30px" }} onClick={onClick}>
-      <SlArrowRight size={15} color="white" />
+    <div className={className} style={{ ...style, display: "block", right: "30vh", zIndex: 1, cursor: "pointer", top: "60px" }} onClick={onClick}>
+      <SlArrowRight size={15} color="black" />
     </div>
   );
 }
@@ -20,16 +21,17 @@ function NextArrow(props) {
 function PrevArrow(props) {
   const { className, style, onClick } = props;
   return (
-    <div className={className} style={{ ...style, display: "block", left: "-0vh", zIndex: 1, cursor: "pointer", top: "30px" }} onClick={onClick}>
-      <SlArrowRight size={15} color="white" style={{ transform: "rotate(180deg)" }} />
+    <div className={className} style={{ ...style, display: "block", left: "-0vh", zIndex: 1, cursor: "pointer", top: "60px" }} onClick={onClick}>
+      <SlArrowRight size={15} color="black" style={{ transform: "rotate(180deg)" }} />
     </div>
   );
 }
 
-function EditTripDays({ tripDays, setTripDays, tripId }) {
+function EditTripDays({ tripDays, setTripDays, tripId, onClose }) {
+  const { id } = useParams();
   const token = localStorage.getItem("token");
   const [activeIndex, setActiveIndex] = useState(0);
-
+  const navigate = useNavigate();
   const handleDayChange = (index, key, value) => {
     const updatedTripDays = [...tripDays];
     updatedTripDays[index][key] = value;
@@ -119,6 +121,8 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
       const result = await response.json();
       console.log("Wijzigingen opgeslagen:", result);
       toast.success("Wijzigingen succesvol opgeslagen!");
+      if (onClose) onClose();
+      else navigate(`/trips/${id}`);
     } catch (error) {
       console.error("Fout bij het opslaan van wijzigingen:", error);
       toast.error("Er is een fout opgetreden bij het opslaan.");
@@ -147,57 +151,57 @@ function EditTripDays({ tripDays, setTripDays, tripId }) {
                 <div>
                   <label>Plaats</label>
                   <input type="text" value={day.place || ""} onChange={(e) => handleDayChange(index, "place", e.target.value)} />
-                </div>
-
-                <div className="traveler-selection">
-                  <label>Activiteiten</label>
-                  <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                    <thead>
-                      <tr className="table-header">
-                        <th style={{ textAlign: "left", padding: "5px" }}>Activiteit</th>
-                        <th style={{ textAlign: "left", padding: "5px" }}>Verwijderen</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {day.activities?.length > 0 ? (
-                        day.activities.map((activity, i) => (
-                          <tr key={i}>
-                            <td style={{ padding: "8px", color: "white" }}>{activity}</td>
-                            <td style={{ padding: "8px" }}>
-                              <DeleteButton type="button" onClick={() => handleRemoveActivity(index, i)} className="delete-button" style={{ marginLeft: "10px" }}>
-                                x
-                              </DeleteButton>
-                            </td>
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td style={{ padding: "8px", color: "white" }}>Geen activiteiten</td>
-                          <td></td>
+                  <div className="traveler-selection">
+                    <label>Activiteiten</label>
+                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                      <thead>
+                        <tr className="table-header">
+                          <th style={{ textAlign: "left", padding: "5px" }}>Activiteit</th>
+                          <th style={{ textAlign: "left", padding: "5px" }}>Verwijderen</th>
                         </tr>
-                      )}
-                      <tr>
-                        <td colSpan="2" style={{ padding: "8px" }}>
-                          <input
-                            className="new-activity-input"
-                            type="text"
-                            value={day.newActivity || ""}
-                            onChange={(e) => handleDayChange(index, "newActivity", e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                handleAddActivity(index);
-                              }
-                            }}
-                            style={{ width: "80%", marginRight: "10px" }}
-                          />
-                          <AddButton type="button" onClick={() => handleAddActivity(index)}>
-                            +
-                          </AddButton>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {day.activities?.length > 0 ? (
+                          day.activities.map((activity, i) => (
+                            <tr key={i}>
+                              <td style={{ padding: "8px", color: "black" }}>{activity}</td>
+                              <td style={{ padding: "8px" }}>
+                                <DeleteButton type="button" onClick={() => handleRemoveActivity(index, i)} className="delete-button" style={{ marginLeft: "10px" }}>
+                                  x
+                                </DeleteButton>
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td style={{ padding: "8px", color: "black" }}>Geen activiteiten</td>
+                            <td></td>
+                          </tr>
+                        )}
+                        <tr>
+                          <td colSpan="2" style={{ padding: "0px" }} className="new-activity-row">
+                            <textarea
+                              className="new-activity-input"
+                              placeholder="Nieuwe activiteit toevoegen..."
+                              value={day.newActivity || ""}
+                              onChange={(e) => handleDayChange(index, "newActivity", e.target.value)}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter" && !e.shiftKey) {
+                                  e.preventDefault();
+                                  handleAddActivity(index);
+                                }
+                              }}
+                              rows={4}
+                              style={{ width: "100%", resize: "vertical", padding: "px" }}
+                            />
+                            <AddButton type="button" onClick={() => handleAddActivity(index)}>
+                              +
+                            </AddButton>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
 
                 <div className="photo-upload">

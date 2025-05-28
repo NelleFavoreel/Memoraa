@@ -10,6 +10,7 @@ function TravelInfo({ refresh, onRefreshed }) {
   const [trips, setTrips] = useState([]);
   const token = localStorage.getItem("token");
   const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
+
   const [filters, setFilters] = useState({
     status: "all",
     year: "",
@@ -72,41 +73,47 @@ function TravelInfo({ refresh, onRefreshed }) {
   const handleDelete = (id) => {
     setTrips((prevTrips) => prevTrips.filter((trip) => trip._id !== id));
   };
-
+  const sortedTrips = [...filteredTrips].sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
   return (
     <div>
       <Filters filters={filters} onFiltersChange={setFilters} />
-      {filteredTrips.map((trip, index) => (
-        <li key={trip._id} className={`trip-item ${index % 2 !== 0 ? "reverse" : ""}`}>
-          <div className="trip-content">
-            {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} className="trip-image" />}
-            <div className="trip-info-container">
-              <h2 className="trips-info-title">{trip.tripType === "roadtrip" && trip.countries?.length > 0 ? trip.countries.join(" - ") : `${trip.place}`}</h2>
-
-              <div className="trip-info">
-                {trip.travelers?.includes(userId) && (
-                  <div className="trip-delete-button">
-                    <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
-                  </div>
-                )}
-                <p>
-                  <strong>Type:</strong> {trip.tripType}
-                </p>
-                <p>
-                  <strong>Datum:</strong> {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
-                </p>
-                <div className="trip-link">
-                  <button>
-                    <Link to={`/trips/${trip._id}`}>
-                      <SlArrowRight />
-                    </Link>
-                  </button>
+      <div className="trips-list">
+        {sortedTrips.map((trip, index) => (
+          <li key={trip._id} className={`trip-item ${index % 2 !== 0 ? "reverse" : ""}`}>
+            <div className="trip-content">
+              {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} className="trip-image" />}
+              <div className="trip-image-little">
+                <div className="trip-image-little">{trip.randomPhotos?.length > 0 && trip.randomPhotos.map((photo, idx) => <img key={idx} src={photo} alt={`Reisfoto ${idx + 1}`} />)}</div>
+              </div>
+              <div className="trip-info-container">
+                <div className="trip-info">
+                  <Link to={`/trips/${trip._id}`}>
+                    <h2 className="trips-info-title">{trip.tripType === "roadtrip" && trip.countries?.length > 0 ? trip.countries.join(" - ") : `${trip.place}`}</h2>
+                    {trip.travelers?.includes(userId) && (
+                      <div className="trip-delete-button">
+                        <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
+                      </div>
+                    )}
+                    <p>
+                      <label>Type:</label> {trip.tripType}
+                    </p>
+                    <p>
+                      <label>Datum:</label> {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
+                    </p>
+                    <div className="trip-link">
+                      <button>
+                        <Link to={`/trips/${trip._id}`}>
+                          <SlArrowRight />
+                        </Link>
+                      </button>
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>
-          </div>
-        </li>
-      ))}
+          </li>
+        ))}
+      </div>
     </div>
   );
 }
