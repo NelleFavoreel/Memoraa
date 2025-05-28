@@ -10,6 +10,7 @@ function TravelInfo({ refresh, onRefreshed }) {
   const [trips, setTrips] = useState([]);
   const token = localStorage.getItem("token");
   const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
+
   const [filters, setFilters] = useState({
     status: "all",
     year: "",
@@ -72,12 +73,12 @@ function TravelInfo({ refresh, onRefreshed }) {
   const handleDelete = (id) => {
     setTrips((prevTrips) => prevTrips.filter((trip) => trip._id !== id));
   };
-
+  const sortedTrips = [...filteredTrips].sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
   return (
     <div>
       <Filters filters={filters} onFiltersChange={setFilters} />
       <div className="trips-list">
-        {filteredTrips.map((trip, index) => (
+        {sortedTrips.map((trip, index) => (
           <li key={trip._id} className={`trip-item ${index % 2 !== 0 ? "reverse" : ""}`}>
             <div className="trip-content">
               {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} className="trip-image" />}
