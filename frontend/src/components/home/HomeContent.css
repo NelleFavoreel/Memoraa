@@ -71,30 +71,6 @@ img {
 .home-content-text {
   font-weight: 600;
 }
-.image1,
-.image2,
-.image3,
-.image4 {
-  transition: transform 0.3s ease;
-  cursor: pointer;
-}
-
-/* Hover effect per afbeelding */
-.image1:hover {
-  transform: translateX(10px) translateY(-5px) rotate(2deg);
-}
-
-.image2:hover {
-  transform: translateX(-8px) translateY(4px) rotate(-1deg);
-}
-
-.image3:hover {
-  transform: translateX(6px) translateY(3px) rotate(1deg);
-}
-
-.image4:hover {
-  transform: translateX(-5px) translateY(-7px) rotate(-2deg);
-}
 
 @media (min-width: 1380px) {
   .home-content-box {
@@ -250,5 +226,64 @@ img {
   .image9:hover {
     transform: none !important;
     cursor: default;
+  }
+}
+
+.image1,
+.image2,
+.image3,
+.image4 {
+  transform: none;
+  transition: transform 1s ease;
+}
+.image1.animate {
+  animation: float1 2s ease-in-out infinite alternate;
+}
+
+.image2.animate {
+  animation: float2 3s ease-in-out infinite alternate;
+}
+
+.image3.animate {
+  animation: float3 2s ease-in-out infinite alternate;
+}
+
+.image4.animate {
+  animation: float4 4s ease-in-out infinite alternate;
+}
+
+@keyframes float1 {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateX(10px) translateY(-5px) rotate(2deg);
+  }
+}
+
+@keyframes float2 {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateX(-8px) translateY(4px) rotate(-1deg);
+  }
+}
+
+@keyframes float3 {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateX(6px) translateY(3px) rotate(1deg);
+  }
+}
+
+@keyframes float4 {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateX(-5px) translateY(-7px) rotate(-2deg);
   }
 }

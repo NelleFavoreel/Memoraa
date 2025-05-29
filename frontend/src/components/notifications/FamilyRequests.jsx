@@ -24,25 +24,27 @@ function FamilyRequests() {
     const token = localStorage.getItem("token");
     try {
       const res = await fetch("http://localhost:3001/family/accept-family-request", {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ requesterId }),
+        body: JSON.stringify({ requestSenderId: requesterId }),
       });
+
       const data = await res.json();
       setMessage(data.message);
-      fetchRequests(); // lijst verversen na acceptatie
+      fetchRequests(); // ververs de lijst
     } catch (error) {
       console.error("Fout bij accepteren verzoek:", error);
     }
   };
+
   const handleReject = async (requesterId) => {
     const token = localStorage.getItem("token");
     try {
       const res = await fetch("http://localhost:3001/family/reject-family-request", {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
