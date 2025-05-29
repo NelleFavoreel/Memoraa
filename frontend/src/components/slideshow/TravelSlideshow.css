@@ -1,3 +1,13 @@
+@keyframes softSwing {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(1.5deg);
+  }
+}
+
 .custom-slideshow {
   display: flex;
   align-items: center;
@@ -10,6 +20,17 @@
   overflow: hidden;
   margin-bottom: 90px;
 }
+.side-image.left img {
+  animation: softSwing 6s ease-in-out infinite;
+  transform-origin: left center;
+}
+
+.side-image.right img {
+  animation: softSwing 6s ease-in-out infinite;
+  transform-origin: right center;
+  animation-delay: 3s;
+}
+
 .image-wrapper {
   display: flex;
   justify-content: center;
@@ -100,7 +121,7 @@
 .side-image img,
 .center-image,
 .center-image img {
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
 }
 .center-image {
   opacity: 1;
@@ -138,14 +159,20 @@
   }
 
   .hover-info {
-    position: relative;
-    bottom: 40px;
-    width: 50%;
-    padding: 20px 30px;
-    text-align: left;
-    right: -24%;
-    left: auto;
-    height: 50px;
+    opacity: 1;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateY(0);
+  }
+
+  .hover-info.fade {
+    opacity: 0;
+    transform: translateY(10px); /* iets naar beneden verplaatsen bij uitfaden */
+  }
+  .center-image:hover .hover-info,
+  .center-image:focus .hover-info {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
   .slide-place {

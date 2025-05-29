@@ -8,8 +8,12 @@ import SeePicture from "../../../public/images/SeePicture.jpeg";
 import SeePicture2 from "../../../public/images/SeePicture2.jpeg";
 import City from "../../../public/images/City.jpeg";
 import MountainCity from "../../../public/images/MountainCity.jpeg";
+import useAnimateOnVisible from "../../components/animations/useAnimateOnVisible";
+
 import "./HomeContent.css";
 function HomeContent() {
+  useAnimateOnVisible(".rotate-on-visible");
+  useAnimateOnVisible(".rotate-on-visible1");
   const navigate = useNavigate();
   return (
     <>
@@ -29,7 +33,7 @@ function HomeContent() {
             </div>
           </div>
           <div className="picture-container">
-            <img src={SeePicture2} alt="Blue See" className="image5" />
+            <img src={SeePicture2} alt="Blue See" className="image5 rotate-on-visible" />
             <img src={City} alt="Blue See" className="image6" />
           </div>
         </div>
@@ -43,7 +47,7 @@ function HomeContent() {
           </div>
           <div className="picture-container">
             <img src={MountainCity} alt="Blue See" className="image8" />
-            <img src={CityPicture} alt="Blue See" className="image7" />
+            <img src={CityPicture} alt="Blue See" className="image7 rotate-on-visible1" />
           </div>
         </div>
 
@@ -52,11 +56,11 @@ function HomeContent() {
             <h2>Laat je inspireren door echte familieavonturen</h2>
             <div className="home-content">
               <p>Bekijk alle onvergetelijke reizen die gezinnen voor jou hebben gedeeld. Misschien zit jouw volgende droomreis er wel tussen!</p>
-              <FullButton onClick={() => navigate("/login")}>Plan je reis</FullButton>
+              <FullButton onClick={() => navigate("/login")}>Bekijk je reis</FullButton>
             </div>
           </div>
           <div className="picture-container">
-            <img src={BlueSeePicture} alt="Blue See" className="image9" />
+            <img src={BlueSeePicture} alt="Blue See" className="image9 rotate-on-visible" />
           </div>
         </div>
       </div>

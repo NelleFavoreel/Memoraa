@@ -3,21 +3,12 @@
   border: none;
   font-size: 16px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.3s ease, color 0.3s ease;
   min-width: 120px;
-}
-a {
-  text-decoration: none;
-  color: #373737;
 }
 
 .custom-button.default {
   background-color: #3c4b64;
-  color: white;
-}
-
-.custom-button.default:hover {
-  background-color: #566a8e;
   color: white;
 }
 
@@ -26,10 +17,44 @@ a {
   color: #3c4b64;
 }
 
-.custom-button.secondary:hover {
-  background-color: #cfcfcf;
+/* Hover kleurveranderingen */
+.custom-button.default:hover {
+  background-color: #566a8e;
+  color: white;
+  animation: shake 0.3s ease;
 }
 
+.custom-button.secondary:hover {
+  background-color: #cfcfcf;
+  animation: shake 0.3s ease;
+}
+
+/* Shake keyframes */
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Link stijl */
+a {
+  text-decoration: none;
+  color: #373737;
+}
+
+/* Mobiel: animatie uitzetten */
 @media (max-width: 768px) {
   .custom-button {
     width: 70px;
@@ -38,11 +63,13 @@ a {
     padding: 5px;
     cursor: pointer;
     transition: none;
+    animation: none !important;
   }
 
   .custom-button.default:hover,
   .custom-button.secondary:hover {
     background-color: inherit;
     color: inherit;
+    animation: none !important;
   }
 }

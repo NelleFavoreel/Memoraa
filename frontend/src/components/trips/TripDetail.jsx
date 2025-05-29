@@ -159,6 +159,10 @@ function TravelDetail({ setHideNavbar }) {
               <p>{tripDays.length} dagen </p>
             </div>
             <div className="trip-detail-info">
+              <label>Type:</label>
+              <p>{trip.tripType}</p>
+            </div>
+            <div className="trip-detail-info">
               <label>Reizigers:</label>
               <p>{travelerNames.length > 0 ? <>{travelerNames.join(", ")}</> : "Geen reisgenoten"}</p>
             </div>
@@ -169,7 +173,7 @@ function TravelDetail({ setHideNavbar }) {
           </div>
         </div>
       </div>
-      <TripDays tripDays={tripDays} onDayChange={handleDayChange} />
+      <TripDays tripDays={tripDays} setTripDays={setTripDays} onDayChange={handleDayChange} tripId={id} />
 
       <div className="trip-detail-under-content" ref={photosRef}>
         <div className="photos-container">
