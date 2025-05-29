@@ -2,6 +2,7 @@ import { useState } from "react";
 import TravelInfo from "../../components/trips/TravelInfo";
 import AddTrip from "../../components/trips/AddTrip";
 import "./Trips.css";
+import "../../components/trips/AnimationTrips.css";
 import FullButton from "../../components/button/FullButton";
 import AddButton from "../../components/button/AddButton";
 function TravelOverview() {

@@ -39,32 +39,9 @@ function TravelDetail({ setHideNavbar }) {
         <span>Terug</span>
       </div>
       <div className="trip-detail-edit-trip">
-        {isTraveler && (
-          // <Link to={`/edit-trip/${id}`}>
-          <Underline onClick={() => setShowModal(true)}>Bewerk reis</Underline>
-          // </Link>
-        )}
+        {isTraveler && <Underline onClick={() => setShowModal(true)}>Bewerk</Underline>}
 
-        {showModal && (
-          <div className="modal-overlay">
-            <div className="modal-content1">
-              <EditTrip onClose={() => setShowModal(false)} />{" "}
-              <button
-                className="modal-close"
-                onClick={() => setShowModal(false)}
-                style={{
-                  float: "right",
-                  fontSize: "2rem",
-                  background: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-              >
-                <span className="material-symbols-outlined">close</span>
-              </button>
-            </div>
-          </div>
-        )}
+        {showModal && <EditTrip isOpen={showModal} onClose={() => setShowModal(false)} />}
       </div>
       <TripDetail trip={trip} setHideNavbar={setHideNavbar} />
     </div>

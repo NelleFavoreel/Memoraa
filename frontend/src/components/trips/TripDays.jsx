@@ -3,6 +3,8 @@ import Slider from "react-slick";
 import { SlArrowRight } from "react-icons/sl";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import EditTripDays from "./EditTripDays";
+import FullButton from "../button/FullButton";
 
 function NextArrow(props) {
   const { className, style, onClick } = props;
@@ -22,8 +24,9 @@ function PrevArrow(props) {
   );
 }
 
-function TripDays({ tripDays, onDayChange }) {
+function TripDays({ tripDays, setTripDays, onDayChange, initialTripDays, tripId }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const settings = {
     dots: false,
@@ -45,6 +48,7 @@ function TripDays({ tripDays, onDayChange }) {
 
   return (
     <div className="trip-days-container">
+      <FullButton onClick={() => setShowEditModal(true)}>Bewerk</FullButton>
       <div className="trip-days-slider">
         <h1>Dag {activeIndex + 1}</h1>
         <Slider {...settings}>
@@ -59,6 +63,7 @@ function TripDays({ tripDays, onDayChange }) {
           ))}
         </Slider>
       </div>
+      {showEditModal && <EditTripDays tripDays={tripDays} setTripDays={setTripDays} tripId={tripId} isOpen={showEditModal} onClose={() => setShowEditModal(false)} />}
     </div>
   );
 }

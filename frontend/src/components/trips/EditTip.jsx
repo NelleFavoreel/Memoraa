@@ -4,8 +4,9 @@ import EditTripDays from "./EditTripDays";
 import "./EditTrip.css";
 import FullButton from "../button/FullButton";
 import { toast } from "react-toastify";
+import LoginModal from "../modal/LoginModal";
 
-function EditTrip({ onClose }) {
+function EditTrip({ onClose, isOpen }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const currentUserId = localStorage.getItem("userId");
@@ -147,17 +148,17 @@ function EditTrip({ onClose }) {
   if (loading || !trip) return <p>De reisgegevens worden geladen...</p>;
 
   return (
-    <div className="edit-trip-modal">
-      <div className="edit-trip-container">
-        {showDaysEditor ? (
-          <>
-            <FullButton onClick={() => setShowDaysEditor(false)} className="edit-days-toggle-button">
-              Terug naar algemene info
-            </FullButton>
-            <EditTripDays tripDays={tripDays} setTripDays={setTripDays} tripId={id} />
-          </>
-        ) : (
-          <>
+    <div className="edit-trip-container">
+      {showDaysEditor ? (
+        <>
+          {/* <FullButton onClick={() => setShowDaysEditor(false)} className="edit-days-toggle-button">
+            Terug naar algemene info
+          </FullButton> */}
+          <EditTripDays tripDays={tripDays} setTripDays={setTripDays} tripId={id} />
+        </>
+      ) : (
+        <>
+          <LoginModal isOpen={isOpen} onClose={onClose}>
             <div className="trip-edit-general-info">
               <form onSubmit={handleSaveChanges} className="edit-trip-form">
                 <div>
@@ -218,15 +219,15 @@ function EditTrip({ onClose }) {
                   <div className="button-container-edit">
                     <FullButton type="submit">Opslaan</FullButton>
                   </div>
-                  <FullButton onClick={() => setShowDaysEditor(true)} className="edit-days-toggle-button">
+                  {/* <FullButton onClick={() => setShowDaysEditor(true)} className="edit-days-toggle-button">
                     Bewerk de dagen afzonderlijk
-                  </FullButton>
+                  </FullButton> */}
                 </div>
               </form>
             </div>
-          </>
-        )}
-      </div>
+          </LoginModal>
+        </>
+      )}
     </div>
   );
 }
