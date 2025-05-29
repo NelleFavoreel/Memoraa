@@ -220,3 +220,35 @@ img {
     margin-bottom: 20px;
   }
 }
+
+/* Animatie */
+.image5,
+.image7,
+.image9 {
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.rotate-on-visible {
+  transform: rotate(0deg) translateX(0px);
+  transition: transform 0.3s ease;
+}
+.rotate-on-visible1 {
+  transform: rotate(0deg) translateX(0px);
+  transition: transform 0.3s ease;
+}
+
+.rotate-on-visible.animate {
+  transform: rotate(-5deg) translateX(-5px);
+}
+.rotate-on-visible1.animate {
+  transform: rotate(5deg) translateX(5px);
+}
+@media (hover: none) {
+  .image5:hover,
+  .image7:hover,
+  .image9:hover {
+    transform: none !important;
+    cursor: default;
+  }
+}

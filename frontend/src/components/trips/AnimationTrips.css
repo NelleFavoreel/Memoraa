@@ -1,0 +1,115 @@
+/* Animatie */
+/* Basis - begin onzichtbaar en verschoven naar links */
+.trip-image-little img {
+  opacity: 0;
+  transform: translateX(-90px); /* start links buiten beeld */
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  position: relative; /* voor goede animatie over de grote foto */
+  z-index: 1; /* achter de grote foto (die z-index 2 krijgt) */
+}
+
+/* Grote foto staat 'boven' */
+.trip-image {
+  position: relative;
+  z-index: 2;
+}
+
+/* Animatie wanneer zichtbaar */
+.trip-image-little img.animate {
+  opacity: 1;
+  transform: translateX(0);
+  animation: fadeSlideRight 0.8s ease forwards;
+}
+
+/* Animatie keyframes */
+@keyframes fadeSlideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Voor fade-out (als je die wilt gebruiken) */
+.trip-image-little img.fade-out {
+  opacity: 0;
+  transform: translateX(-90px);
+}
+@media (max-width: 767px) {
+  /* Zet de animaties en transformaties terug naar normaal */
+  .trip-image-little img {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    position: static !important;
+    z-index: auto !important;
+    animation: none !important;
+  }
+
+  .trip-image-little img.animate {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .trip-image {
+    position: static !important;
+    z-index: auto !important;
+  }
+}
+/* REVERSE: begin onzichtbaar en verschoven naar rechts */
+.trip-item.reverse .trip-image-little img {
+  opacity: 0;
+  transform: translateX(90px); /* start rechts buiten beeld */
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  position: relative;
+  z-index: 1;
+}
+
+/* Animatie wanneer zichtbaar in reverse */
+.trip-item.reverse .trip-image-little img.animate {
+  opacity: 1;
+  transform: translateX(0);
+  animation: fadeSlideLeft 0.8s ease forwards;
+}
+
+/* Nieuwe keyframes voor reverse */
+@keyframes fadeSlideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Voor fade-out in reverse */
+.trip-item.reverse .trip-image-little img.fade-out {
+  opacity: 0;
+  transform: translateX(90px);
+}
+.trip-info {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: none;
+}
+
+.trip-info.animate {
+  animation: fadeSlideUp 0.6s ease forwards;
+}
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -5,6 +5,7 @@ import FullButton from "../button/FullButton";
 import Underline from "../button/Underline";
 import { SlArrowRight } from "react-icons/sl";
 import Filters from "../../components/trips/filters/Filters";
+import useAnimateOnVisible from "../animations/useAnimateOnVisible";
 
 function TravelInfo({ refresh, onRefreshed }) {
   const [trips, setTrips] = useState([]);
@@ -73,6 +74,35 @@ function TravelInfo({ refresh, onRefreshed }) {
   const handleDelete = (id) => {
     setTrips((prevTrips) => prevTrips.filter((trip) => trip._id !== id));
   };
+  useEffect(() => {
+    if (trips.length > 0) {
+      setTimeout(() => {
+        const elements = document.querySelectorAll(".trip-image-little img");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("animate");
+                entry.target.classList.remove("fade-out");
+              } else {
+                entry.target.classList.remove("animate");
+                entry.target.classList.add("fade-out");
+              }
+            });
+          },
+          {
+            threshold: 0.2,
+          }
+        );
+
+        elements.forEach((el) => observer.observe(el));
+
+        return () => observer.disconnect();
+      }, 100);
+    }
+  }, [trips]);
+  useAnimateOnVisible(".trip-info", [trips]);
+
   const sortedTrips = [...filteredTrips].sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
   return (
     <div>
