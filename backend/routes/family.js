@@ -79,7 +79,6 @@ router.put("/accept-family-request", authenticateToken, async (req, res) => {
   const requesterId = new ObjectId(requestSenderId);
 
   try {
-    // Voeg elkaar toe aan elkaars familieleden
     await usersCollection.updateOne(
       { _id: userId },
       {
@@ -95,7 +94,6 @@ router.put("/accept-family-request", authenticateToken, async (req, res) => {
       }
     );
 
-    // ✅ Notificatie naar verzoeker
     await notificationsCollection.insertOne({
       recipients: [requesterId],
       type: "familyRequestAccepted",
@@ -104,7 +102,6 @@ router.put("/accept-family-request", authenticateToken, async (req, res) => {
       readBy: [],
     });
 
-    // ✅ Notificatie naar jezelf
     await notificationsCollection.insertOne({
       recipients: [userId],
       type: "familyRequestAccepted",
@@ -113,7 +110,7 @@ router.put("/accept-family-request", authenticateToken, async (req, res) => {
       readBy: [],
     });
 
-    res.status(200).json({ message: "Familieverzoek geaccepteerd en notificaties verzonden." });
+    res.status(200).json({ message: "Familieverzoek geaccepteerd" });
   } catch (error) {
     console.error("❌ Fout bij accepteren familieverzoek:", error);
     res.status(500).json({ message: "Fout bij accepteren familieverzoek." });
@@ -152,7 +149,7 @@ router.get("/friends", authenticateToken, async (req, res) => {
     const user = await collection.findOne({ _id: userId });
 
     if (!user || !user.familyMembers || user.familyMembers.length === 0) {
-      return res.json([]); // Geen familieleden
+      return res.json([]);
     }
 
     const friends = await collection
@@ -175,10 +172,8 @@ router.delete("/remove-friend", authenticateToken, async (req, res) => {
     const { friendId } = req.body;
     const friendObjectId = new ObjectId(friendId);
 
-    // Verwijder vriend bij gebruiker
     await collection.updateOne({ _id: userId }, { $pull: { familyMembers: friendObjectId } });
 
-    // Verwijder gebruiker bij vriend
     await collection.updateOne({ _id: friendObjectId }, { $pull: { familyMembers: userId } });
 
     res.json({ message: "Familielid verwijderd." });
@@ -187,24 +182,21 @@ router.delete("/remove-friend", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Verwijderen mislukt." });
   }
 });
-// Voorbeeld route voor acceptatie familieverzoek (in bv routes/family.js)
+
 router.post("/accept", authenticateToken, async (req, res) => {
   try {
     const db = getDB();
     const usersCollection = db.collection("users");
     const notificationsCollection = db.collection("notifications");
 
-    const { requesterId } = req.body; // wie het verzoek stuurde
+    const { requesterId } = req.body;
     const currentUserId = new ObjectId(req.user.userId);
 
-    // Update familieleden van beide users (vereist)
-    // Voeg hier je logica toe om familyMembers up te daten, bv:
     await usersCollection.updateOne({ _id: currentUserId }, { $addToSet: { familyMembers: new ObjectId(requesterId) } });
     await usersCollection.updateOne({ _id: new ObjectId(requesterId) }, { $addToSet: { familyMembers: currentUserId } });
 
-    // Maak notificatie voor de oorspronkelijke verzoeker
     const notification = {
-      userId: new ObjectId(requesterId), // die moet dit zien
+      userId: new ObjectId(requesterId),
       type: "familyAccepted",
       sender: currentUserId,
       date: new Date(),
@@ -219,6 +211,7 @@ router.post("/accept", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Fout bij accepteren familieverzoek." });
   }
 });
+
 router.post("/reject-family-request", authenticateToken, async (req, res) => {
   try {
     const db = getDB();
@@ -228,7 +221,6 @@ router.post("/reject-family-request", authenticateToken, async (req, res) => {
     const currentUserId = new ObjectId(req.user.userId);
     const requesterObjectId = new ObjectId(requesterId);
 
-    // Verwijder het verzoek van de array familyRequests van de huidige gebruiker
     await usersCollection.updateOne({ _id: currentUserId }, { $pull: { familyRequests: requesterObjectId } });
 
     res.status(200).json({ message: "Familieverzoek geweigerd." });
