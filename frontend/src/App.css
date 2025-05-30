@@ -80,6 +80,10 @@ td {
 th {
   color: #3c4b64;
 }
+li {
+  font-size: 14px;
+  font-weight: 100;
+}
 /* Mobiele versie */
 @media (max-width: 768px) {
   body {
@@ -111,5 +115,8 @@ th {
   th {
     font-size: 14px;
     font-weight: 600;
+  }
+  li {
+    font-size: 11px;
   }
 }

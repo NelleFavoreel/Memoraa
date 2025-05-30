@@ -14,28 +14,35 @@ function GetNotifications() {
         const currentUserId = localStorage.getItem("userId");
         if (!token || !currentUserId) throw new Error("Niet ingelogd.");
 
-        // 1. Haal alle notificaties op
         const resNotif = await fetch("http://localhost:3001/notifications", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         if (!resNotif.ok) throw new Error("Fout bij laden notificaties");
         const notifData = await resNotif.json();
-        notifData.forEach((n) => {
-          console.log("Notif", n._id, "userId:", n.userId, "recipients:", n.recipients);
-        });
+
         const filteredNotifs = notifData.filter((n) => {
-          const userIdMatch = n.userId && n.userId.toString() === currentUserId.toString();
-          const recipientsMatch = Array.isArray(n.recipients) && n.recipients.some((r) => r.toString() === currentUserId.toString());
-          console.log(`Notificatie ${n._id}: userIdMatch=${userIdMatch}, recipientsMatch=${recipientsMatch}`);
+          const userIdMatch = n.userId === currentUserId;
+          const recipientsMatch = Array.isArray(n.recipients) && n.recipients.includes(currentUserId);
           return userIdMatch || recipientsMatch;
         });
 
-        const tripIds = [...new Set(filteredNotifs.map((n) => n.tripId && n.tripId.toString()).filter(Boolean))];
-
         setNotifications(filteredNotifs);
 
-        // 4. Haal reizen op per tripId
+        const unreadNotifIds = filteredNotifs.filter((n) => !(n.readBy || []).includes(currentUserId)).map((n) => n._id);
+
+        if (unreadNotifIds.length > 0) {
+          await fetch("http://localhost:3001/notifications/mark-as-read", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ notificationIds: unreadNotifIds }),
+          });
+        }
+
+        const tripIds = [...new Set(filteredNotifs.map((n) => n.tripId).filter(Boolean))];
         const tripsData = {};
         for (const id of tripIds) {
           try {
@@ -54,10 +61,7 @@ function GetNotifications() {
         }
         setTrips(tripsData);
 
-        // 5. Verzamel unieke sender IDs uit gefilterde notificaties
         const senderIds = [...new Set(filteredNotifs.map((n) => n.sender))];
-
-        // 6. Haal naam op per sender
         const sendersData = {};
         for (const senderId of senderIds) {
           try {
@@ -90,51 +94,57 @@ function GetNotifications() {
 
   if (notifications.length === 0) return <p>Geen nieuwe notificaties.</p>;
 
-  const renderNotificationText = (notif) => {
-    const sender = senders[notif.sender] || "Iemand";
-    const trip = trips[notif.tripId?.toString()];
-    const place = trip?.place || notif.tripPlace || "";
-
-    switch (notif.type) {
-      case "tripAdded":
-        return `${sender} heeft je toegevoegd aan een reis${place ? ` naar ${place}` : ""}`;
-      case "tripDeleted":
-        return `${sender} heeft een reis verwijderd${place ? ` naar ${place}` : ""}`;
-      case "tripUpdated":
-        return `${sender} heeft de reis${place ? ` naar ${place}` : ""} bijgewerkt`;
-      case "familyRequest":
-        return `${sender} wil je toevoegen als familielid`;
-      case "friendRequestReceived":
-        return `${sender} heeft je een vriendschapsverzoek gestuurd`;
-      case "friendRequestAccepted":
-        return `${sender} heeft je vriendschapsverzoek geaccepteerd`;
-      case "familyRequestAccepted":
-      case "familyAccepted":
-        if (notif.sender?.toString() === localStorage.getItem("userId")) {
-          return `Je hebt een familielid toegevoegd.`;
-        } else {
-          return `${sender} heeft je familievriend-verzoek geaccepteerd`;
-        }
-      default:
-        return `Onbekende notificatie: ${notif.type}`;
-    }
-  };
-
   return (
-    <div>
-      <h1 className="title">Notificaties</h1>
+    <div className="get-notifications-container">
       <ul>
-        {notifications.map((notif) => (
-          <li key={notif._id}>
-            {renderNotificationText(notif)} (
-            {new Date(notif.date).toLocaleDateString("nl-BE", {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-            })}
-            )
-          </li>
-        ))}
+        {notifications.map((notif) => {
+          const isUnread = !(notif.readBy || []).includes(localStorage.getItem("userId"));
+          const senderName = senders[notif.sender] || "Iemand";
+          const trip = trips[notif.tripId?.toString()];
+          const place = trip?.place || notif.tripPlace || "";
+
+          let message = "";
+          switch (notif.type) {
+            case "tripAdded":
+              message = `heeft je toegevoegd aan een reis${place ? ` naar ${place}` : ""}`;
+              break;
+            case "tripDeleted":
+              message = `heeft een reis verwijderd${place ? ` naar ${place}` : ""}`;
+              break;
+            case "tripUpdated":
+              message = `heeft de reis${place ? ` naar ${place}` : ""} bijgewerkt`;
+              break;
+            case "familyRequest":
+              message = `wil je toevoegen als familielid`;
+              break;
+            case "friendRequestReceived":
+              message = `heeft je een vriendschapsverzoek gestuurd`;
+              break;
+            case "friendRequestAccepted":
+              message = `heeft je vriendschapsverzoek geaccepteerd`;
+              break;
+            case "familyRequestAccepted":
+            case "familyAccepted":
+              message = notif.sender?.toString() === localStorage.getItem("userId") ? `Je hebt een familielid toegevoegd.` : `heeft je familievriend-verzoek geaccepteerd`;
+              break;
+            default:
+              message = `Onbekende notificatie: ${notif.type}`;
+          }
+
+          return (
+            <li key={notif._id} className={`notification-item ${isUnread ? "unread" : ""}`}>
+              <span className="notification-sender">{senderName}</span>
+              {message}
+              <div style={{ fontSize: "0.85em", color: "#666", marginTop: "4px" }}>
+                {new Date(notif.date).toLocaleDateString("nl-BE", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                })}
+              </div>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

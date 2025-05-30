@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DeleteButton from "../button/DeleteButton";
+import AddButton from "../button/AddButton";
 
 function FamilyRequests() {
   const [requests, setRequests] = useState([]);
@@ -34,7 +35,7 @@ function FamilyRequests() {
 
       const data = await res.json();
       setMessage(data.message);
-      fetchRequests(); // ververs de lijst
+      fetchRequests();
     } catch (error) {
       console.error("Fout bij accepteren verzoek:", error);
     }
@@ -65,24 +66,24 @@ function FamilyRequests() {
 
   return (
     <div className="family-requests-container">
-      {requests.length === 0 && <p>Geen verzoeken gevonden.</p>}
       <table style={{ width: "100%", borderCollapse: "collapse" }}>
         <thead>
           <tr>
-            <th style={{ textAlign: "left", padding: "8px" }}>Naam</th>
-            <th style={{ textAlign: "left", padding: "8px" }}>Toevoegen of Verwijderen</th>
+            <th style={{ textAlign: "left", padding: "8px 8px" }}>Naam</th>
+            <th style={{ textAlign: "left", padding: "8px 8px" }}></th>
           </tr>
+          {requests.length === 0 && <p>Geen verzoeken gevonden.</p>}
         </thead>
-        <tbody>
+        <tbody className="family-requests-body">
           {requests.map((user) => (
             <tr key={user._id}>
               <td style={{ padding: "8px" }}>{user.screenName}</td>
-              <td style={{ padding: "8px" }}>
-                <td style={{ padding: "8px" }}>
-                  <button onClick={() => handleAccept(user._id)} style={{ marginRight: "8px" }}>
-                    Accepteer
-                  </button>
-                  <DeleteButton onClick={() => handleReject(user._id)} style={{ backgroundColor: "lightcoral" }}>
+              <td>
+                <td className="action-buttons" style={{ display: "flex", gap: "20px", justifyContent: "flex-end", width: "170px" }}>
+                  <AddButton onClick={() => handleAccept(user._id)} style={{ marginRight: "8px", padding: "8px 10px" }}>
+                    ＋
+                  </AddButton>
+                  <DeleteButton onClick={() => handleReject(user._id)} style={{ backgroundColor: "lightcoral", padding: "20px 16px" }}>
                     Weiger
                   </DeleteButton>
                 </td>
