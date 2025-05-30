@@ -7,11 +7,12 @@
 }
 
 .family-requests-container {
-  background-color: #d7d3cd;
+  background-color: #e5e3df46;
   padding: 20px 30px;
   height: 300px;
   width: 400px;
 }
+
 .notifications-container li {
   margin-bottom: 20px;
   list-style-type: none;
@@ -28,14 +29,13 @@
 }
 
 .get-notifications-container li {
-  background-color: #f8f8f8;
+  background-color: #e5e3df46;
   margin-bottom: 10px;
   padding: 10px 15px;
   font-weight: 100;
 }
 .notification-item {
   background: #f9f9f9;
-  border: 1px solid #ddd;
   padding: 12px 16px;
   margin-bottom: 10px;
   transition: background 0.3s ease;

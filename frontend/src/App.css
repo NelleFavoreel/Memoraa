@@ -48,6 +48,8 @@ input {
   border-bottom: 0.5px solid #3c4b64;
   margin-bottom: 20px;
   margin-top: 10px;
+  padding: 5px;
+  padding-bottom: 3px;
   min-width: 210px;
   margin-left: 20px;
   color: #3c4b64;
