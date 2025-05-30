@@ -14,7 +14,10 @@
   font-weight: 400;
   font-size: 14px;
 }
-
+.underline-link svg {
+  display: flex;
+  height: 20px;
+}
 .underline-link::after {
   content: "";
   position: absolute;

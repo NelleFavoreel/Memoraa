@@ -6,6 +6,8 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
 import TripDays from "./TripDays";
 import Underline from "../button/Underline";
+import { SlSettings } from "react-icons/sl";
+import EditTrip from "./EditTip";
 
 function TravelDetail({ setHideNavbar }) {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
@@ -17,6 +19,8 @@ function TravelDetail({ setHideNavbar }) {
   const [travelerNames, setTravelerNames] = useState([]);
   const [backgroundPhotos, setBackgroundPhotos] = useState([]);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  const currentUserId = localStorage.getItem("userId");
+  const [showModal, setShowModal] = useState(false);
 
   const scrollToPhotos = () => {
     photosRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -128,7 +132,7 @@ function TravelDetail({ setHideNavbar }) {
     }
   }, [tripDays]);
   if (loading) return <p>De reisgegevens worden geladen...</p>;
-
+  const isTraveler = trip.travelers.includes(currentUserId);
   return (
     <div>
       <div
@@ -145,8 +149,18 @@ function TravelDetail({ setHideNavbar }) {
       <div className="trip-detail-container">
         <div className="trip-detail-header">
           <h1>{trip.country}</h1>
-          <div className="trip-detail-share">
-            <ShareTripButton tripId={trip._id} />
+          <div className="trip-detail-header-actions">
+            <div className="trip-detail-share">
+              <ShareTripButton tripId={trip._id} />
+            </div>
+            {showModal && <EditTrip isOpen={showModal} onClose={() => setShowModal(false)} />}
+            {isTraveler && (
+              <Underline onClick={() => setShowModal(true)} className="edit-trip-button">
+                <SlSettings />
+              </Underline>
+            )}
+
+            {showModal && <EditTrip isOpen={showModal} onClose={() => setShowModal(false)} />}
           </div>
         </div>
         <div className="trip-detail-general-info">

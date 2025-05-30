@@ -38,6 +38,9 @@ input {
   .login-container input {
     min-width: 30px;
   }
+  .login-background {
+    display: block;
+  }
 }
 .logged-in-container button {
   background-color: red !important;

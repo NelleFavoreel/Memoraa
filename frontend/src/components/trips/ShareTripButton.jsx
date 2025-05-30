@@ -3,6 +3,7 @@ import FullButton from "../button/FullButton";
 import { SlCursor } from "react-icons/sl";
 import AddButton from "../button/AddButton";
 import { toast } from "react-toastify";
+import { SlLink } from "react-icons/sl";
 
 const ShareTripButton = ({ tripId }) => {
   const handleCopyLink = () => {
@@ -21,7 +22,7 @@ const ShareTripButton = ({ tripId }) => {
   return (
     <button onClick={handleCopyLink}>
       {" "}
-      <SlCursor></SlCursor>
+      <SlLink />
     </button>
   );
 };
