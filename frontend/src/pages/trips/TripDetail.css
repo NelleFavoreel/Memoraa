@@ -6,7 +6,7 @@
   padding-top: 90px;
   padding-left: 300px;
   width: 50%;
-  max-width: 400px;
+  max-width: 500px;
   margin-left: -300px;
 }
 .trip-detail-container h1 {
@@ -140,8 +140,7 @@
   display: flex;
   align-items: center;
   align-items: center;
-  width: 45%;
-  max-width: 400px;
+  max-width: 500px;
   justify-content: space-between;
 }
 .trip-detail-share {

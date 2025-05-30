@@ -8,6 +8,7 @@ import TripDays from "./TripDays";
 import Underline from "../button/Underline";
 import { SlSettings } from "react-icons/sl";
 import EditTrip from "./EditTip";
+import PhotoGallery from "./PhotoGallery";
 
 function TravelDetail({ setHideNavbar }) {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
@@ -190,7 +191,9 @@ function TravelDetail({ setHideNavbar }) {
       <TripDays tripDays={tripDays} setTripDays={setTripDays} onDayChange={handleDayChange} tripId={id} />
 
       <div className="trip-detail-under-content" ref={photosRef}>
-        <div className="photos-container">
+        <PhotoGallery tripDays={tripDays} />
+
+        {/* <div className="photos-container">
           <h2>Alle foto's</h2>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
             {tripDays
@@ -199,7 +202,7 @@ function TravelDetail({ setHideNavbar }) {
                 <img key={index} src={photo} alt={`Foto ${index + 1}`} width={100} />
               ))}
           </div>
-        </div>
+        </div> */}
         <div className="map-container">
           <h2>Kaartweergave</h2>
           <div ref={mapRef}>

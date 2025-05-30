@@ -112,6 +112,7 @@
 }
 .trip-days-container button {
   margin-bottom: -80px;
+  margin-right: 40px;
   z-index: 4;
 }
 .traveler-selection table input {
