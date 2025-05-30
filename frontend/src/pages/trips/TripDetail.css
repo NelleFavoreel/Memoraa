@@ -119,6 +119,11 @@
 .photos-container {
   height: 100vh;
 }
+.photos-container img {
+  width: 30%;
+  height: 40%;
+  object-fit: cover;
+}
 
 .trip-detail-edit-trip {
   display: flex;

@@ -9,6 +9,7 @@ import Underline from "../button/Underline";
 import { SlSettings } from "react-icons/sl";
 import EditTrip from "./EditTip";
 import PhotoGallery from "./PhotoGallery";
+import AddPictures from "./AddPictures";
 
 function TravelDetail({ setHideNavbar }) {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
@@ -23,39 +24,38 @@ function TravelDetail({ setHideNavbar }) {
   const currentUserId = localStorage.getItem("userId");
   const [showModal, setShowModal] = useState(false);
 
-  const scrollToPhotos = () => {
-    photosRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const scrollToMap = () => {
-    mapRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
   const photosRef = useRef(null);
   const mapRef = useRef(null);
+
+  // Scroll handlers
+  const scrollToPhotos = () => photosRef.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollToMap = () => mapRef.current?.scrollIntoView({ behavior: "smooth" });
+
+  // Navbar verbergen/showen
   useEffect(() => {
     setHideNavbar(true);
     return () => setHideNavbar(false);
   }, [setHideNavbar]);
+
+  // Trip ophalen
   useEffect(() => {
     const fetchTripDetails = async () => {
       try {
         const response = await fetch(`http://localhost:3001/trips/${id}`);
-        if (!response.ok) {
-          throw new Error("Kon tripdetails niet ophalen.");
-        }
+        if (!response.ok) throw new Error("Kon tripdetails niet ophalen.");
         const data = await response.json();
-        console.log("Gehaalde trip data:", data);
         setTrip(data.trip);
-        setTripDays(data.tripDays);
+        setTripDays(data.tripDays || []);
       } catch (error) {
         console.error("Fout bij ophalen van trip details:", error);
       } finally {
         setLoading(false);
       }
     };
-
     fetchTripDetails();
   }, [id]);
+
+  // Namen van reizigers ophalen
   useEffect(() => {
     if (!trip || !trip.travelers || trip.travelers.length === 0) {
       setTravelerNames([]);
@@ -80,21 +80,25 @@ function TravelDetail({ setHideNavbar }) {
 
     fetchTravelerNames();
   }, [trip]);
+
+  // Achtergrondfoto wisselen (slideshow)
   useEffect(() => {
     if (backgroundPhotos.length > 1) {
       const interval = setInterval(() => {
-        setCurrentPhotoIndex((prevIndex) => (prevIndex + 1) % backgroundPhotos.length);
+        setCurrentPhotoIndex((prev) => (prev + 1) % backgroundPhotos.length);
       }, 4000);
-
       return () => clearInterval(interval);
     }
   }, [backgroundPhotos]);
+
+  // Bij laden van tripDays eerste dag kiezen
   useEffect(() => {
     if (tripDays.length > 0) {
       handleDayChange(0);
     }
   }, [tripDays]);
 
+  // Bij dag wisselen foto’s aanpassen
   const handleDayChange = (index) => {
     const selectedDayPhotos = tripDays[index]?.photos || [];
     const fallbackPhoto = trip?.imageUrl ? [trip.imageUrl] : [];
@@ -104,6 +108,7 @@ function TravelDetail({ setHideNavbar }) {
     setCurrentPhotoIndex(0);
   };
 
+  // Coördinaten ophalen van plaatsen via Mapbox geocoding
   useEffect(() => {
     const fetchCoordinatesForPlaces = async () => {
       const fetchedCoordinates = [];
@@ -132,8 +137,34 @@ function TravelDetail({ setHideNavbar }) {
       fetchCoordinatesForPlaces();
     }
   }, [tripDays]);
+
+  // Foto toegevoegd handler voor AddPictures component
+  const handlePhotoAdded = (newPhotoUrl, dayIndex = null) => {
+    if (dayIndex !== null) {
+      // Foto aan specifieke dag toevoegen
+      setTripDays((prevDays) => {
+        const updatedDays = [...prevDays];
+        if (!updatedDays[dayIndex].photos) updatedDays[dayIndex].photos = [];
+        updatedDays[dayIndex].photos.push(newPhotoUrl);
+        return updatedDays;
+      });
+      if (currentPhotoIndex === 0) {
+        handleDayChange(dayIndex);
+      }
+    } else {
+      // Foto algemeen toevoegen aan trip
+      setTrip((prevTrip) => ({
+        ...prevTrip,
+        photos: prevTrip.photos ? [...prevTrip.photos, newPhotoUrl] : [newPhotoUrl],
+      }));
+    }
+  };
+
   if (loading) return <p>De reisgegevens worden geladen...</p>;
-  const isTraveler = trip.travelers.includes(currentUserId);
+  if (!trip) return <p>Reis niet gevonden.</p>;
+
+  const isTraveler = trip.travelers?.includes(currentUserId);
+
   return (
     <div>
       <div
@@ -154,16 +185,15 @@ function TravelDetail({ setHideNavbar }) {
             <div className="trip-detail-share">
               <ShareTripButton tripId={trip._id} />
             </div>
-            {showModal && <EditTrip isOpen={showModal} onClose={() => setShowModal(false)} />}
             {isTraveler && (
               <Underline onClick={() => setShowModal(true)} className="edit-trip-button">
                 <SlSettings />
               </Underline>
             )}
-
             {showModal && <EditTrip isOpen={showModal} onClose={() => setShowModal(false)} />}
           </div>
         </div>
+
         <div className="trip-detail-general-info">
           <div className="trip-detail-info1">
             <p>
@@ -171,7 +201,7 @@ function TravelDetail({ setHideNavbar }) {
             </p>
             <div className="trip-detail-info">
               <label>Aantal dagen:</label>
-              <p>{tripDays.length} dagen </p>
+              <p>{tripDays.length} dagen</p>
             </div>
             <div className="trip-detail-info">
               <label>Type:</label>
@@ -179,7 +209,7 @@ function TravelDetail({ setHideNavbar }) {
             </div>
             <div className="trip-detail-info">
               <label>Reizigers:</label>
-              <p>{travelerNames.length > 0 ? <>{travelerNames.join(", ")}</> : "Geen reisgenoten"}</p>
+              <p>{travelerNames.length > 0 ? travelerNames.join(", ") : "Geen reisgenoten"}</p>
             </div>
           </div>
           <div>
@@ -188,21 +218,12 @@ function TravelDetail({ setHideNavbar }) {
           </div>
         </div>
       </div>
+
       <TripDays tripDays={tripDays} setTripDays={setTripDays} onDayChange={handleDayChange} tripId={id} />
 
       <div className="trip-detail-under-content" ref={photosRef}>
-        <PhotoGallery tripDays={tripDays} />
-
-        {/* <div className="photos-container">
-          <h2>Alle foto's</h2>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-            {tripDays
-              .flatMap((day) => day.photos || [])
-              .map((photo, index) => (
-                <img key={index} src={photo} alt={`Foto ${index + 1}`} width={100} />
-              ))}
-          </div>
-        </div> */}
+        <AddPictures tripId={id} onPhotoAdded={handlePhotoAdded} />
+        <PhotoGallery generalPhotos={trip?.photos || []} tripDays={tripDays} />
         <div className="map-container">
           <h2>Kaartweergave</h2>
           <div ref={mapRef}>
