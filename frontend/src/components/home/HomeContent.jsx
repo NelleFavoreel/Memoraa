@@ -14,6 +14,10 @@ import "./HomeContent.css";
 function HomeContent() {
   useAnimateOnVisible(".rotate-on-visible");
   useAnimateOnVisible(".rotate-on-visible1");
+  useAnimateOnVisible(".image1");
+  useAnimateOnVisible(".image2");
+  useAnimateOnVisible(".image3");
+  useAnimateOnVisible(".image4");
   const navigate = useNavigate();
   return (
     <>

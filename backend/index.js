@@ -22,6 +22,9 @@ app.use("/users", userRoutes);
 const familyRoutes = require("./routes/family");
 app.use("/family", familyRoutes);
 
+const notifications = require("./routes/notifications");
+app.use("/notifications", notifications);
+
 // MongoDB connectie opstarten en daarna server starten
 connectDB().then(() => {
   app.listen(port, () => {

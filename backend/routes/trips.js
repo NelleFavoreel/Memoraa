@@ -38,8 +38,6 @@ router.get("/", authenticateToken, async (req, res) => {
         return { ...trip, randomPhotos };
       })
     );
-
-    // ✅ Alleen deze mag overblijven
     res.json(tripsWithPhotos);
   } catch (err) {
     console.error("❌ Fout bij ophalen van trips:", err);
@@ -47,18 +45,35 @@ router.get("/", authenticateToken, async (req, res) => {
   }
 });
 // Reis verwijderen
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticateToken, async (req, res) => {
   try {
     const db = getDB();
     const collection = db.collection("trips");
     const tripDaysCollection = db.collection("tripDays");
+    const notificationsCollection = db.collection("notifications");
+    const usersCollection = db.collection("users");
 
     const tripId = req.params.id;
+    const currentUserId = new ObjectId(req.user.userId);
 
-    const result = await collection.deleteOne({ _id: new ObjectId(tripId) }); // Gebruik 'new ObjectId'
+    const trip = await collection.findOne({ _id: new ObjectId(tripId) });
+    if (!trip) return res.status(404).send("Reis niet gevonden.");
+
+    const result = await collection.deleteOne({ _id: new ObjectId(tripId) });
 
     if (result.deletedCount === 1) {
       await tripDaysCollection.deleteMany({ tripId: new ObjectId(tripId) });
+      const recipients = trip.travelers.filter((id) => !id.equals(currentUserId));
+      const notification = {
+        recipients: recipients,
+        type: "tripDeleted",
+        sender: currentUserId,
+        tripId: new ObjectId(tripId),
+        tripPlace: trip.place,
+        date: new Date(),
+        readBy: [],
+      };
+      await notificationsCollection.insertOne(notification);
       res.status(200).send("Reis succesvol verwijderd.");
     } else {
       res.status(404).send("Reis niet gevonden.");
@@ -75,6 +90,7 @@ router.post("/", async (req, res) => {
     const db = getDB();
     const collection = db.collection("trips");
     const usersCollection = db.collection("users");
+    const notificationsCollection = db.collection("notifications");
 
     const { tripType, place, country, countries, imageUrl, startDate, endDate, screenNames, familyId, userId, selectedFriend = [] } = req.body;
 
@@ -100,7 +116,6 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ message: "Ongeldig tripType." });
     }
 
-    // Haal gebruikers op basis van screenNames
     const users = await usersCollection.find({ screenName: { $in: screenNames || [] } }).toArray();
     const travelerIds = users.map((user) => user._id);
 
@@ -137,6 +152,38 @@ router.post("/", async (req, res) => {
 
     const result = await collection.insertOne(newTrip);
 
+    // Haal familieleden van huidige gebruiker op
+    const currentUser = await usersCollection.findOne({ _id: currentUserObjectId });
+    const familyMemberIds = (currentUser.familyMembers || []).filter((id) => ObjectId.isValid(id)).map((id) => new ObjectId(id));
+
+    // Maak een Set van alle ontvangers (travelerIds + familieleden)
+    const recipientsSet = new Set(travelerIds.map((id) => id.toString()));
+
+    // Voeg familieleden toe die nog niet in travelerIds zitten en niet de huidige gebruiker zijn
+    familyMemberIds.forEach((fmId) => {
+      if (!recipientsSet.has(fmId.toString()) && !fmId.equals(currentUserObjectId)) {
+        recipientsSet.add(fmId.toString());
+      }
+    });
+
+    // Zet terug naar ObjectId en filter huidige gebruiker eruit
+    const finalRecipients = Array.from(recipientsSet)
+      .map((idStr) => new ObjectId(idStr))
+      .filter((id) => !id.equals(currentUserObjectId));
+
+    if (finalRecipients.length > 0) {
+      const notification = {
+        recipients: finalRecipients,
+        type: "tripAdded",
+        sender: currentUserObjectId,
+        tripId: result.insertedId,
+        date: new Date(),
+        readBy: [],
+      };
+
+      await notificationsCollection.insertOne(notification);
+    }
+
     res.status(201).json({ message: "Reis succesvol toegevoegd.", tripId: result.insertedId });
   } catch (err) {
     console.error("❌ Fout bij toevoegen van reis:", err);
@@ -172,7 +219,7 @@ router.get("/:id", async (req, res) => {
         newTripDays.push({
           tripId: tripObjectId,
           date: new Date(d),
-          description: "", // leeg laten, kan ingevuld worden
+          description: "",
           activities: [],
           photos: [],
         });
@@ -200,49 +247,73 @@ router.put("/:id", authenticateToken, async (req, res) => {
     const { id } = req.params;
     const { place, country, startDate, endDate, travelers, familyId, imageUrl, tripDays } = req.body;
 
-    // Valideer of alle benodigde velden aanwezig zijn
     if (!place && !country && !startDate && !endDate && !familyId && !travelers && !imageUrl && !tripDays) {
       return res.status(400).json({ message: "Geen wijzigingen gevonden." });
     }
 
     const db = getDB();
     const tripsCollection = db.collection("trips");
+    const usersCollection = db.collection("users");
+    const notificationsCollection = db.collection("notifications");
     const tripObjectId = new ObjectId(id);
 
-    // Zoek de reis op
     const trip = await tripsCollection.findOne({ _id: tripObjectId });
-
     if (!trip) {
       return res.status(404).json({ message: "Reis niet gevonden." });
     }
 
-    // Update de reisgegevens
-    const travelerObjectIds = travelers ? travelers.map((id) => new ObjectId(id)) : null;
+    const travelerObjectIds = travelers ? travelers.map((id) => new ObjectId(id)) : trip.travelers;
 
     const updatedTrip = {
       place: place || trip.place,
       country: country || trip.country,
       startDate: startDate ? new Date(startDate) : trip.startDate,
       endDate: endDate ? new Date(endDate) : trip.endDate,
-      travelers: travelerObjectIds || trip.travelers,
+      travelers: travelerObjectIds,
       familyId: familyId || trip.familyId,
       imageUrl: imageUrl || trip.imageUrl,
     };
 
     const result = await tripsCollection.updateOne({ _id: tripObjectId }, { $set: updatedTrip });
 
-    // Werk de tripDays bij
     if (tripDays) {
       const tripDaysCollection = db.collection("tripDays");
-      // Verwijder oude tripdagen van de reis
       await tripDaysCollection.deleteMany({ tripId: tripObjectId });
 
-      // Voeg de nieuwe tripdagen toe
       const tripDaysInsert = tripDays.map((day) => ({
         ...day,
-        tripId: tripObjectId, // Zorg ervoor dat tripId correct wordt gekoppeld
+        tripId: tripObjectId,
       }));
       await tripDaysCollection.insertMany(tripDaysInsert);
+    }
+
+    const currentUserId = new ObjectId(req.user.userId);
+    const currentUser = await usersCollection.findOne({ _id: currentUserId });
+    const familyMemberIds = (currentUser.familyMembers || []).filter((id) => ObjectId.isValid(id)).map((id) => new ObjectId(id));
+
+    const recipientSet = new Set(travelerObjectIds.map((id) => id.toString()));
+
+    familyMemberIds.forEach((fmId) => {
+      if (!recipientSet.has(fmId.toString()) && !fmId.equals(currentUserId)) {
+        recipientSet.add(fmId.toString());
+      }
+    });
+
+    const finalRecipients = Array.from(recipientSet)
+      .map((idStr) => new ObjectId(idStr))
+      .filter((id) => !id.equals(currentUserId));
+
+    if (finalRecipients.length > 0) {
+      const notification = {
+        recipients: finalRecipients,
+        type: "tripUpdated",
+        sender: currentUserId,
+        tripId: tripObjectId,
+        tripPlace: updatedTrip.place || trip.place,
+        date: new Date(),
+        readBy: [],
+      };
+      await notificationsCollection.insertOne(notification);
     }
 
     res.status(200).json({ message: "Reis succesvol bijgewerkt." });

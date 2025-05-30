@@ -6,7 +6,6 @@ const bcrypt = require("bcryptjs");
 const authenticateToken = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
 
-// Zoek familieleden binnen dezelfde familyId
 router.get("/search-family-members", authenticateToken, async (req, res) => {
   const { query } = req.query;
   const db = getDB();
@@ -23,7 +22,7 @@ router.get("/search-family-members", authenticateToken, async (req, res) => {
       .find({
         familyId: user.familyId,
         screenName: { $regex: query, $options: "i" },
-        _id: { $ne: user._id }, // zichzelf niet tonen
+        _id: { $ne: user._id },
       })
       .project({ _id: 1, screenName: 1 })
       .toArray();
@@ -39,6 +38,7 @@ router.post("/add-friend", authenticateToken, async (req, res) => {
   const { friendId } = req.body;
   const db = getDB();
   const collection = db.collection("users");
+  const notifications = db.collection("notifications");
 
   try {
     const userId = new ObjectId(req.user.userId);
@@ -50,12 +50,18 @@ router.post("/add-friend", authenticateToken, async (req, res) => {
     if (!user || !friend) {
       return res.status(404).json({ message: "Gebruiker of vriend niet gevonden." });
     }
+    if (friend.familyRequests?.includes(userId) || friend.familyMembers?.includes(userId)) {
+      return res.status(400).json({ message: "Je hebt al een verzoek gestuurd of bent al verbonden." });
+    }
 
-    // Voeg een verzoek toe bij de andere gebruiker
-    await collection.updateOne(
-      { _id: friendObjectId },
-      { $addToSet: { familyRequests: userId } } // gebruiker stuurt verzoek
-    );
+    await collection.updateOne({ _id: friendObjectId }, { $addToSet: { familyRequests: userId } });
+    await notifications.insertOne({
+      userId: friendObjectId,
+      type: "familyRequest",
+      sender: userId,
+      date: new Date(),
+      read: false,
+    });
 
     res.json({ message: "Familieverzoek verzonden." });
   } catch (err) {
@@ -63,32 +69,54 @@ router.post("/add-friend", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Verzoek verzenden mislukt." });
   }
 });
-router.post("/accept-family-request", authenticateToken, async (req, res) => {
-  const { requesterId } = req.body;
+router.put("/accept-family-request", authenticateToken, async (req, res) => {
   const db = getDB();
-  const collection = db.collection("users");
-
+  const usersCollection = db.collection("users");
+  const notificationsCollection = db.collection("notifications");
   const userId = new ObjectId(req.user.userId);
-  const requesterObjectId = new ObjectId(requesterId);
+  const { requestSenderId } = req.body;
+
+  const requesterId = new ObjectId(requestSenderId);
 
   try {
-    // Voeg elkaar toe aan elkaars familieleden
-    await collection.updateOne(
+    await usersCollection.updateOne(
       { _id: userId },
       {
-        $addToSet: { familyMembers: requesterObjectId },
-        $pull: { familyRequests: requesterObjectId },
+        $addToSet: { familyMembers: requesterId },
+        $pull: { familyRequests: requesterId },
       }
     );
 
-    await collection.updateOne({ _id: requesterObjectId }, { $addToSet: { familyMembers: userId } });
+    await usersCollection.updateOne(
+      { _id: requesterId },
+      {
+        $addToSet: { familyMembers: userId },
+      }
+    );
 
-    res.json({ message: "Familieverzoek geaccepteerd." });
-  } catch (err) {
-    console.error("❌ Fout bij accepteren verzoek:", err);
-    res.status(500).json({ message: "Kon verzoek niet accepteren." });
+    await notificationsCollection.insertOne({
+      recipients: [requesterId],
+      type: "familyRequestAccepted",
+      sender: userId,
+      date: new Date(),
+      readBy: [],
+    });
+
+    await notificationsCollection.insertOne({
+      recipients: [userId],
+      type: "familyRequestAccepted",
+      sender: userId,
+      date: new Date(),
+      readBy: [],
+    });
+
+    res.status(200).json({ message: "Familieverzoek geaccepteerd" });
+  } catch (error) {
+    console.error("❌ Fout bij accepteren familieverzoek:", error);
+    res.status(500).json({ message: "Fout bij accepteren familieverzoek." });
   }
 });
+
 router.get("/family-requests", authenticateToken, async (req, res) => {
   const db = getDB();
   const collection = db.collection("users");
@@ -121,7 +149,7 @@ router.get("/friends", authenticateToken, async (req, res) => {
     const user = await collection.findOne({ _id: userId });
 
     if (!user || !user.familyMembers || user.familyMembers.length === 0) {
-      return res.json([]); // Geen familieleden
+      return res.json([]);
     }
 
     const friends = await collection
@@ -144,16 +172,61 @@ router.delete("/remove-friend", authenticateToken, async (req, res) => {
     const { friendId } = req.body;
     const friendObjectId = new ObjectId(friendId);
 
-    // Verwijder vriend bij gebruiker
     await collection.updateOne({ _id: userId }, { $pull: { familyMembers: friendObjectId } });
 
-    // Verwijder gebruiker bij vriend
     await collection.updateOne({ _id: friendObjectId }, { $pull: { familyMembers: userId } });
 
     res.json({ message: "Familielid verwijderd." });
   } catch (err) {
     console.error("❌ Fout bij verwijderen familielid:", err);
     res.status(500).json({ message: "Verwijderen mislukt." });
+  }
+});
+
+router.post("/accept", authenticateToken, async (req, res) => {
+  try {
+    const db = getDB();
+    const usersCollection = db.collection("users");
+    const notificationsCollection = db.collection("notifications");
+
+    const { requesterId } = req.body;
+    const currentUserId = new ObjectId(req.user.userId);
+
+    await usersCollection.updateOne({ _id: currentUserId }, { $addToSet: { familyMembers: new ObjectId(requesterId) } });
+    await usersCollection.updateOne({ _id: new ObjectId(requesterId) }, { $addToSet: { familyMembers: currentUserId } });
+
+    const notification = {
+      userId: new ObjectId(requesterId),
+      type: "familyAccepted",
+      sender: currentUserId,
+      date: new Date(),
+      read: false,
+    };
+
+    await notificationsCollection.insertOne(notification);
+
+    res.status(200).json({ message: "Familieverzoek geaccepteerd en notificatie verstuurd." });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Fout bij accepteren familieverzoek." });
+  }
+});
+
+router.post("/reject-family-request", authenticateToken, async (req, res) => {
+  try {
+    const db = getDB();
+    const usersCollection = db.collection("users");
+
+    const { requesterId } = req.body;
+    const currentUserId = new ObjectId(req.user.userId);
+    const requesterObjectId = new ObjectId(requesterId);
+
+    await usersCollection.updateOne({ _id: currentUserId }, { $pull: { familyRequests: requesterObjectId } });
+
+    res.status(200).json({ message: "Familieverzoek geweigerd." });
+  } catch (err) {
+    console.error("❌ Fout bij weigeren familieverzoek:", err);
+    res.status(500).json({ message: "Fout bij weigeren familieverzoek." });
   }
 });
 

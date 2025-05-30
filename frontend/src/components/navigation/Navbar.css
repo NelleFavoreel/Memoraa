@@ -40,7 +40,6 @@
   z-index: 9999;
 }
 
-/* standaard desktop weergave */
 .nav-links {
   display: flex;
   gap: 1.5rem;
@@ -68,6 +67,17 @@
 .nav-link:hover::after,
 .nav-link:focus::after {
   width: 100%;
+}
+.notification-badge {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background-color: red;
+  border-radius: 50%;
+  margin-left: 6px;
+  vertical-align: middle;
+  margin-top: -5px;
+  margin-left: 5px;
 }
 
 /* mobiele weergave */

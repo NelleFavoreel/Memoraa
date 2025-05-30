@@ -228,3 +228,62 @@ img {
     cursor: default;
   }
 }
+
+.image1,
+.image2,
+.image3,
+.image4 {
+  transform: none;
+  transition: transform 1s ease;
+}
+.image1.animate {
+  animation: float1 2s ease-in-out infinite alternate;
+}
+
+.image2.animate {
+  animation: float2 3s ease-in-out infinite alternate;
+}
+
+.image3.animate {
+  animation: float3 2s ease-in-out infinite alternate;
+}
+
+.image4.animate {
+  animation: float4 4s ease-in-out infinite alternate;
+}
+
+@keyframes float1 {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateX(10px) translateY(-5px) rotate(2deg);
+  }
+}
+
+@keyframes float2 {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateX(-8px) translateY(4px) rotate(-1deg);
+  }
+}
+
+@keyframes float3 {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateX(6px) translateY(3px) rotate(1deg);
+  }
+}
+
+@keyframes float4 {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateX(-5px) translateY(-7px) rotate(-2deg);
+  }
+}

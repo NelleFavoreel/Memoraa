@@ -210,10 +210,10 @@ function AddTrip({ show, onClose, onTripAdded }) {
               </tbody>
             </table>
           </div>
+          <div className="model-form-AddButton">
+            <FullButton type="submit">Voeg reis toe</FullButton>
+          </div>
         </form>
-      </div>
-      <div className="model-form-AddButton">
-        <FullButton type="submit">Voeg reis toe</FullButton>
       </div>
     </LoginModal>
   );

@@ -5,6 +5,7 @@ import "./Navbar.css";
 export default function Navbar({ hidden }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef(null);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -20,6 +21,27 @@ export default function Navbar({ hidden }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuOpen]);
+  useEffect(() => {
+    const fetchUnreadCount = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      try {
+        const res = await fetch("http://localhost:3001/notifications/unread-count", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        setUnreadCount(data.unreadCount || 0);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchUnreadCount();
+    const interval = setInterval(fetchUnreadCount, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <nav ref={navRef} className={`navbar ${hidden ? "hidden" : ""}`}>
@@ -45,7 +67,9 @@ export default function Navbar({ hidden }) {
           </Link>
           <Link to="/notifications" className="nav-link" onClick={() => setMenuOpen(false)}>
             Meldingen
+            {unreadCount > 0 && <span className="notification-badge"></span>}
           </Link>
+
           <Link to="/users" className="nav-link" onClick={() => setMenuOpen(false)}>
             Account
           </Link>
