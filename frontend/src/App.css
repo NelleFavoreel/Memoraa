@@ -84,6 +84,9 @@ li {
   font-size: 14px;
   font-weight: 100;
 }
+.date-input {
+  font-family: "myriad-pro", sans-serif;
+}
 /* Mobiele versie */
 @media (max-width: 768px) {
   body {

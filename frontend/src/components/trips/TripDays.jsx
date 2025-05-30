@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import EditTripDays from "./EditTripDays";
 import FullButton from "../button/FullButton";
+import { SlSettings } from "react-icons/sl";
+import Underline from "../button/Underline";
 
 function NextArrow(props) {
   const { className, style, onClick } = props;
@@ -48,7 +50,9 @@ function TripDays({ tripDays, setTripDays, onDayChange, initialTripDays, tripId 
 
   return (
     <div className="trip-days-container">
-      <FullButton onClick={() => setShowEditModal(true)}>Bewerk</FullButton>
+      <Underline onClick={() => setShowEditModal(true)}>
+        <SlSettings />
+      </Underline>
       <div className="trip-days-slider">
         <h1>Dag {activeIndex + 1}</h1>
         <Slider {...settings}>

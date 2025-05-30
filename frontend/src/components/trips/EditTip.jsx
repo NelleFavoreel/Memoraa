@@ -136,9 +136,10 @@ function EditTrip({ onClose, isOpen }) {
       if (!response.ok) throw new Error("Fout bij het bijwerken van de reis");
 
       const data = await response.json();
-      toast.success(data.message || "Reis opgeslagen!");
+      // toast.success(data.message || "Reis opgeslagen!");
       if (onClose) onClose();
       else navigate(`/trips/${id}`);
+      window.location.reload();
     } catch (error) {
       console.error("Fout bij opslaan:", error);
       toast.error("Er is een fout opgetreden bij het opslaan van de reis.");
@@ -177,6 +178,7 @@ function EditTrip({ onClose, isOpen }) {
                         setTrip({ ...trip, startDate: newStartDate });
                         regenerateTripDays(newStartDate, trip.endDate);
                       }}
+                      className="date-input"
                     />
                   </div>
 
@@ -190,6 +192,7 @@ function EditTrip({ onClose, isOpen }) {
                         setTrip({ ...trip, endDate: newEndDate });
                         regenerateTripDays(trip.startDate, newEndDate);
                       }}
+                      className="date-input"
                     />
                   </div>
                 </div>

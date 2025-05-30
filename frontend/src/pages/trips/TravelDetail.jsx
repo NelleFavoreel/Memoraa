@@ -9,11 +9,12 @@ import { SlClose } from "react-icons/sl";
 import { SlPencil } from "react-icons/sl";
 import AddButton from "../../components/button/AddButton";
 import Underline from "../../components/button/Underline";
+import { SlSettings } from "react-icons/sl";
 
 function TravelDetail({ setHideNavbar }) {
   const { id } = useParams();
   const [trip, setTrip] = useState(null);
-  const currentUserId = localStorage.getItem("userId");
+
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
@@ -31,18 +32,14 @@ function TravelDetail({ setHideNavbar }) {
 
   if (!trip) return <p>Reis wordt geladen...</p>;
 
-  const isTraveler = trip.travelers.includes(currentUserId);
   return (
     <div className="trip-detail-container">
       <div className="back-button-detail" onClick={() => navigate(-1)} style={{ cursor: "pointer", display: "flex", alignItems: "center", marginBottom: "1rem" }}>
         <SlArrowRight style={{ transform: "rotate(180deg)", marginRight: "0.5rem" }} />
         <span>Terug</span>
       </div>
-      <div className="trip-detail-edit-trip">
-        {isTraveler && <Underline onClick={() => setShowModal(true)}>Bewerk</Underline>}
+      <div className="trip-detail-edit-trip"></div>
 
-        {showModal && <EditTrip isOpen={showModal} onClose={() => setShowModal(false)} />}
-      </div>
       <TripDetail trip={trip} setHideNavbar={setHideNavbar} />
     </div>
   );
