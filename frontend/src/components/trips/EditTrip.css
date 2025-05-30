@@ -95,15 +95,14 @@
   margin-right: 140px;
 }
 .add-trip-modal .model-form {
-  flex-direction: row;
   align-items: center;
 }
 .model-form {
   padding-top: 80px;
+  padding-bottom: 40px;
 }
 .add-trip-modal form {
   width: 100vw;
-  height: auto;
   max-width: 800px;
 }
 
@@ -240,5 +239,15 @@
     margin-right: 5% !important;
     margin-left: 5% !important;
     justify-content: flex-start;
+  }
+  .table-header th {
+    font-size: 11px;
+  }
+  .custom-select {
+    font-size: 11px;
+  }
+  .date-input {
+    font-size: 11px;
+    font-family: "myriad-pro", sans-serif;
   }
 }
