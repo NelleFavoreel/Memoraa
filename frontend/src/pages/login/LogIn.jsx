@@ -33,8 +33,8 @@ function LogIn() {
           localStorage.setItem("token", data.token);
           localStorage.setItem("userId", data.userId);
           setIsLoggedIn(true);
-          toast.success("Inloggen gelukt!");
           navigate("/home");
+          window.location.reload();
         } else {
           setError("Er is iets mis met het ontvangen van het token.");
           toast.error("Geen token ontvangen van server");
@@ -111,8 +111,9 @@ function LogIn() {
               localStorage.removeItem("token");
               localStorage.removeItem("userId");
               setIsLoggedIn(false);
+
               navigate("/");
-              toast.info("Je bent uitgelogd");
+              window.location.reload();
             }}
           >
             Uitloggen
