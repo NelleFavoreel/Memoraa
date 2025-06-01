@@ -322,5 +322,44 @@ router.put("/:id", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Fout bij het bijwerken van reis." });
   }
 });
+router.post("/:id/photos", authenticateToken, async (req, res) => {
+  try {
+    const tripId = new ObjectId(req.params.id);
+    const { imageUrl, imageBase64, description } = req.body;
+
+    if (!imageUrl) {
+      return res.status(400).json({ message: "ImageUrl is verplicht." });
+    }
+
+    const db = getDB();
+    const tripsCollection = db.collection("trips");
+
+    if (!imageBase64 && !imageUrl) {
+      return res.status(400).json({ message: "Base64 is verplicht." });
+    }
+
+    const result = await tripsCollection.updateOne(
+      { _id: tripId },
+      {
+        $push: {
+          photos: {
+            imageUrl,
+            description: description || "",
+            addedAt: new Date(),
+          },
+        },
+      }
+    );
+
+    if (result.modifiedCount === 1) {
+      res.status(200).json({ message: "Foto succesvol toegevoegd." });
+    } else {
+      res.status(404).json({ message: "Reis niet gevonden." });
+    }
+  } catch (error) {
+    console.error("Fout bij toevoegen foto:", error);
+    res.status(500).json({ message: "Fout bij toevoegen foto." });
+  }
+});
 
 module.exports = router;

@@ -112,6 +112,7 @@
 }
 .trip-days-container button {
   margin-bottom: -80px;
+  margin-right: 40px;
   z-index: 4;
 }
 .traveler-selection table input {
@@ -172,10 +173,56 @@
   margin-right: 1%;
 }
 .edit-trip-buttons {
-  display: flex;
+  display: block;
   align-items: flex-end;
   gap: 30px;
   justify-content: center;
+}
+.add-pictures {
+  display: flex;
+  flex-direction: column;
+  background-color: #d7d3cd;
+  width: 50%;
+  max-width: 500px;
+  margin-top: 50px;
+  height: auto;
+  align-items: center;
+
+  padding: 20px 10%;
+}
+.add-pictures-container {
+  display: flex;
+  justify-content: center;
+}
+.add-pictures input {
+  border: none;
+  padding: 0;
+}
+.add-picture-buttons {
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+.trip-detail-photos-header-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: -70px;
+  margin-top: 80px;
+}
+.photos-summary {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 30px;
+  margin-top: -20px;
+}
+.photos-container h2 {
+  margin-left: 0;
+}
+.summary-photo {
+  margin-top: 50px;
+  display: block;
+}
+.summary-container {
+  margin-top: 30px;
 }
 @media (max-width: 600px) {
   .edit-trip-container {
