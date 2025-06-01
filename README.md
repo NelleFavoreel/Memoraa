@@ -12,4 +12,9 @@
 - https://github.com/fkhadra/react-toastify/blob/main/src/style.css
 - https://fkhadra.github.io/react-toastify/how-to-style
 - https://www.heroui.com/docs/components/toast
+- https://chatgpt.com/share/683c28ab-97dc-8004-a2a5-3c68e5f01bbb
+- https://www.npmjs.com/package/lightbox.js-react
+- https://yet-another-react-lightbox.com/
+- https://www.npmjs.com/package/react-toastify
+- https://react-icons.github.io/react-icons/
 - 
