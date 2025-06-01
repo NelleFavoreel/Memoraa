@@ -217,6 +217,13 @@
 .photos-container h2 {
   margin-left: 0;
 }
+.summary-photo {
+  margin-top: 50px;
+  display: block;
+}
+.summary-container {
+  margin-top: 30px;
+}
 @media (max-width: 600px) {
   .edit-trip-container {
     flex-direction: column;
