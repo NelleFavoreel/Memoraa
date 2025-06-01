@@ -1,6 +1,7 @@
 import "yet-another-react-lightbox/styles.css";
 import Lightbox from "yet-another-react-lightbox";
 import { useState } from "react";
+import FullButton from "../button/FullButton";
 
 function PhotoGallery({ generalPhotos, tripDays }) {
   const [index, setIndex] = useState(-1);
@@ -32,13 +33,13 @@ function PhotoGallery({ generalPhotos, tripDays }) {
   return (
     <div className="photos-container">
       <h2>Alle foto's</h2>
-
-      {isTripDone && (
-        <button onClick={selectRandomPhotos} style={{ marginBottom: "15px", padding: "10px 15px", cursor: "pointer" }}>
-          Kies 10 foto’s met muziek
-        </button>
-      )}
-
+      <div className="photos-summary">
+        {isTripDone && (
+          <FullButton onClick={selectRandomPhotos} style={{ marginBottom: "15px", padding: "10px 15px", cursor: "pointer" }}>
+            Samenvatting reis
+          </FullButton>
+        )}
+      </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", objectFit: "cover" }}>
         {allPhotos.map((photo, i) => (
           <img

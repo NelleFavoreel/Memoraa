@@ -183,10 +183,12 @@
   flex-direction: column;
   background-color: #d7d3cd;
   width: 50%;
+  max-width: 500px;
   margin-top: 50px;
   height: auto;
-  align-items: flex-start;
-  padding: 0px 10%;
+  align-items: center;
+
+  padding: 20px 10%;
 }
 .add-pictures-container {
   display: flex;
@@ -194,6 +196,7 @@
 }
 .add-pictures input {
   border: none;
+  padding: 0;
 }
 .add-picture-buttons {
   margin-top: 30px;
@@ -202,8 +205,17 @@
 .trip-detail-photos-header-button {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: -90px;
-  margin-top: 70px;
+  margin-bottom: -70px;
+  margin-top: 80px;
+}
+.photos-summary {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 30px;
+  margin-top: -20px;
+}
+.photos-container h2 {
+  margin-left: 0;
 }
 @media (max-width: 600px) {
   .edit-trip-container {

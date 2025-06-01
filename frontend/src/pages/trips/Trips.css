@@ -23,7 +23,7 @@
   flex-direction: row-reverse;
 }
 .trip-item.reverse .trip-info-container {
-  margin-right: -70%;
+  margin-right: -75%;
 }
 .trip-item.reverse {
   margin-top: 80px;
@@ -129,7 +129,7 @@ li {
   flex-direction: column;
   gap: 10px;
   align-items: flex-end;
-  margin-left: 10%;
+  margin-left: 15%;
   height: 500px;
   align-items: flex-start;
 }
@@ -140,7 +140,7 @@ li {
 }
 .trip-item.reverse .trip-image-little {
   align-items: flex-end;
-  margin-right: 8%;
+  margin-right: 12%;
 }
 .trips-list {
   margin-top: -90px;

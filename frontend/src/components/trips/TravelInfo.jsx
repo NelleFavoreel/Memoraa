@@ -103,6 +103,13 @@ function TravelInfo({ refresh, onRefreshed }) {
   }, [trips]);
   useAnimateOnVisible(".trip-info", [trips]);
 
+  const getSmallPhotos = (trip) => {
+    const dayPhotos = trip.randomPhotos || [];
+    const generalPhotos = (trip.photos || []).map((photo) => photo.imageUrl);
+    const allPhotos = [...dayPhotos, ...generalPhotos];
+    return allPhotos.slice(0, 2);
+  };
+
   const sortedTrips = [...filteredTrips].sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
   return (
     <div>
@@ -112,9 +119,8 @@ function TravelInfo({ refresh, onRefreshed }) {
           <li key={trip._id} className={`trip-item ${index % 2 !== 0 ? "reverse" : ""}`}>
             <div className="trip-content">
               {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} className="trip-image" />}
-              <div className="trip-image-little">
-                <div className="trip-image-little">{trip.randomPhotos?.length > 0 && trip.randomPhotos.map((photo, idx) => <img key={idx} src={photo} alt={`Reisfoto ${idx + 1}`} />)}</div>
-              </div>
+              <div className="trip-image-little">{getSmallPhotos(trip).length > 0 && getSmallPhotos(trip).map((photo, idx) => <img key={idx} src={photo} alt={`Reisfoto ${idx + 1}`} />)}</div>
+
               <div className="trip-info-container">
                 <div className="trip-info">
                   <Link to={`/trips/${trip._id}`}>
