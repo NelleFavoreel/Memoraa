@@ -7,8 +7,6 @@ function PhotoGallery({ generalPhotos, tripDays }) {
   const [selectedSlides, setSelectedSlides] = useState([]);
   const [showSlideshow, setShowSlideshow] = useState(false);
 
-  const allPhotos = [...generalPhotos, ...tripDays.flatMap((day) => day.photos || [])];
-
   const isTripDone = (() => {
     if (tripDays.length === 0) return false;
     const lastDay = tripDays[tripDays.length - 1];
@@ -23,6 +21,13 @@ function PhotoGallery({ generalPhotos, tripDays }) {
     setIndex(0);
     setShowSlideshow(true);
   }
+  const getPhotoSrc = (p) => {
+    if (typeof p === "string") return p;
+    if (p && p.imageUrl) return p.imageUrl;
+    return "";
+  };
+
+  const allPhotos = [...generalPhotos.filter((p) => p != null), ...tripDays.flatMap((day) => (day.photos || []).filter((p) => p != null))];
 
   return (
     <div className="photos-container">
@@ -38,12 +43,12 @@ function PhotoGallery({ generalPhotos, tripDays }) {
         {allPhotos.map((photo, i) => (
           <img
             key={i}
-            src={typeof photo === "string" ? photo : photo.imageUrl}
+            src={getPhotoSrc(photo)}
             alt={`Foto ${i + 1}`}
             width={100}
             style={{ cursor: "pointer", borderRadius: "8px" }}
             onClick={() => {
-              setSelectedSlides(allPhotos.map((p) => ({ src: typeof p === "string" ? p : p.imageUrl })));
+              setSelectedSlides(allPhotos.map((p) => ({ src: getPhotoSrc(p) })));
               setIndex(i);
               setShowSlideshow(true);
             }}

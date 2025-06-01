@@ -8,7 +8,7 @@ function AddPictures({ tripId, onPhotoAdded, onClose }) {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -89,12 +89,14 @@ function AddPictures({ tripId, onPhotoAdded, onClose }) {
         if (!response.ok) {
           throw new Error("Fout bij het uploaden van media");
         }
+
+        // Bel de callback voor elke succesvolle upload
+        if (onPhotoAdded) onPhotoAdded(base64Data);
       }
 
       setMediaFiles([]);
       setDescription("");
       setIsOpen(false);
-      if (onPhotoAdded) onPhotoAdded();
     } catch (err) {
       console.error(err);
       setError("Fout bij uploaden van media.");

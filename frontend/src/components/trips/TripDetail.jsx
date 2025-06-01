@@ -233,11 +233,11 @@ function TravelDetail({ setHideNavbar }) {
         <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <AddPictures
             tripId={id}
-            onPhotoAdded={() => {
-              handlePhotoAdded();
-              setIsModalOpen(false); // sluit modal na upload
+            onPhotoAdded={(newPhotoUrl) => {
+              handlePhotoAdded(newPhotoUrl);
+              setIsModalOpen(false);
             }}
-            onClose={() => setIsModalOpen(false)} // sluit modal bij annuleren
+            onClose={() => setIsModalOpen(false)}
           />
         </LoginModal>
         <PhotoGallery generalPhotos={trip?.photos || []} tripDays={tripDays} />
