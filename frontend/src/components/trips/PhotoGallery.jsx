@@ -7,22 +7,19 @@ function PhotoGallery({ generalPhotos, tripDays }) {
   const [selectedSlides, setSelectedSlides] = useState([]);
   const [showSlideshow, setShowSlideshow] = useState(false);
 
-  // Alle foto's per dag ophalen
   const allPhotos = [...generalPhotos, ...tripDays.flatMap((day) => day.photos || [])];
 
-  // Check of reis gedaan is: laatste dag < vandaag
   const isTripDone = (() => {
     if (tripDays.length === 0) return false;
     const lastDay = tripDays[tripDays.length - 1];
     return new Date(lastDay.date) < new Date();
   })();
 
-  // Selecteer 10 willekeurige foto's, maar sorteer op datum
   function selectRandomPhotos() {
     let shuffled = [...allPhotos].sort(() => 0.5 - Math.random());
     let selected = shuffled.slice(0, 10);
     selected.sort((a, b) => new Date(a.date) - new Date(b.date));
-    setSelectedSlides(selected.map((p) => ({ src: typeof p === "string" ? p : p.url })));
+    setSelectedSlides(selected.map((p) => ({ src: typeof p === "string" ? p : p.imageUrl })));
     setIndex(0);
     setShowSlideshow(true);
   }
@@ -31,7 +28,6 @@ function PhotoGallery({ generalPhotos, tripDays }) {
     <div className="photos-container">
       <h2>Alle foto's</h2>
 
-      {/* Knop alleen tonen als reis gedaan is */}
       {isTripDone && (
         <button onClick={selectRandomPhotos} style={{ marginBottom: "15px", padding: "10px 15px", cursor: "pointer" }}>
           Kies 10 foto’s met muziek
@@ -42,13 +38,12 @@ function PhotoGallery({ generalPhotos, tripDays }) {
         {allPhotos.map((photo, i) => (
           <img
             key={i}
-            src={typeof photo === "string" ? photo : photo.url}
+            src={typeof photo === "string" ? photo : photo.imageUrl}
             alt={`Foto ${i + 1}`}
             width={100}
             style={{ cursor: "pointer", borderRadius: "8px" }}
             onClick={() => {
-              setSelectedSlides(allPhotos.map((p) => ({ src: typeof p === "string" ? p : p.url })));
-
+              setSelectedSlides(allPhotos.map((p) => ({ src: typeof p === "string" ? p : p.imageUrl })));
               setIndex(i);
               setShowSlideshow(true);
             }}
@@ -56,7 +51,6 @@ function PhotoGallery({ generalPhotos, tripDays }) {
         ))}
       </div>
 
-      {/* Lightbox met automatische slideshow + muziek */}
       {showSlideshow && (
         <Lightbox
           open={index >= 0}
