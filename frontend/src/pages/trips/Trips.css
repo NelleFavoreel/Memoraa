@@ -351,16 +351,20 @@ li {
     justify-content: center;
   }
   .trip-content {
-    margin: 90px 0px 20px 0px;
+    margin: 50px 0px 20px 0px;
   }
   .trip-item {
-    margin-top: 0;
+    margin-top: 0px;
+    margin-bottom: 40px;
   }
   .trip-item.reverse {
     margin-top: 0;
   }
   .model-form-flex {
     flex-direction: column;
+  }
+  .trips-list {
+    margin-top: -50px;
   }
 }
 @media (max-width: 1000px) {

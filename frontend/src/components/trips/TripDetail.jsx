@@ -58,7 +58,6 @@ function TravelDetail({ setHideNavbar }) {
     fetchTripDetails();
   }, [id]);
 
-  // Namen van reizigers ophalen
   useEffect(() => {
     if (!trip || !trip.travelers || trip.travelers.length === 0) {
       setTravelerNames([]);
@@ -84,7 +83,6 @@ function TravelDetail({ setHideNavbar }) {
     fetchTravelerNames();
   }, [trip]);
 
-  // Achtergrondfoto wisselen (slideshow)
   useEffect(() => {
     if (backgroundPhotos.length > 1) {
       const interval = setInterval(() => {
@@ -94,14 +92,12 @@ function TravelDetail({ setHideNavbar }) {
     }
   }, [backgroundPhotos]);
 
-  // Bij laden van tripDays eerste dag kiezen
   useEffect(() => {
     if (tripDays.length > 0) {
       handleDayChange(0);
     }
   }, [tripDays]);
 
-  // Bij dag wisselen foto’s aanpassen
   const handleDayChange = (index) => {
     const selectedDayPhotos = tripDays[index]?.photos || [];
     const fallbackPhoto = trip?.imageUrl ? [trip.imageUrl] : [];
@@ -111,7 +107,6 @@ function TravelDetail({ setHideNavbar }) {
     setCurrentPhotoIndex(0);
   };
 
-  // Coördinaten ophalen van plaatsen via Mapbox geocoding
   useEffect(() => {
     const fetchCoordinatesForPlaces = async () => {
       const fetchedCoordinates = [];
@@ -222,7 +217,7 @@ function TravelDetail({ setHideNavbar }) {
         </div>
       </div>
 
-      <TripDays tripDays={tripDays} setTripDays={setTripDays} onDayChange={handleDayChange} tripId={id} />
+      <TripDays tripDays={trip.days} setTripDays={setTripDays} tripId={trip._id} trip={trip} onDayChange={handleDayChange} />
 
       <div className="trip-detail-under-content" ref={photosRef}>
         <div className="trip-detail-photos-header-button">
