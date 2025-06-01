@@ -173,10 +173,37 @@
   margin-right: 1%;
 }
 .edit-trip-buttons {
-  display: flex;
+  display: block;
   align-items: flex-end;
   gap: 30px;
   justify-content: center;
+}
+.add-pictures {
+  display: flex;
+  flex-direction: column;
+  background-color: #d7d3cd;
+  width: 50%;
+  margin-top: 50px;
+  height: auto;
+  align-items: flex-start;
+  padding: 0px 10%;
+}
+.add-pictures-container {
+  display: flex;
+  justify-content: center;
+}
+.add-pictures input {
+  border: none;
+}
+.add-picture-buttons {
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+.trip-detail-photos-header-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: -90px;
+  margin-top: 70px;
 }
 @media (max-width: 600px) {
   .edit-trip-container {

@@ -10,6 +10,8 @@ import { SlSettings } from "react-icons/sl";
 import EditTrip from "./EditTip";
 import PhotoGallery from "./PhotoGallery";
 import AddPictures from "./AddPictures";
+import AddButton from "../button/AddButton";
+import LoginModal from "../modal/LoginModal";
 
 function TravelDetail({ setHideNavbar }) {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
@@ -23,6 +25,7 @@ function TravelDetail({ setHideNavbar }) {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const currentUserId = localStorage.getItem("userId");
   const [showModal, setShowModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const photosRef = useRef(null);
   const mapRef = useRef(null);
@@ -222,7 +225,21 @@ function TravelDetail({ setHideNavbar }) {
       <TripDays tripDays={tripDays} setTripDays={setTripDays} onDayChange={handleDayChange} tripId={id} />
 
       <div className="trip-detail-under-content" ref={photosRef}>
-        <AddPictures tripId={id} onPhotoAdded={handlePhotoAdded} />
+        <div className="trip-detail-photos-header-button">
+          <AddButton onClick={() => setIsModalOpen(true)} style={{ cursor: "pointer" }}>
+            +
+          </AddButton>
+        </div>
+        <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <AddPictures
+            tripId={id}
+            onPhotoAdded={() => {
+              handlePhotoAdded();
+              setIsModalOpen(false); // sluit modal na upload
+            }}
+            onClose={() => setIsModalOpen(false)} // sluit modal bij annuleren
+          />
+        </LoginModal>
         <PhotoGallery generalPhotos={trip?.photos || []} tripDays={tripDays} />
         <div className="map-container">
           <h2>Kaartweergave</h2>
