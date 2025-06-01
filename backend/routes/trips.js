@@ -325,7 +325,7 @@ router.put("/:id", authenticateToken, async (req, res) => {
 router.post("/:id/photos", authenticateToken, async (req, res) => {
   try {
     const tripId = new ObjectId(req.params.id);
-    const { imageUrl, description } = req.body;
+    const { imageUrl, imageBase64, description } = req.body;
 
     if (!imageUrl) {
       return res.status(400).json({ message: "ImageUrl is verplicht." });
@@ -334,7 +334,10 @@ router.post("/:id/photos", authenticateToken, async (req, res) => {
     const db = getDB();
     const tripsCollection = db.collection("trips");
 
-    // Voeg foto toe aan 'photos' array in trip document
+    if (!imageBase64 && !imageUrl) {
+      return res.status(400).json({ message: "Base64 is verplicht." });
+    }
+
     const result = await tripsCollection.updateOne(
       { _id: tripId },
       {
