@@ -198,6 +198,10 @@ function TravelDetail({ setHideNavbar }) {
               {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
             </p>
             <div className="trip-detail-info">
+              <label>Stad:</label>
+              <p>{trip.place}</p>
+            </div>
+            <div className="trip-detail-info">
               <label>Aantal dagen:</label>
               <p>{tripDays.length} dagen</p>
             </div>
@@ -217,7 +221,7 @@ function TravelDetail({ setHideNavbar }) {
         </div>
       </div>
 
-      <TripDays tripDays={trip.days} setTripDays={setTripDays} tripId={trip._id} trip={trip} onDayChange={handleDayChange} />
+      <TripDays tripDays={tripDays} setTripDays={setTripDays} tripId={trip._id} trip={trip} onDayChange={handleDayChange} />
 
       <div className="trip-detail-under-content" ref={photosRef}>
         <div className="trip-detail-photos-header-button">

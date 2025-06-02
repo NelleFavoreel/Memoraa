@@ -70,13 +70,11 @@ function TripDays({ tripDays, setTripDays, onDayChange, initialTripDays, tripId,
 
     fetchTravelerNames();
   }, [trip]);
-  console.log("Ontvangen trip prop:", trip);
 
   const isTraveler = trip?.travelers?.map(String).includes(currentUserId);
 
   return (
     <div className="trip-days-container">
-      {/* Toon het instellingen-icoon alleen als reiziger */}
       {isTraveler && (
         <Underline onClick={() => setShowEditModal(true)}>
           <SlSettings />
@@ -103,7 +101,7 @@ function TripDays({ tripDays, setTripDays, onDayChange, initialTripDays, tripId,
         )}
       </div>
 
-      {showEditModal && <EditTripDays tripDays={tripDays} setTripDays={setTripDays} tripId={tripId} isOpen={showEditModal} onClose={() => setShowEditModal(false)} />}
+      {showEditModal && tripDays && <EditTripDays tripId={trip._id} isOpen={showEditModal} onClose={() => setShowEditModal(false)} tripDays={tripDays} setTripDays={setTripDays} />}
     </div>
   );
 }
