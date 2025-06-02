@@ -4,12 +4,13 @@
   font-family: "myriad-pro", sans-serif;
   justify-content: space-between;
   gap: 20px;
+  padding-top: 40px;
 }
 
 .family-requests-container {
-  background-color: #e5e3df46;
-  padding: 20px 30px;
-  height: 300px;
+  background-color: #f1f1f1;
+  padding: 30px 5%;
+  height: 100%;
   width: 400px;
 }
 
@@ -19,9 +20,14 @@
 }
 .get-notifications-container {
   font-family: Arial, sans-serif;
-  width: 550px;
+  width: 80%;
 }
-
+.family-requests-container tr th {
+  padding-left: -20px;
+}
+.family-requests-container td {
+  font-size: 14px;
+}
 .get-notifications-container ul {
   list-style-type: none;
   padding: 0;
@@ -29,7 +35,7 @@
 }
 
 .get-notifications-container li {
-  background-color: #e5e3df46;
+  background-color: #f1f1f1;
   margin-bottom: 10px;
   padding: 10px 15px;
   font-weight: 100;
