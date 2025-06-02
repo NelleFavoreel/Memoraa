@@ -134,11 +134,7 @@ function TravelInfo({ refresh, onRefreshed }) {
                 <div className="trip-info">
                   <Link to={`/trips/${trip._id}`}>
                     <h2 className="trips-info-title">{trip.tripType === "roadtrip" && trip.countries?.length > 0 ? trip.countries.join(" - ") : `${trip.place}`}</h2>
-                    {trip.travelers?.includes(userId) && (
-                      <div className="trip-delete-button">
-                        <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
-                      </div>
-                    )}
+
                     <p>
                       <label>Type:</label> {trip.tripType}
                     </p>
@@ -153,6 +149,11 @@ function TravelInfo({ refresh, onRefreshed }) {
                       </button>
                     </div>
                   </Link>
+                  {trip.travelers?.includes(userId) && (
+                    <div className="trip-delete-button">
+                      <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

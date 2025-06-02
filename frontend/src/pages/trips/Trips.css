@@ -112,8 +112,9 @@ li {
   margin-top: 80px;
 }
 .trip-delete-button {
-  padding-top: 10px;
-  margin-bottom: -30px;
+  padding-top: -30px;
+  margin-bottom: 0px;
+  margin-right: -30px;
 }
 .modal-content .title-header {
   font-size: 60px;
@@ -125,7 +126,11 @@ li {
   margin-top: -40px;
   margin-bottom: 20px;
   cursor: pointer;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  margin-left: -30px;
+}
+.delete {
+  margin-top: -90px;
 }
 .trip-image-little {
   width: 50%;
@@ -334,10 +339,9 @@ li {
     margin: -30px -10px;
   }
   .trip-delete-button {
-    margin: 0;
     margin-bottom: 10px;
     margin-top: -35px;
-    margin-right: -10px;
+    margin-left: -20px;
   }
   .trip-image-little {
     display: none;
@@ -372,6 +376,9 @@ li {
   }
   .load-more-container {
     margin-top: 90px;
+  }
+  .delete {
+    margin-top: -50px;
   }
 }
 @media (max-width: 1000px) {
