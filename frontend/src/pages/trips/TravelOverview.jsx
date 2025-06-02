@@ -5,13 +5,19 @@ import "./Trips.css";
 import "../../components/trips/AnimationTrips.css";
 import FullButton from "../../components/button/FullButton";
 import AddButton from "../../components/button/AddButton";
+import { useNavigate } from "react-router-dom";
+
 function TravelOverview() {
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const navigate = useNavigate();
 
-  const handleTripAdded = () => {
+  const handleTripAdded = (tripId) => {
     setRefresh(true);
     setShowModal(false);
+    if (tripId) {
+      navigate(`/trips/${tripId}`);
+    }
   };
 
   const handleRefreshed = () => {

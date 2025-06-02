@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../pages/trips/Trips.css";
 import FullButton from "../button/FullButton";
 import AddButton from "../button/AddButton";
@@ -20,8 +21,7 @@ function AddTrip({ show, onClose, onTripAdded }) {
   const [audience, setAudience] = useState("self");
   const [useAICover, setUseAICover] = useState(true);
   const [countries, setCountries] = useState([""]);
-
-  // Haal de achternaam op van de user uit localStorage (optioneel, blijft als userLastName)
+  const navigate = useNavigate();
   const lastName = localStorage.getItem("lastName") || "";
 
   useEffect(() => {
@@ -105,8 +105,12 @@ function AddTrip({ show, onClose, onTripAdded }) {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log("Response van server na toevoegen trip:", data);
         toast.success(data.message || "Reis succesvol toegevoegd!");
-        if (onTripAdded) onTripAdded();
+        if (data.tripId) {
+          if (onTripAdded) onTripAdded(data.tripId);
+          onClose();
+        }
       })
       .catch((err) => {
         toast.error("Fout bij toevoegen van reis, probeer het later opnieuw.");
