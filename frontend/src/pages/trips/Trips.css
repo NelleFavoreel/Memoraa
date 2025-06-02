@@ -23,13 +23,13 @@
   flex-direction: row-reverse;
 }
 .trip-item.reverse .trip-info-container {
-  margin-right: -75%;
+  margin-right: -76%;
 }
 .trip-item.reverse {
   margin-top: 80px;
 }
 .trip-content {
-  margin-top: 120px;
+  margin-top: 80px;
   margin-left: -4%;
 }
 .trip-info {
@@ -72,7 +72,7 @@ ul {
   height: 500px;
   object-fit: cover;
   margin-left: -10%;
-  margin-right: -13%;
+  margin-right: -14%;
 }
 
 .modal-close {
@@ -129,7 +129,7 @@ li {
   flex-direction: column;
   gap: 10px;
   align-items: flex-end;
-  margin-left: 15%;
+  margin-left: 19%;
   height: 500px;
   align-items: flex-start;
 }
@@ -179,7 +179,7 @@ li {
 .searchbar {
   width: 280px;
   padding: 12px 10px;
-  background-color: #d7d3cd;
+  background-color: #f1f1f1;
   color: white !important;
 }
 .searchbar::placeholder {
