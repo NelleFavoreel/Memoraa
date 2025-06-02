@@ -52,6 +52,7 @@ input {
   min-width: 210px;
   margin-left: 20px;
   color: #3c4b64;
+  font-size: 14px;
 }
 label {
   font-family: "myriad-pro", sans-serif;
@@ -74,6 +75,7 @@ button {
   border: none;
   cursor: pointer;
   color: #3c4b64;
+  font-size: 14px;
 }
 td {
   color: #3c4b64;
@@ -122,6 +124,17 @@ li {
     font-weight: 600;
   }
   li {
+    font-size: 11px;
+  }
+  input {
+    min-width: 190px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    padding: 2px;
+    padding-bottom: 3px;
+    font-size: 11px;
+  }
+  button {
     font-size: 11px;
   }
 }
