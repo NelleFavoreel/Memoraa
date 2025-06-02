@@ -11,6 +11,7 @@ function TravelInfo({ refresh, onRefreshed }) {
   const [trips, setTrips] = useState([]);
   const token = localStorage.getItem("token");
   const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
+  const [visibleCount, setVisibleCount] = useState(5);
 
   const [filters, setFilters] = useState({
     status: "all",
@@ -37,6 +38,9 @@ function TravelInfo({ refresh, onRefreshed }) {
       .catch((err) => {
         console.error("❌ Fout bij ophalen van trips:", err);
       });
+  };
+  const handleLoadMore = () => {
+    setVisibleCount((prevCount) => prevCount + 7);
   };
   const filteredTrips = trips.filter((trip) => {
     const now = new Date();
@@ -109,13 +113,18 @@ function TravelInfo({ refresh, onRefreshed }) {
     const allPhotos = [...dayPhotos, ...generalPhotos];
     return allPhotos.slice(0, 2);
   };
+  const now = new Date();
 
-  const sortedTrips = [...filteredTrips].sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+  const upcomingTrips = filteredTrips.filter((trip) => new Date(trip.startDate) >= now).sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+
+  const pastTrips = filteredTrips.filter((trip) => new Date(trip.endDate) < now).sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+
+  const sortedTrips = [...upcomingTrips, ...pastTrips];
   return (
     <div>
       <Filters filters={filters} onFiltersChange={setFilters} />
       <div className="trips-list">
-        {sortedTrips.map((trip, index) => (
+        {sortedTrips.slice(0, visibleCount).map((trip, index) => (
           <li key={trip._id} className={`trip-item ${index % 2 !== 0 ? "reverse" : ""}`}>
             <div className="trip-content">
               {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} className="trip-image" />}
@@ -149,6 +158,11 @@ function TravelInfo({ refresh, onRefreshed }) {
             </div>
           </li>
         ))}
+        {visibleCount < sortedTrips.length && (
+          <div className="load-more-container">
+            <FullButton onClick={handleLoadMore}>Meer tonen</FullButton>
+          </div>
+        )}
       </div>
     </div>
   );

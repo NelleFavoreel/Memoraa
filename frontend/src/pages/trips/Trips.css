@@ -74,7 +74,11 @@ ul {
   margin-left: -10%;
   margin-right: -13%;
 }
-
+.load-more-container {
+  margin-top: 200px;
+  display: flex;
+  justify-content: center;
+}
 .modal-close {
   position: absolute;
   top: 0.5rem;
@@ -277,8 +281,8 @@ li {
     margin-bottom: 50px;
   }
   .filters select {
-    font-size: 12px;
-    padding: 5px 3px;
+    font-size: 11px;
+    padding: 5px 7px;
     width: 100%;
   }
   .filters input {
@@ -365,6 +369,9 @@ li {
   }
   .trips-list {
     margin-top: -50px;
+  }
+  .load-more-container {
+    margin-top: 90px;
   }
 }
 @media (max-width: 1000px) {
