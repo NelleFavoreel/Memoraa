@@ -16,11 +16,11 @@ function ClickableMap({ coordinates }) {
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v11",
       center: [4.5, 50.8],
-      zoom: 10,
+      zoom: 6,
       pitch: 0,
       bearing: 0,
       antialias: true,
-      minZoom: 4,
+      minZoom: 5,
       maxZoom: 16,
     });
 
@@ -87,7 +87,7 @@ function ClickableMap({ coordinates }) {
     <div>
       <div style={{ marginBottom: 8 }}></div>
 
-      <div ref={mapContainerRef} style={{ height: "80vh", width: "100%" }} />
+      <div ref={mapContainerRef} style={{ height: "70vh", width: "100%" }} />
       {/* <input type="text" placeholder="Zoek een plaats..." value={searchInput} onChange={(e) => setSearchInput(e.target.value)} style={{ width: "70%", padding: "6px" }} />
       <FullButton onClick={handleSearch}>Zoek</FullButton> */}
     </div>

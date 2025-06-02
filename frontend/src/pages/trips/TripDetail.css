@@ -15,7 +15,6 @@
   position: relative;
 }
 .back-button-detail {
-  padding-top: 40px;
   font-family: "myriad-pro", sans-serif;
   font-weight: 100;
   font-size: 13px;
@@ -110,11 +109,12 @@
   margin-left: -13%;
   margin-right: -13%;
   padding: 13%;
+  padding-bottom: 30%;
   padding-top: 20px;
 }
 .map-container {
-  height: 80vh;
-  padding-bottom: 50%;
+  height: 100vh;
+  padding-bottom: 0%;
 }
 .photos-container {
   height: 100vh;
@@ -139,7 +139,7 @@
   display: flex;
   align-items: baseline;
   gap: 10px;
-  height: 50px;
+  height: 30px;
 }
 .trip-detail-header {
   display: flex;
@@ -162,29 +162,34 @@
 .trip-detail-share svg {
   color: white;
 }
+.underline-back-button {
+  display: flex;
+  align-items: center;
+}
+.map-container h2 {
+  margin-left: 0;
+  margin-top: 80px;
+}
 @media (max-width: 600px) {
   .trip-detail-general-info {
     width: 80%;
-    padding: 10px;
-    margin-top: 10px;
-    padding-left: 280px;
+    margin-top: -60px;
   }
   .trip-detail-general-info button {
     font-size: 10px;
   }
   .trip-days-slider {
-    padding: 20px 70px 20px 70px;
+    padding: 20px 70px 50px 70px;
     width: 82%;
     margin-top: 10px;
-    margin-left: -15%;
-    margin-right: -11%;
   }
   .days-place {
-    margin-top: 50px !important;
+    margin-top: 20px !important;
     color: blue;
   }
   .trip-days-container {
     margin-top: 70px;
+    align-items: center;
   }
   .slick-dots {
     display: none;
@@ -197,9 +202,7 @@
   .slick-dots li button {
     height: 1px;
   }
-  .trip-days-container {
-    align-items: stretch;
-  }
+
   .trip-days-slider li {
     font-size: 10px;
   }
@@ -211,5 +214,40 @@
   }
   .back-button-detail {
     font-size: 10px;
+  }
+  .trip-detail-container h1 {
+    margin: 0;
+    margin-top: 20px;
+  }
+  .back-button-detail {
+    margin-bottom: 30px;
+  }
+  .trip-detail-header-actions {
+    margin-left: 30%;
+  }
+  .trip-detail-header {
+    justify-content: flex-start;
+  }
+  .trip-detail-share {
+    margin: 20px 0px 0px 0px;
+  }
+  .edit-trip-button {
+    margin: 20px 0px 0px 0px;
+  }
+  .trip-days-container button {
+    margin-left: 100%;
+  }
+  .trip-detail-photos-header-button {
+    margin-bottom: -40px;
+  }
+  .add-pictures input {
+    margin-left: 30%;
+    background-color: transparent;
+  }
+  .photos-container img {
+    width: 160px;
+  }
+  .back-button-detail button {
+    margin: 0;
   }
 }
