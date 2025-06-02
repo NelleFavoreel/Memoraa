@@ -61,9 +61,9 @@ function ChangingPassword({ onClose }) {
         {error && <p style={{ color: "red" }}>{error}</p>}
         <div className="button-container-account">
           <FullButton type="submit">Wachtwoord wijzigen</FullButton>
-          <Underline type="button" onClick={onClose}>
+          <button type="button" onClick={onClose}>
             Annuleren
-          </Underline>
+          </button>
         </div>
       </form>
     </div>
