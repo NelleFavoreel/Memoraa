@@ -1,18 +1,21 @@
 .add-family-members th {
   margin-top: 50px;
-  font-size: 16px;
+  font-size: 14px;
   font-family: "myriad-pro", sans-serif;
 }
 .account-container h2 {
   width: 80%;
   margin-top: -55px;
 }
+.add-family-members h2 {
+  margin-left: 0;
+}
 .account-info-container {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 130px;
-  margin-top: 100px;
+  padding-bottom: 130px;
+  padding-top: 40px;
 }
 .add-family-members h3 {
   font-size: 15px;
@@ -29,18 +32,33 @@
   margin-left: -10px;
 }
 .account-info {
-  background-color: #e5e3df46;
-  padding: 20px 80px 40px 30px;
+  background-color: #f1f1f1;
+  padding: 90px 80px 40px 30px;
   width: 35%;
   font-size: 16px;
+  height: 100%;
+}
+
+.account-info h2 {
+  margin-left: 0;
 }
 .account-info button {
   margin-top: 20px;
 }
+.info-form-text {
+  height: 30px;
+}
 .account-family {
-  background-color: #e5e3df46;
-  padding: 20px 30px 40px 30px;
+  background-color: #f1f1f1;
+  padding: 90px 30px 40px 30px;
   width: 40%;
+  height: 100%;
+}
+.account-info-buttons {
+  margin-top: 50px;
+}
+.changing-password-form form {
+  background-color: transparent;
 }
 .account-user-trips {
   padding: -30px 30px 40px 30px;
@@ -64,12 +82,12 @@
   margin-top: 30px;
 }
 .changing-password-form form {
-  padding: 20px 0px;
+  padding: 20px 30px;
 }
 .button-container-account {
   display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  justify-content: flex-start;
+  margin-top: -10px;
   gap: 20px;
 }
 .change-passord-button {
@@ -89,13 +107,25 @@
   .account-info-container {
     flex-direction: column;
     align-items: center;
-    margin-top: 60px;
+    margin-top: -20px;
   }
   .account-info {
     width: 90%;
-    padding: 40px 20px 20px 20px;
+    padding: 80px 20px 20px 20px;
   }
-  .info-form-user {
+  .account-info-buttons {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+  }
+  .account-info-buttons button {
+    width: 40%;
+  }
+  .changing-password-form form {
+    width: 100%;
+  }
+  .changing-password-form input {
+    max-width: 20px;
   }
   .account-family {
     width: 90%;
@@ -115,6 +145,6 @@
     font-size: 11px;
   }
   .add-family-members th {
-    font-size: 14px;
+    font-size: 11px;
   }
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DeleteButton from "../button/DeleteButton";
 import AddButton from "../button/AddButton";
+import { label } from "yet-another-react-lightbox";
 
 function FamilyRequests() {
   const [requests, setRequests] = useState([]);
@@ -45,7 +46,7 @@ function FamilyRequests() {
     const token = localStorage.getItem("token");
     try {
       const res = await fetch("http://localhost:3001/family/reject-family-request", {
-        method: "PUT",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -66,32 +67,37 @@ function FamilyRequests() {
 
   return (
     <div className="family-requests-container">
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-        <thead>
-          <tr>
-            <th style={{ textAlign: "left", padding: "8px 8px" }}>Naam</th>
-            <th style={{ textAlign: "left", padding: "8px 8px" }}></th>
-          </tr>
-          {requests.length === 0 && <p>Geen verzoeken gevonden.</p>}
-        </thead>
-        <tbody className="family-requests-body">
-          {requests.map((user) => (
-            <tr key={user._id}>
-              <td style={{ padding: "8px" }}>{user.screenName}</td>
-              <td>
-                <td className="action-buttons" style={{ display: "flex", gap: "20px", justifyContent: "flex-end", width: "170px" }}>
-                  <AddButton onClick={() => handleAccept(user._id)} style={{ marginRight: "8px", padding: "8px 10px" }}>
-                    ＋
-                  </AddButton>
-                  <DeleteButton onClick={() => handleReject(user._id)} style={{ backgroundColor: "lightcoral", padding: "20px 16px" }}>
-                    Weiger
-                  </DeleteButton>
-                </td>
-              </td>
+      <label>Familie verzoeken</label>
+
+      {requests.length === 0 ? (
+        <p>Geen verzoeken gevonden.</p>
+      ) : (
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead>
+            <tr>
+              <th style={{ textAlign: "left" }}></th>
+              <th style={{ textAlign: "right", width: "170px" }}></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="family-requests-body">
+            {requests.map((user) => (
+              <tr key={user._id}>
+                <td style={{ padding: "8px" }}>{user.screenName}</td>
+                <td>
+                  <td className="action-buttons" style={{ display: "flex", gap: "20px", justifyContent: "flex-end", width: "170px" }}>
+                    <AddButton onClick={() => handleAccept(user._id)} style={{ marginRight: "8px", padding: "8px 10px" }}>
+                      ＋
+                    </AddButton>
+                    <DeleteButton onClick={() => handleReject(user._id)} style={{ backgroundColor: "lightcoral", padding: "20px 16px" }}>
+                      Weiger
+                    </DeleteButton>
+                  </td>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
       {message && <p>{message}</p>}
     </div>
   );
