@@ -48,7 +48,7 @@ export default function Navbar({ hidden }) {
       <div className="navbar-content">
         <div className="navbar-content-inner">
           <div className="logo">
-            <Link to="/">FamilyTrips</Link>
+            <Link to="/">Tripli</Link>
           </div>
           <button className="hamburger" onClick={toggleMenu}>
             ☰
