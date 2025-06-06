@@ -17,4 +17,4 @@
 - https://yet-another-react-lightbox.com/
 - https://www.npmjs.com/package/react-toastify
 - https://react-icons.github.io/react-icons/
-- 
+- https://alvarotrigo.com/fullPage/examples/
