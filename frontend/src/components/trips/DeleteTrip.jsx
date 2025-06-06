@@ -1,10 +1,15 @@
-// DeleteTrip.js
 import React from "react";
 import { toast } from "react-toastify";
 import DeleteButton from "../button/DeleteButton";
+import { useNavigate } from "react-router-dom";
+
 function DeleteTrip({ tripId, onDelete }) {
   const token = localStorage.getItem("token");
-  const handleDelete = () => {
+  const navigate = useNavigate();
+
+  const handleDelete = (event) => {
+    event.stopPropagation();
+
     fetch(`http://localhost:3001/trips/${tripId}`, {
       method: "DELETE",
       headers: {
@@ -16,6 +21,8 @@ function DeleteTrip({ tripId, onDelete }) {
         if (res.ok) {
           toast.success("Reis succesvol verwijderd.");
           onDelete(tripId);
+          // Als je op detailpagina bent, ga dan terug naar trips overzicht
+          navigate("/trips");
         } else {
           toast.error("Fout bij verwijderen van reis.");
         }
