@@ -3,7 +3,6 @@
   justify-content: center;
   align-items: center;
   padding: 0px 0;
-  cursor: pointer;
   position: relative;
   width: 100%;
   margin-top: 80px;
@@ -245,6 +244,37 @@ li {
   color: rgb(255, 255, 255);
   font-size: 10px;
 }
+.custom-cursor {
+  position: fixed;
+  pointer-events: none; /* Zodat hij geen muisinteracties blokkeert */
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(0, 4, 255); /* Of een kleur die je pijl zichtbaar maakt */
+  user-select: none;
+}
+.custom-cursor-icon {
+  width: 30px;
+  height: 30px;
+  font-size: 24px; /* Groter als je wil */
+  color: white; /* Of zwart, wat jij wil */
+  text-shadow: 0 0 2px black, 0 0 2px black; /* Maakt het 'vetter' */
+}
+
+.trip-content {
+  cursor: none;
+}
+.trip-info {
+  cursor: none;
+}
+.trip-link {
+  display: none;
+}
 
 @media (max-width: 1000px) {
   .trip-info {
@@ -337,6 +367,7 @@ li {
   }
   .trip-link {
     margin: -30px -10px;
+    display: flex;
   }
   .trip-delete-button {
     margin-bottom: 10px;

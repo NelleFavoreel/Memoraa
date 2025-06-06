@@ -34,11 +34,11 @@ function TravelDetail({ setHideNavbar }) {
 
   return (
     <div className="trip-detail-container">
-      <div className="back-button-detail" onClick={() => navigate(-1)} style={{ cursor: "pointer", display: "flex", alignItems: "center", marginBottom: "1rem" }}>
-        <Underline className="underline-back-button">
+      <div className="back-button-detail" onClick={() => navigate("/trips")} style={{ cursor: "pointer", display: "flex", alignItems: "center", marginBottom: "1rem" }}>
+        <button className="underline-back-button">
           <SlArrowRight style={{ transform: "rotate(180deg)", marginRight: "0.5rem" }} />
           <span>Terug</span>
-        </Underline>
+        </button>
       </div>
       <div className="trip-detail-edit-trip"></div>
 

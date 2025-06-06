@@ -6,12 +6,15 @@ import Underline from "../button/Underline";
 import { SlArrowRight } from "react-icons/sl";
 import Filters from "../../components/trips/filters/Filters";
 import useAnimateOnVisible from "../animations/useAnimateOnVisible";
+import CustomCursor from "../animations/CustomCursor";
 
 function TravelInfo({ refresh, onRefreshed }) {
   const [trips, setTrips] = useState([]);
   const token = localStorage.getItem("token");
   const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
   const [visibleCount, setVisibleCount] = useState(5);
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [showCursor, setShowCursor] = useState(false);
 
   const [filters, setFilters] = useState({
     status: "all",
@@ -126,14 +129,16 @@ function TravelInfo({ refresh, onRefreshed }) {
       <div className="trips-list">
         {sortedTrips.slice(0, visibleCount).map((trip, index) => (
           <li key={trip._id} className={`trip-item ${index % 2 !== 0 ? "reverse" : ""}`}>
-            <div className="trip-content">
-              {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} className="trip-image" />}
-              <div className="trip-image-little">{getSmallPhotos(trip).length > 0 && getSmallPhotos(trip).map((photo, idx) => <img key={idx} src={photo} alt={`Reisfoto ${idx + 1}`} />)}</div>
+            <Link to={`/trips/${trip._id}`}>
+              <div className="trip-content" onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })} onMouseEnter={() => setShowCursor(true)} onMouseLeave={() => setShowCursor(false)}>
+                {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} className="trip-image" />}
+                <div className="trip-image-little">{getSmallPhotos(trip).length > 0 && getSmallPhotos(trip).map((photo, idx) => <img key={idx} src={photo} alt={`Reisfoto ${idx + 1}`} />)}</div>
 
-              <div className="trip-info-container">
-                <div className="trip-info">
-                  <Link to={`/trips/${trip._id}`}>
-                    <h2 className="trips-info-title">{trip.tripType === "roadtrip" && trip.countries?.length > 0 ? trip.countries.join(" - ") : `${trip.place}`}</h2>
+                <div className="trip-info-container">
+                  <div className="trip-info">
+                    <h2 className="trips-info-title">
+                      <Link to={`/trips/${trip._id}`}>{trip.tripType === "roadtrip" && trip.countries?.length > 0 ? trip.countries.join(" - ") : `${trip.place}`}</Link>
+                    </h2>
 
                     <p>
                       <label>Type:</label> {trip.tripType}
@@ -141,22 +146,24 @@ function TravelInfo({ refresh, onRefreshed }) {
                     <p>
                       <label>Datum:</label> {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
                     </p>
+
                     <div className="trip-link">
-                      <button>
-                        <Link to={`/trips/${trip._id}`}>
+                      <Link to={`/trips/${trip._id}`}>
+                        <button>
                           <SlArrowRight />
-                        </Link>
-                      </button>
+                        </button>
+                      </Link>
                     </div>
-                  </Link>
-                  {trip.travelers?.includes(userId) && (
-                    <div className="trip-delete-button">
-                      <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
-                    </div>
-                  )}
+
+                    {trip.travelers?.includes(userId) && (
+                      <div className="trip-delete-button">
+                        <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </li>
         ))}
         {visibleCount < sortedTrips.length && (
@@ -165,6 +172,7 @@ function TravelInfo({ refresh, onRefreshed }) {
           </div>
         )}
       </div>
+      {showCursor && <CustomCursor x={cursorPos.x} y={cursorPos.y} />}
     </div>
   );
 }
