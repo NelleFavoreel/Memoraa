@@ -2,6 +2,7 @@ body {
   background-color: #f6f6f6;
   color: black;
   margin: 100px 10%;
+  height: 100%;
   overflow-x: hidden;
 }
 
