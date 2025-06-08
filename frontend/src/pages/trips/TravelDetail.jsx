@@ -5,12 +5,8 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import "./TripDetail.css";
 import FullButton from "../../components/button/FullButton";
 import { SlArrowRight } from "react-icons/sl";
-import { SlClose } from "react-icons/sl";
-import { SlPencil } from "react-icons/sl";
 import AddButton from "../../components/button/AddButton";
 import Underline from "../../components/button/Underline";
-import { SlSettings } from "react-icons/sl";
-import DeleteTrip from "../../components/trips/DeleteTrip";
 
 function TravelDetail({ setHideNavbar }) {
   const { id } = useParams();
@@ -24,9 +20,6 @@ function TravelDetail({ setHideNavbar }) {
     setHideNavbar(true);
     return () => setHideNavbar(false);
   }, [setHideNavbar]);
-  const handleDelete = () => {
-    navigate("/trips");
-  };
 
   useEffect(() => {
     fetch(`http://localhost:3001/trips/${id}`)
@@ -44,14 +37,8 @@ function TravelDetail({ setHideNavbar }) {
           <SlArrowRight style={{ transform: "rotate(180deg)", marginRight: "0.5rem" }} />
           <span>Terug</span>
         </button>
-        <div className="">
-          {trip.travelers?.includes(userId) && (
-            <div className="trip-delete-button">
-              <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
-            </div>
-          )}
-        </div>
       </div>
+
       <div className="trip-detail-edit-trip"></div>
 
       <TripDetail trip={trip} setHideNavbar={setHideNavbar} />

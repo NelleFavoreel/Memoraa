@@ -2,6 +2,8 @@ import React from "react";
 import { toast } from "react-toastify";
 import DeleteButton from "../button/DeleteButton";
 import { useNavigate } from "react-router-dom";
+import Underline from "../button/Underline";
+import { SlTrash } from "react-icons/sl";
 
 function DeleteTrip({ tripId, onDelete }) {
   const token = localStorage.getItem("token");
@@ -21,7 +23,6 @@ function DeleteTrip({ tripId, onDelete }) {
         if (res.ok) {
           toast.success("Reis succesvol verwijderd.");
           onDelete(tripId);
-          // Als je op detailpagina bent, ga dan terug naar trips overzicht
           navigate("/trips");
         } else {
           toast.error("Fout bij verwijderen van reis.");
@@ -33,7 +34,11 @@ function DeleteTrip({ tripId, onDelete }) {
       });
   };
 
-  return <DeleteButton onClick={handleDelete}>X</DeleteButton>;
+  return (
+    <button onClick={handleDelete}>
+      <SlTrash style={{ color: "white" }} />
+    </button>
+  );
 }
 
 export default DeleteTrip;

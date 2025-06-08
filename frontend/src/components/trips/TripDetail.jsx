@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ShareTripButton from "./ShareTripButton";
 import ClickableMap from "../maps/ClickableMap";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -13,6 +13,7 @@ import AddPictures from "./AddPictures";
 import AddButton from "../button/AddButton";
 import LoginModal from "../modal/LoginModal";
 import ReactFullpage from "@fullpage/react-fullpage";
+import DeleteTrip from "../../components/trips/DeleteTrip";
 
 function TravelDetail({ setHideNavbar }) {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
@@ -27,13 +28,11 @@ function TravelDetail({ setHideNavbar }) {
   const currentUserId = localStorage.getItem("userId");
   const [showModal, setShowModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
   const photosRef = useRef(null);
   const mapRef = useRef(null);
-
-  // Scroll handlers
-  const scrollToPhotos = () => photosRef.current?.scrollIntoView({ behavior: "smooth" });
-  const scrollToMap = () => mapRef.current?.scrollIntoView({ behavior: "smooth" });
 
   // Navbar verbergen/showen
   useEffect(() => {
@@ -158,7 +157,9 @@ function TravelDetail({ setHideNavbar }) {
       }));
     }
   };
-
+  const handleDelete = () => {
+    navigate("/trips");
+  };
   if (loading) return <p>De reisgegevens worden geladen...</p>;
   if (!trip) return <p>Reis niet gevonden.</p>;
 
@@ -187,6 +188,13 @@ function TravelDetail({ setHideNavbar }) {
                 transition: "opacity 0.8s ease-in-out",
               }}
             ></div>
+            <div className="trip-delete-header">
+              {trip.travelers?.includes(userId) && (
+                <div className="trip-delete-button">
+                  <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
+                </div>
+              )}
+            </div>
             <div className="trip-detail-container-info">
               <div className="trip-detail-container">
                 <div className="trip-detail-header">
@@ -201,6 +209,7 @@ function TravelDetail({ setHideNavbar }) {
                         <SlSettings />
                       </Underline>
                     )}
+
                     {showModal && <EditTrip isOpen={showModal} onClose={() => setShowModal(false)} />}
                   </div>
                 </div>
