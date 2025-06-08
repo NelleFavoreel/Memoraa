@@ -35,7 +35,7 @@ function MainApp({ isLoggedIn, setIsLoggedIn }) {
         <Route path="/home" element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/trips" element={<TravelOverview />} />
         <Route path="/trips/:id" element={<TravelDetail setHideNavbar={setHideNavbar} />} />
-        <Route path="/calendar" element={<Calendar />} />
+        {/* <Route path="/calendar" element={<Calendar />} /> */}
         <Route path="/account" element={<Account />} />
         <Route path="/users" element={<Account />} />
         <Route path="/notifications" element={<Notifications />} />

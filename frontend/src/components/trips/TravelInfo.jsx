@@ -8,7 +8,7 @@ import Filters from "../../components/trips/filters/Filters";
 import useAnimateOnVisible from "../animations/useAnimateOnVisible";
 import CustomCursor from "../animations/CustomCursor";
 
-function TravelInfo({ refresh, onRefreshed }) {
+function TravelInfo({ refresh, onRefreshed, scrollY }) {
   const [trips, setTrips] = useState([]);
   const token = localStorage.getItem("token");
   const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
@@ -66,21 +66,16 @@ function TravelInfo({ refresh, onRefreshed }) {
 
     return true;
   });
-  // Eerste keer laden
   useEffect(() => {
     fetchTrips();
   }, []);
 
-  // Herladen als refresh verandert naar true
   useEffect(() => {
     if (refresh) {
       fetchTrips();
     }
   }, [refresh]);
 
-  const handleDelete = (id) => {
-    setTrips((prevTrips) => prevTrips.filter((trip) => trip._id !== id));
-  };
   useEffect(() => {
     if (trips.length > 0) {
       setTimeout(() => {
@@ -116,6 +111,7 @@ function TravelInfo({ refresh, onRefreshed }) {
     const allPhotos = [...dayPhotos, ...generalPhotos];
     return allPhotos.slice(0, 2);
   };
+
   const now = new Date();
 
   const upcomingTrips = filteredTrips.filter((trip) => new Date(trip.startDate) >= now).sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
@@ -131,11 +127,10 @@ function TravelInfo({ refresh, onRefreshed }) {
           <li key={trip._id} className={`trip-item ${index % 2 !== 0 ? "reverse" : ""}`}>
             <Link to={`/trips/${trip._id}`}>
               <div className="trip-content" onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })} onMouseEnter={() => setShowCursor(true)} onMouseLeave={() => setShowCursor(false)}>
-                {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} className="trip-image" />}
+                {trip.imageUrl && <img src={trip.imageUrl} alt={`Afbeelding van ${trip.place || trip.country}`} className="trip-image" />}{" "}
                 <div className="trip-image-little">{getSmallPhotos(trip).length > 0 && getSmallPhotos(trip).map((photo, idx) => <img key={idx} src={photo} alt={`Reisfoto ${idx + 1}`} />)}</div>
-
                 <div className="trip-info-container">
-                  <div className="trip-info">
+                  <div className="trip-info parallax" style={{ transform: `translateY(${scrollY * 0.1}px)` }}>
                     <h2 className="trips-info-title">
                       <Link to={`/trips/${trip._id}`}>{trip.tripType === "roadtrip" && trip.countries?.length > 0 ? trip.countries.join(" - ") : `${trip.place}`}</Link>
                     </h2>
@@ -154,12 +149,6 @@ function TravelInfo({ refresh, onRefreshed }) {
                         </button>
                       </Link>
                     </div>
-
-                    {trip.travelers?.includes(userId) && (
-                      <div className="trip-delete-button">
-                        <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>

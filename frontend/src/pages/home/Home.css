@@ -19,32 +19,16 @@
   margin-top: 90px;
 }
 .home {
-  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  height: 100%;
-  margin-bottom: -50px;
 }
-
-.fpTableCustom {
-  padding-top: 15vh;
+.slideshow-hover-area {
+  position: relative;
+  z-index: 1;
 }
-
-.title {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-.sectionHomeCustom {
-  margin: 0 100px;
-}
-
-.fpTableCustom {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 85%;
-  margin: 0 auto;
+.slideshow-hover-area {
+  cursor: none;
 }

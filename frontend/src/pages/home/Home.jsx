@@ -1,41 +1,33 @@
-import ReactFullpage from "@fullpage/react-fullpage";
 import "./Home.css";
 import HomeContent from "../../components/home/HomeContent";
 import TravelSlideshow from "../../components/slideshow/TravelSlideshow";
+import React, { useState, useEffect } from "react";
 
 function Home() {
-  return (
-    <ReactFullpage
-      licenseKey={"gplv3-license"}
-      scrollingSpeed={800}
-      autoScrolling={true}
-      fitToSection={true}
-      scrollOverflow={false}
-      navigation
-      anchors={["slideshow", "info"]}
-      render={({ fullpageApi }) => {
-        return (
-          <div id="fullpage-wrapper">
-            {/* SECTION 1 - Slideshow */}
-            <div className="section sectionHome">
-              <div className="sectionInner">
-                <div className="home">
-                  <h1 className="title">Toekomstige reizen</h1>
-                  <TravelSlideshow />
-                </div>
-              </div>
-            </div>
+  const [scrollY, setScrollY] = useState(0);
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [showCursor, setShowCursor] = useState(false);
 
-            {/* SECTION 2 - Info */}
-            <div className="section sectionHome">
-              <div className="home">
-                <HomeContent />
-              </div>
-            </div>
-          </div>
-        );
-      }}
-    />
+  useEffect(() => {
+    const onScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const parallaxTranslate = scrollY * 0.2;
+
+  return (
+    <div className="home">
+      <h1 className="title">Toekomstige reizen</h1>
+      {/* <div className="slideshow-hover-area" onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })} onMouseEnter={() => setShowCursor(true)} onMouseLeave={() => setShowCursor(false)}> */}
+      <TravelSlideshow parallaxTranslate={parallaxTranslate} />
+      {/* </div> */}
+      <div className="home-content1">
+        <HomeContent />
+      </div>
+    </div>
   );
 }
 

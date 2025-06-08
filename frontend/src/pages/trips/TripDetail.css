@@ -23,6 +23,7 @@
   margin-top: 90px;
   z-index: 20;
   margin-left: 10px;
+  margin-right: 50px;
 }
 #fullpage-wrapper {
   margin-top: -100px;
@@ -78,7 +79,11 @@
   color: gray;
   opacity: 1;
 }
-
+.trip-delete-button {
+  background-color: red;
+  padding: 8px;
+  color: white;
+}
 .slick-dots li.slick-active button:before {
   color: rgb(0, 0, 0);
 }

@@ -10,18 +10,23 @@ import { SlPencil } from "react-icons/sl";
 import AddButton from "../../components/button/AddButton";
 import Underline from "../../components/button/Underline";
 import { SlSettings } from "react-icons/sl";
+import DeleteTrip from "../../components/trips/DeleteTrip";
 
 function TravelDetail({ setHideNavbar }) {
   const { id } = useParams();
   const [trip, setTrip] = useState(null);
-
+  const token = localStorage.getItem("token");
+  const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setHideNavbar(true);
     return () => setHideNavbar(false);
-  }, [setHideNavbar]); // <- DIT toevoegen
+  }, [setHideNavbar]);
+  const handleDelete = () => {
+    navigate("/trips");
+  };
 
   useEffect(() => {
     fetch(`http://localhost:3001/trips/${id}`)
@@ -34,11 +39,18 @@ function TravelDetail({ setHideNavbar }) {
 
   return (
     <div className="trip-detail-container">
-      <div className="back-button-detail" onClick={() => navigate("/trips")} style={{ cursor: "pointer", display: "flex", alignItems: "center", marginBottom: "1rem" }}>
+      <div className="back-button-detail" onClick={() => navigate("/trips")} style={{ cursor: "pointer", display: "flex", alignItems: "center", marginBottom: "1rem", justifyContent: "space-between", margin: "0px, 30px" }}>
         <button className="underline-back-button">
           <SlArrowRight style={{ transform: "rotate(180deg)", marginRight: "0.5rem" }} />
           <span>Terug</span>
         </button>
+        <div className="">
+          {trip.travelers?.includes(userId) && (
+            <div className="trip-delete-button">
+              <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
+            </div>
+          )}
+        </div>
       </div>
       <div className="trip-detail-edit-trip"></div>
 

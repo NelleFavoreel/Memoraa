@@ -11,21 +11,27 @@ import MountainCity from "../../../public/images/MountainCity.jpeg";
 import useAnimateOnVisible from "../../components/animations/useAnimateOnVisible";
 
 import "./HomeContent.css";
-function HomeContent() {
+
+function HomeContent({ scrollY }) {
   useAnimateOnVisible(".rotate-on-visible");
   useAnimateOnVisible(".rotate-on-visible1");
-  useAnimateOnVisible(".image1");
-  useAnimateOnVisible(".image2");
-  useAnimateOnVisible(".image3");
-  useAnimateOnVisible(".image4");
+  // useAnimateOnVisible(".image1");
+  // useAnimateOnVisible(".image2");
+  // useAnimateOnVisible(".image3");
+  // useAnimateOnVisible(".image4");
+  const translateY1 = scrollY * 0.2;
+  const translateY2 = scrollY * 0.3;
+  const translateY3 = scrollY * 0.1;
+  const translateY4 = scrollY * 0.05;
+  const translateY5 = scrollY * 0.15;
   const navigate = useNavigate();
   return (
     <>
-      <img src={BlueSeePicture} alt="Blue See" className="image1" />
-      <img src={GreenPicture} alt="Blue See" className="image2" />
+      <img src={BlueSeePicture} alt="Blue See" className="image1" style={{ transform: `translateY(${translateY1}px)` }} />
+      <img src={GreenPicture} alt="Green" className="image2" style={{ transform: `translateY(${translateY2}px)` }} />
       <div className="picture-container">
-        <img src={SeePicture} alt="Blue See" className="image4" />
-        <img src={Mountain} alt="Blue See" className="image3" />
+        <img src={SeePicture} alt="See" className="image4" style={{ transform: `translateY(${translateY3}px)` }} />
+        <img src={Mountain} alt="Mountain" className="image3" style={{ transform: `translateY(${translateY4}px)` }} />
       </div>
       <div className="home-content-container">
         <div className="home-content-box">
