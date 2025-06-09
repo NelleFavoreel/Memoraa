@@ -22,6 +22,7 @@ function BeforeHome() {
   return (
     <div className="before-home">
       <div className="before-home-button">
+        <h1 className="logo">Tripli</h1>
         <FullButton className="header-button" onClick={() => setShowLogin(true)}>
           Log in
         </FullButton>

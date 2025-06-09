@@ -108,7 +108,6 @@
   padding-bottom: 40px;
 }
 .add-trip-modal form {
-  width: 100vw;
   max-width: 800px;
 }
 .trip-day {
@@ -227,6 +226,9 @@
 }
 .summary-container {
   margin-top: 30px;
+}
+.model-form-AddButton button {
+  margin-left: 20px;
 }
 @media (max-width: 600px) {
   .edit-trip-container {

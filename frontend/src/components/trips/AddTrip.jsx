@@ -6,6 +6,7 @@ import AddButton from "../button/AddButton";
 import { toast } from "react-toastify";
 import LoginModal from "../modal/LoginModal";
 import { div } from "three/tsl";
+import Underline from "../button/Underline";
 
 function AddTrip({ show, onClose, onTripAdded }) {
   const [place, setPlace] = useState("");
@@ -206,8 +207,8 @@ function AddTrip({ show, onClose, onTripAdded }) {
                 <tbody>
                   {friends.map((friend) => (
                     <tr key={friend._id}>
-                      <td style={{ padding: "8px" }}>{friend.screenName}</td>
-                      <td style={{ padding: "8px" }}>
+                      <td style={{ padding: "0px 8px" }}>{friend.screenName}</td>
+                      <td style={{ padding: "0px 8px" }}>
                         <input type="checkbox" checked={selectedFriend.includes(friend._id)} onChange={() => handleCheckboxChange(friend._id)} />
                       </td>
                     </tr>
@@ -218,6 +219,9 @@ function AddTrip({ show, onClose, onTripAdded }) {
           </div>
           <div className="model-form-AddButton">
             <FullButton type="submit">Voeg reis toe</FullButton>
+            <button type="button" onClick={onClose}>
+              Annuleer
+            </button>
           </div>
         </form>
       </div>

@@ -1,5 +1,6 @@
 import Modal from "react-modal";
 import "./LoginModal.css";
+import { color } from "three/tsl";
 
 Modal.setAppElement("#root");
 
@@ -14,12 +15,12 @@ function LoginModal({ isOpen, onClose, children }) {
         content: {
           border: "none",
           padding: "20px",
-          backgroundColor: "rgba(249, 249, 249, 0)",
+          backgroundColor: "rgba(60, 75, 100, 0)",
           overflow: "hidden",
           position: "static",
         },
         overlay: {
-          backgroundColor: "rgba(249, 249, 249, 0.9)",
+          backgroundColor: "rgba(60, 75, 100, 0.6)",
           zIndex: 9999,
         },
       }}
@@ -28,13 +29,14 @@ function LoginModal({ isOpen, onClose, children }) {
         onClick={onClose}
         style={{
           float: "right",
-          fontSize: "1rem",
+          fontSize: "0.5rem",
           background: "transparent",
           border: "none",
           cursor: "pointer",
+          color: "white",
         }}
       >
-        ✖️
+        ❌
       </button>
       {children}
     </Modal>
