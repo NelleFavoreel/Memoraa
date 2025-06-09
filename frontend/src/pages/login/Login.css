@@ -9,9 +9,15 @@ input {
   border: #484848;
 }
 .title-header {
-  margin-left: 50px;
   width: 60%;
   z-index: 3;
+}
+.login-form {
+  padding-top: 0px;
+  margin-top: 80px;
+}
+.login-form h1 {
+  margin-bottom: 20px;
 }
 .login-container {
   width: 40%;

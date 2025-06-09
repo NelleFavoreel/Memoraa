@@ -123,8 +123,8 @@ function LogIn() {
         <>
           <div className="login-background">
             <div className="login-container">
-              <h1 className="title-header">{isRegistering ? "Registreren" : "Inloggen"}</h1>
-              <form onSubmit={isRegistering ? handleRegister : handleLogin}>
+              <form onSubmit={isRegistering ? handleRegister : handleLogin} className="login-form">
+                <h1 className="title-header">{isRegistering ? "Registreren" : "Inloggen"}</h1>
                 {isRegistering && (
                   <>
                     <div>
