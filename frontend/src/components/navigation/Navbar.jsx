@@ -62,9 +62,9 @@ export default function Navbar({ hidden }) {
           <Link to="/trips" className="nav-link" onClick={() => setMenuOpen(false)}>
             Reizen
           </Link>
-          <Link to="/calendar" className="nav-link" onClick={() => setMenuOpen(false)}>
+          {/* <Link to="/calendar" className="nav-link" onClick={() => setMenuOpen(false)}>
             Kalender
-          </Link>
+          </Link> */}
           <Link to="/notifications" className="nav-link" onClick={() => setMenuOpen(false)}>
             Meldingen
             {unreadCount > 0 && <span className="notification-badge"></span>}

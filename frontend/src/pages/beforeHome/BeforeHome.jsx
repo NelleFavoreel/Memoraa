@@ -8,12 +8,17 @@ import LogIn from "../login/LogIn";
 function BeforeHome() {
   const [showLogin, setShowLogin] = useState(false);
   const navigate = useNavigate();
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) navigate("/home");
   }, []);
-
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
     <div className="before-home">
       <div className="before-home-button">
@@ -27,7 +32,7 @@ function BeforeHome() {
         <FullButton onClick={() => setShowLogin(true)}>Log in</FullButton>
       </div>
       <div className="before-home-container">
-        <HomeContent />
+        <HomeContent scrollY={scrollY} />
         <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)}>
           <LogIn />
         </LoginModal>

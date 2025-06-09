@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ShareTripButton from "./ShareTripButton";
 import ClickableMap from "../maps/ClickableMap";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -12,6 +12,8 @@ import PhotoGallery from "./PhotoGallery";
 import AddPictures from "./AddPictures";
 import AddButton from "../button/AddButton";
 import LoginModal from "../modal/LoginModal";
+import ReactFullpage from "@fullpage/react-fullpage";
+import DeleteTrip from "../../components/trips/DeleteTrip";
 
 function TravelDetail({ setHideNavbar }) {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
@@ -26,13 +28,11 @@ function TravelDetail({ setHideNavbar }) {
   const currentUserId = localStorage.getItem("userId");
   const [showModal, setShowModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
   const photosRef = useRef(null);
   const mapRef = useRef(null);
-
-  // Scroll handlers
-  const scrollToPhotos = () => photosRef.current?.scrollIntoView({ behavior: "smooth" });
-  const scrollToMap = () => mapRef.current?.scrollIntoView({ behavior: "smooth" });
 
   // Navbar verbergen/showen
   useEffect(() => {
@@ -157,97 +157,148 @@ function TravelDetail({ setHideNavbar }) {
       }));
     }
   };
-
+  const handleDelete = () => {
+    navigate("/trips");
+  };
   if (loading) return <p>De reisgegevens worden geladen...</p>;
   if (!trip) return <p>Reis niet gevonden.</p>;
 
   const isTraveler = trip.travelers?.includes(currentUserId);
 
   return (
-    <div>
-      <div
-        className="trip-background-image"
-        style={{
-          backgroundImage: backgroundPhotos.length > 0 ? `url(${backgroundPhotos[currentPhotoIndex]})` : "none",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          opacity: 1,
-          transition: "opacity 0.8s ease-in-out",
-        }}
-      ></div>
-
-      <div className="trip-detail-container">
-        <div className="trip-detail-header">
-          <h1>{trip.country}</h1>
-          <div className="trip-detail-header-actions">
-            <div className="trip-detail-share">
-              <ShareTripButton tripId={trip._id} />
+    <ReactFullpage
+      licenseKey={"gplv3-license"}
+      scrollingSpeed={800}
+      autoScrolling={true}
+      fitToSection={true}
+      scrollOverflow={false}
+      anchors={["info", "photos", "map"]}
+      navigation
+      render={({ fullpageApi }) => (
+        <div id="fullpage-wrapper">
+          {/* SECTION 1 - INFO */}
+          <div className="section">
+            <div
+              className="trip-background-image"
+              style={{
+                backgroundImage: backgroundPhotos.length > 0 ? `url(${backgroundPhotos[currentPhotoIndex]})` : "none",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                opacity: 1,
+                transition: "opacity 0.8s ease-in-out",
+              }}
+            ></div>
+            <div className="trip-delete-header">
+              {trip.travelers?.includes(userId) && (
+                <div className="trip-delete-button">
+                  <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
+                </div>
+              )}
             </div>
-            {isTraveler && (
-              <Underline onClick={() => setShowModal(true)} className="edit-trip-button">
-                <SlSettings />
-              </Underline>
-            )}
-            {showModal && <EditTrip isOpen={showModal} onClose={() => setShowModal(false)} />}
+            <div className="trip-detail-container-info">
+              <div className="trip-detail-container">
+                <div className="trip-detail-header">
+                  <h1>{trip.country || trip.place || "Onbekende locatie"}</h1>
+
+                  <div className="trip-detail-header-actions">
+                    <div className="trip-detail-share">
+                      <ShareTripButton tripId={trip._id} />
+                    </div>
+                    {isTraveler && (
+                      <Underline onClick={() => setShowModal(true)} className="edit-trip-button">
+                        <SlSettings />
+                      </Underline>
+                    )}
+
+                    {showModal && <EditTrip isOpen={showModal} onClose={() => setShowModal(false)} />}
+                  </div>
+                </div>
+
+                <div className="trip-detail-general-info">
+                  <div className="trip-detail-info1">
+                    {/* Datum is altijd aanwezig */}
+                    <p>
+                      {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
+                    </p>
+
+                    {/* Stad tonen als die er is */}
+                    {trip.place && (
+                      <div className="trip-detail-info">
+                        <label>Stad:</label>
+                        <p>{trip.place}</p>
+                      </div>
+                    )}
+
+                    {/* Aantal dagen tonen als tripDays bestaat */}
+                    {tripDays.length > 0 && (
+                      <div className="trip-detail-info">
+                        <label>Aantal dagen:</label>
+                        <p>{tripDays.length} dagen</p>
+                      </div>
+                    )}
+
+                    {/* Type tonen als die ingevuld is */}
+                    {trip.tripType && (
+                      <div className="trip-detail-info">
+                        <label>Type:</label>
+                        <p>{trip.tripType}</p>
+                      </div>
+                    )}
+
+                    {/* Reizigers tonen als er namen zijn */}
+                    {travelerNames.length > 0 && (
+                      <div className="trip-detail-info">
+                        <label>Reizigers:</label>
+                        <p>{travelerNames.join(", ")}</p>
+                      </div>
+                    )}
+                  </div>
+
+                  <div>
+                    <Underline onClick={() => fullpageApi.moveTo("photos")}>Foto's bekijken</Underline>
+                    <Underline onClick={() => fullpageApi.moveTo("map")}>Kaart bekijken</Underline>
+                  </div>
+                </div>
+              </div>
+
+              <TripDays tripDays={tripDays} setTripDays={setTripDays} tripId={trip._id} trip={trip} onDayChange={handleDayChange} />
+            </div>
+          </div>
+
+          {/* SECTION 2 - FOTO'S */}
+          <div className="section">
+            <div className="trip-detail-under-content">
+              <div className="trip-detail-photos-header-button">
+                <AddButton onClick={() => setIsModalOpen(true)} style={{ cursor: "pointer" }}>
+                  +
+                </AddButton>
+              </div>
+              <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                <AddPictures
+                  tripId={id}
+                  onPhotoAdded={(newPhotoUrl) => {
+                    handlePhotoAdded(newPhotoUrl);
+                    setIsModalOpen(false);
+                  }}
+                  onClose={() => setIsModalOpen(false)}
+                />
+              </LoginModal>
+              <PhotoGallery generalPhotos={trip?.photos || []} tripDays={tripDays} />
+            </div>
+          </div>
+
+          {/* SECTION 3 - KAART */}
+          <div className="section">
+            <div className="map-container">
+              <h2>Kaartweergave</h2>
+              <div>
+                <ClickableMap coordinates={coordinates} />
+              </div>
+            </div>
           </div>
         </div>
-
-        <div className="trip-detail-general-info">
-          <div className="trip-detail-info1">
-            <p>
-              {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
-            </p>
-            <div className="trip-detail-info">
-              <label>Stad:</label>
-              <p>{trip.place}</p>
-            </div>
-            <div className="trip-detail-info">
-              <label>Aantal dagen:</label>
-              <p>{tripDays.length} dagen</p>
-            </div>
-            <div className="trip-detail-info">
-              <label>Type:</label>
-              <p>{trip.tripType}</p>
-            </div>
-            <div className="trip-detail-info">
-              <label>Reizigers:</label>
-              <p>{travelerNames.length > 0 ? travelerNames.join(", ") : "Geen reisgenoten"}</p>
-            </div>
-          </div>
-          <div>
-            <Underline onClick={scrollToPhotos}>Foto's bekijken</Underline>
-            <Underline onClick={scrollToMap}>Kaart bekijken</Underline>
-          </div>
-        </div>
-      </div>
-
-      <TripDays tripDays={tripDays} setTripDays={setTripDays} tripId={trip._id} trip={trip} onDayChange={handleDayChange} />
-
-      <div className="trip-detail-under-content" ref={photosRef}>
-        <div className="trip-detail-photos-header-button">
-          <AddButton onClick={() => setIsModalOpen(true)} style={{ cursor: "pointer" }}>
-            +
-          </AddButton>
-        </div>
-        <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <AddPictures
-            tripId={id}
-            onPhotoAdded={(newPhotoUrl) => {
-              handlePhotoAdded(newPhotoUrl);
-              setIsModalOpen(false);
-            }}
-            onClose={() => setIsModalOpen(false)}
-          />
-        </LoginModal>
-        <PhotoGallery generalPhotos={trip?.photos || []} tripDays={tripDays} />
-        <div className="map-container">
-          <h2>Kaartweergave</h2>
-          <div ref={mapRef}>
-            <ClickableMap coordinates={coordinates} />
-          </div>
-        </div>
-      </div>
-    </div>
+      )}
+    />
   );
 }
 

@@ -12,7 +12,7 @@ h2 {
   width: 200px;
 }
 .home-content-container {
-  margin-top: 0px;
+  margin-top: 90px;
 }
 img {
   width: 40%;
@@ -37,6 +37,7 @@ img {
 }
 .picture-container {
   display: flex;
+  overflow: visible;
   justify-content: space-between;
 }
 .image6 {
@@ -70,6 +71,15 @@ img {
 }
 .home-content-text {
   font-weight: 600;
+}
+.image1.animate,
+.image2.animate,
+.image3.animate,
+.image4.animate {
+  animation: none; /* of gewoon verwijderen */
+}
+.rotate-on-visible {
+  animation: none !important;
 }
 
 @media (min-width: 1380px) {
@@ -228,7 +238,7 @@ img {
     cursor: default;
   }
 }
-
+/* 
 .image1,
 .image2,
 .image3,
@@ -286,4 +296,4 @@ img {
   to {
     transform: translateX(-5px) translateY(-7px) rotate(-2deg);
   }
-}
+} */

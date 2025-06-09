@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TravelInfo from "../../components/trips/TravelInfo";
 import AddTrip from "../../components/trips/AddTrip";
 import "./Trips.css";
@@ -11,6 +11,7 @@ function TravelOverview() {
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
+  const [scrollY, setScrollY] = useState(0);
 
   const handleTripAdded = (tripId) => {
     setRefresh(true);
@@ -23,14 +24,20 @@ function TravelOverview() {
   const handleRefreshed = () => {
     setRefresh(false);
   };
-
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
     <>
       <div className="model-form-container">
         <AddButton onClick={() => setShowModal(true)}>+</AddButton>
       </div>
       <AddTrip show={showModal} onClose={() => setShowModal(false)} onTripAdded={handleTripAdded} />
-      <TravelInfo refresh={refresh} onRefreshed={handleRefreshed} />
+      <TravelInfo scrollY={scrollY} refresh={refresh} onRefreshed={handleRefreshed} />
     </>
   );
 }

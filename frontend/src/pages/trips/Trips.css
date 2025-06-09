@@ -3,35 +3,46 @@
   justify-content: center;
   align-items: center;
   padding: 0px 0;
-  cursor: pointer;
   position: relative;
-  width: 100%;
   margin-top: 80px;
+  width: 100%;
+  justify-content: flex-start;
 }
 
 .trip-content {
   display: flex;
   align-items: center;
-  width: 95%;
   align-items: flex-end;
 }
 .trip-info-container {
   width: 400px;
-  margin-left: -60%;
+  margin-left: -20%;
 }
+.trip-info.parallax {
+  position: relative;
+  transform: translateY(0);
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+}
+
 .trip-item.reverse .trip-content {
   flex-direction: row-reverse;
+  align-items: flex-end;
+  width: 100%;
+  margin-right: -20%;
 }
 .trip-item.reverse .trip-info-container {
-  margin-right: -76%;
+  margin-right: -20%;
 }
 .trip-item.reverse {
   margin-top: 80px;
+  justify-content: flex-end;
 }
+
 .trip-content {
   margin-top: 80px;
-  margin-left: -4%;
 }
+
 .trip-info {
   background-color: #d7d3cd;
   padding: 40px 40px;
@@ -67,12 +78,11 @@ ul {
   margin-top: 90px;
 }
 .trip-image {
-  width: 60%;
+  max-width: 900px;
+  width: 100%;
   z-index: 1;
   height: 500px;
   object-fit: cover;
-  margin-left: -10%;
-  margin-right: -14%;
 }
 .load-more-container {
   margin-top: 200px;
@@ -111,48 +121,39 @@ li {
   justify-content: flex-end;
   margin-top: 80px;
 }
-.trip-delete-button {
-  padding-top: -30px;
-  margin-bottom: 0px;
-  margin-right: -30px;
-}
+
 .modal-content .title-header {
   font-size: 60px;
   margin-top: 10px;
 }
 /* trips overview */
-.trip-delete-button {
-  display: flex;
-  margin-top: -40px;
-  margin-bottom: 20px;
-  cursor: pointer;
-  justify-content: flex-start;
-  margin-left: -30px;
-}
 .delete {
   margin-top: -90px;
 }
 .trip-image-little {
-  width: 50%;
   display: flex;
   flex-direction: column;
   gap: 10px;
   align-items: flex-end;
-  margin-left: 19%;
   height: 500px;
+  width: 40px;
+  margin-left: 15px;
   align-items: flex-start;
 }
 .trip-image-little img {
   height: 30%;
-  object-fit: cover;
   width: 250px;
+  object-fit: cover;
 }
 .trip-item.reverse .trip-image-little {
   align-items: flex-end;
-  margin-right: 12%;
+  margin-right: 15px;
 }
 .trips-list {
   margin-top: -90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .trip-link a {
   color: #3c4b64;
@@ -244,6 +245,37 @@ li {
   pointer-events: none;
   color: rgb(255, 255, 255);
   font-size: 10px;
+}
+.custom-cursor {
+  position: fixed;
+  pointer-events: none; /* Zodat hij geen muisinteracties blokkeert */
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(0, 4, 255); /* Of een kleur die je pijl zichtbaar maakt */
+  user-select: none;
+}
+.custom-cursor-icon {
+  width: 30px;
+  height: 30px;
+  font-size: 24px; /* Groter als je wil */
+  color: white; /* Of zwart, wat jij wil */
+  text-shadow: 0 0 2px black, 0 0 2px black; /* Maakt het 'vetter' */
+}
+
+.trip-content {
+  cursor: none;
+}
+.trip-info {
+  cursor: none;
+}
+.trip-link {
+  display: none;
 }
 
 @media (max-width: 1000px) {
@@ -337,6 +369,7 @@ li {
   }
   .trip-link {
     margin: -30px -10px;
+    display: flex;
   }
   .trip-delete-button {
     margin-bottom: 10px;

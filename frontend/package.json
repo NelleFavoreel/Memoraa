@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fullpage/react-fullpage": "^0.1.48",
     "@headlessui/react": "^2.2.4",
     "@heroui/react": "^2.7.8",
     "@heroui/toast": "^2.0.9",
     "axios": "^1.9.0",
+    "framer-motion": "^12.16.0",
     "mapbox-gl": "^3.12.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
