@@ -50,7 +50,7 @@ function BeforeHome() {
         <div className="before-home-container">
           <HomeContent scrollY={scrollY} />
           <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)}>
-            <LogIn />
+            <LogIn onClose={() => setShowLogin(false)} />
           </LoginModal>
         </div>
       </>
