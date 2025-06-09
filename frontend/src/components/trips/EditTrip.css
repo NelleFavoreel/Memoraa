@@ -115,7 +115,6 @@
 }
 .trip-days-container button {
   margin-bottom: -80px;
-  margin-right: 40px;
   z-index: 4;
 }
 .traveler-selection table input {
@@ -326,5 +325,21 @@
   }
   .edit-trip-slider input {
     font-size: 11px;
+  }
+  .photos-container {
+    padding-top: 50px;
+  }
+  .trip-detail-photos-header-button {
+    padding-top: 100px;
+  }
+  .photos-summary {
+    justify-content: center;
+    width: auto;
+  }
+  .photos-summary button {
+    width: auto;
+    margin-left: 90px;
+    margin-top: -16px;
+    height: 20px;
   }
 }

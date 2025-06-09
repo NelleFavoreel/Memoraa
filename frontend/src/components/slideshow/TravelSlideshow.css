@@ -125,4 +125,14 @@
     bottom: 80px;
     right: 20px;
   }
+  .slick-slide {
+    position: relative;
+    height: 0vh !important;
+    cursor: pointer;
+    overflow: visible;
+    padding-bottom: 120px;
+  }
+  .trip-days-slider {
+    height: auto !important;
+  }
 }
