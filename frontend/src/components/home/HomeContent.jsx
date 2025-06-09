@@ -15,10 +15,6 @@ import "./HomeContent.css";
 function HomeContent({ scrollY }) {
   useAnimateOnVisible(".rotate-on-visible");
   useAnimateOnVisible(".rotate-on-visible1");
-  // useAnimateOnVisible(".image1");
-  // useAnimateOnVisible(".image2");
-  // useAnimateOnVisible(".image3");
-  // useAnimateOnVisible(".image4");
   const translateY1 = scrollY * 0.2;
   const translateY2 = scrollY * 0.3;
   const translateY3 = scrollY * 0.1;

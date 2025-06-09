@@ -103,7 +103,7 @@ function TravelInfo({ refresh, onRefreshed, scrollY }) {
       }, 100);
     }
   }, [trips]);
-  useAnimateOnVisible(".trip-info", [trips]);
+  useAnimateOnVisible(".trip-info", [trips, visibleCount, filters]);
 
   const getSmallPhotos = (trip) => {
     const dayPhotos = trip.randomPhotos || [];
