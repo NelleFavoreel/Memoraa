@@ -116,6 +116,7 @@ function EditTrip({ onClose, isOpen }) {
     if (trip.startDate !== originalTrip.startDate) updatedTrip.startDate = trip.startDate;
     if (trip.endDate !== originalTrip.endDate) updatedTrip.endDate = trip.endDate;
     if (JSON.stringify(trip.travelers) !== JSON.stringify(originalTrip.travelers)) updatedTrip.travelers = trip.travelers;
+    if (trip.place !== originalTrip.place) updatedTrip.place = trip.place;
 
     if (JSON.stringify(tripDays) !== JSON.stringify(originalTripDays)) updatedTrip.tripDays = tripDays;
 
@@ -167,6 +168,10 @@ function EditTrip({ onClose, isOpen }) {
                     <label>Land</label>
                     <input type="text" value={trip.country} onChange={(e) => setTrip({ ...trip, country: e.target.value })} />
                   </div>
+                  <div>
+                    <label>Stad</label>
+                    <input type="text" value={trip.place} onChange={(e) => setTrip({ ...trip, place: e.target.value })} />
+                  </div>
 
                   <div>
                     <label>Startdatum</label>
@@ -209,8 +214,8 @@ function EditTrip({ onClose, isOpen }) {
                     <tbody>
                       {familyMembers.map((member) => (
                         <tr key={member._id}>
-                          <td style={{ padding: "8px" }}>{member.screenName}</td>
-                          <td style={{ padding: "8px" }}>
+                          <td style={{ padding: "0px 8px" }}>{member.screenName}</td>
+                          <td style={{ padding: "0px 8px" }}>
                             <input type="checkbox" checked={trip.travelers.includes(member._id)} onChange={() => handleTravelerToggle(member._id)} />
                           </td>
                         </tr>

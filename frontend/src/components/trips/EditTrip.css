@@ -39,7 +39,7 @@
 .edit-trip-slider {
   padding: 0px 20px 0px 55px;
   display: block;
-  background-color: #d7d3cd;
+  background-color: #f1f1f1;
   height: auto;
   margin-top: 60px;
   width: 40%;
@@ -78,7 +78,7 @@
   margin-left: -0px;
 }
 .new-activity-row textarea {
-  background-color: #d7d3cd;
+  background-color: #f1f1f1;
   padding: 10px 6px;
   font-family: "myriad-pro", sans-serif;
 }
@@ -135,6 +135,7 @@
 .table-header {
   width: 10%;
 }
+
 .traveler-selection td {
   font-family: "myriad-pro", sans-serif;
   font-weight: 100;
@@ -151,7 +152,7 @@
   z-index: 4;
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  padding-bottom: 40px;
 }
 .slick-track1 {
   height: 610px;
