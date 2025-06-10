@@ -9,10 +9,20 @@
   overflow-y: auto;
   max-height: 90vh;
   display: flex;
-  align-items: center;
   justify-content: center;
+  background-color: #f1f1f1;
+  margin-top: 20px;
+  flex-direction: column;
+  width: 40%;
+  padding-top: 30px;
+  align-items: flex-start;
+  padding: 30px 50px;
 }
-
+.edit-trip-days-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 .trip-edit-general-info {
   flex: 1;
   display: flex;
@@ -35,7 +45,9 @@
   padding-top: 50px;
   padding-bottom: 50px;
 }
-
+.edit-trip-modal select {
+  padding: 12px 10px;
+}
 .edit-trip-slider {
   padding: 0px 20px 0px 55px;
   display: block;
@@ -65,14 +77,21 @@
   width: 140%;
 }
 .photo-upload img {
-  width: 80px;
+  width: 200px;
+  height: 120px;
+  object-fit: cover;
 }
 .photo-upload input {
   border-bottom: none;
 }
+.photo-upload .delete span {
+  margin-left: -30px;
+}
+
 .new-activity-row {
   display: flex;
   align-items: flex-end;
+  width: 140%;
 }
 .new-activity-row button {
   margin-left: -0px;
@@ -80,6 +99,7 @@
 .new-activity-row textarea {
   background-color: #f1f1f1;
   padding: 10px 6px;
+  margin-top: 10px;
   font-family: "myriad-pro", sans-serif;
 }
 .edit-trip-slider .slick-dots {
@@ -115,6 +135,7 @@
 }
 .trip-days-container button {
   margin-bottom: -80px;
+  margin-right: 40px;
   z-index: 4;
 }
 .traveler-selection table input {
@@ -151,8 +172,8 @@
 .button-container-edit-days {
   z-index: 4;
   display: flex;
-  justify-content: center;
-  padding-bottom: 40px;
+  justify-content: flex-start;
+  margin-top: 40px;
 }
 .slick-track1 {
   height: 610px;

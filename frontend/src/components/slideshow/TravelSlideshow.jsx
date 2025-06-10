@@ -46,7 +46,7 @@ const TravelSlideshow = ({ parallaxTranslate }) => {
     <div className="slick-wrapper">
       <Slider {...settings}>
         {trips.map((trip) => (
-          <div key={trip._id} className="slick-slide" onClick={() => navigate(`/trips/${trip._id}`)}>
+          <div key={trip._id} className="slick-slide1" onClick={() => navigate(`/trips/${trip._id}`)}>
             <img src={trip.imageUrl} alt={trip.place || "Trip"} className="slide-image" style={{ transform: `translateY(${parallaxTranslate}px)` }} />
             <div className="slide-overlay">
               <div className="slide-place">{trip.country || trip.place}</div>

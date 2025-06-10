@@ -31,7 +31,7 @@
   background-color: #d7d3cd;
   padding: 20px 80px 60px 80px;
   font-family: "myriad-pro", sans-serif;
-  width: 40%;
+  width: 35%;
   z-index: 1;
   max-width: 450px;
   opacity: 0.9;
@@ -105,7 +105,7 @@
 }
 .trip-detail-container-info {
   margin-top: 0%;
-  margin-bottom: 4%;
+  margin-bottom: 9%;
 }
 .trip-background-image {
   position: fixed;

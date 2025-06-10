@@ -6,9 +6,9 @@
   padding-bottom: 300px;
 }
 
-.slick-slide {
+.slick-slide1 {
   position: relative;
-  height: 65vh;
+  height: auto;
   cursor: pointer;
   overflow: visible;
   padding-bottom: 120px;
