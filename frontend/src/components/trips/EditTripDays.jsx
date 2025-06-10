@@ -121,17 +121,19 @@ function EditTripDays({ tripId, isOpen, onClose, tripDays, setTripDays }) {
       <div className="edit-trip-days-container">
         <div className="edit-trip-modal">
           {/* Dropdown om dag te kiezen */}
-          <div style={{ marginBottom: "20px" }}>
-            <label htmlFor="day-select" style={{ marginRight: "10px" }}>
-              Kies dag:
-            </label>
-            <select id="day-select" value={activeIndex} onChange={(e) => setActiveIndex(Number(e.target.value))}>
-              {tripDays.map((_, idx) => (
-                <option key={idx} value={idx}>
-                  Dag {idx + 1}
-                </option>
-              ))}
-            </select>
+          <div style={{ display: "flex", alignItems: "center", width: "80%", height: "40px" }}>
+            <div>
+              <label htmlFor="day-select" style={{ marginRight: "10px" }}>
+                Kies dag:
+              </label>
+              <select id="day-select" value={activeIndex} onChange={(e) => setActiveIndex(Number(e.target.value))}>
+                {tripDays.map((_, idx) => (
+                  <option key={idx} value={idx}>
+                    Dag {idx + 1}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div className="trip-day-content">
@@ -195,7 +197,7 @@ function EditTripDays({ tripId, isOpen, onClose, tripDays, setTripDays }) {
             <div className="photo-upload">
               <label>Foto toevoegen</label>
               <input type="file" accept="image/*" multiple onChange={(e) => handlePhotoUpload(activeIndex, e.target.files)} />
-              <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+              <div style={{ display: "flex", gap: "10px", marginTop: "10px", width: "100%", flexWrap: "wrap", flexDirection: "row" }}>
                 {activeDay.photos?.map((photo, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "flex-start" }}>
                     <img src={photo} alt="upload preview" />

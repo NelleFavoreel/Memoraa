@@ -15,7 +15,7 @@ import LoginModal from "../modal/LoginModal";
 import ReactFullpage from "@fullpage/react-fullpage";
 import DeleteTrip from "../../components/trips/DeleteTrip";
 
-function TravelDetail({ setHideNavbar }) {
+function TravelDetail({ setHideNavbar, hideNavbar }) {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
   const { id } = useParams();
   const [trip, setTrip] = useState(null);
@@ -36,7 +36,6 @@ function TravelDetail({ setHideNavbar }) {
 
   // Navbar verbergen/showen
   useEffect(() => {
-    setHideNavbar(true);
     return () => setHideNavbar(false);
   }, [setHideNavbar]);
 
@@ -173,10 +172,15 @@ function TravelDetail({ setHideNavbar }) {
       fitToSection={true}
       scrollOverflow={false}
       anchors={["info", "photos", "map"]}
-      navigation
+      navigation={false}
       render={({ fullpageApi }) => (
-        <div id="fullpage-wrapper">
-          {/* SECTION 1 - INFO */}
+        <div
+          id="fullpage-wrapper"
+          className={token ? "has-token" : "no-token-overlay"}
+          style={{
+            marginTop: setHideNavbar ? "-13%" : "0px",
+          }}
+        >
           <div className="section">
             <div
               className="trip-background-image"
@@ -264,7 +268,6 @@ function TravelDetail({ setHideNavbar }) {
               <TripDays tripDays={tripDays} setTripDays={setTripDays} tripId={trip._id} trip={trip} onDayChange={handleDayChange} />
             </div>
           </div>
-
           {/* SECTION 2 - FOTO'S */}
           <div className="section">
             <div className="trip-detail-under-content">
@@ -286,7 +289,6 @@ function TravelDetail({ setHideNavbar }) {
               <PhotoGallery generalPhotos={trip?.photos || []} tripDays={tripDays} />
             </div>
           </div>
-
           {/* SECTION 3 - KAART */}
           <div className="section">
             <div className="map-container">

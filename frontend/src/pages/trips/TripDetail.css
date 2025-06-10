@@ -20,12 +20,27 @@
   font-weight: 100;
   font-size: 13px;
   position: relative;
-  margin-top: 80px;
+  margin-top: 90px;
   z-index: 20;
-  margin-left: 100px;
+  margin-left: 8%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+  margin: 0px, 30px;
 }
 #fullpage-wrapper {
   margin-top: -100px;
+}
+.without-back-button {
+  margin-top: 180px;
+  height: 20vh;
+}
+.no-token-overlay {
+  padding-top: 0px !important;
+  margin-top: -13.5% !important;
+  height: 100%;
 }
 .trip-days-slider {
   background-color: #d7d3cd;
@@ -152,7 +167,7 @@
 .trip-detail-edit-trip {
   display: flex;
   justify-content: flex-end;
-  margin-top: -40px;
+  margin-top: 90px;
   margin-bottom: 50px;
 }
 .trip-detail-general-info button {
@@ -194,14 +209,14 @@
   margin-left: 0;
 }
 .section {
-  margin: 0px 100px;
+  margin: 0px 10%;
 }
 .fp-table {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: auto;
-  max-width: 85%;
+  max-width: 80%;
 }
 .trip-detail-photos-header-button {
   margin-top: 130px;

@@ -127,9 +127,7 @@ li {
   margin-top: 10px;
 }
 /* trips overview */
-.delete {
-  margin-top: -90px;
-}
+
 .trip-image-little {
   display: flex;
   flex-direction: column;
