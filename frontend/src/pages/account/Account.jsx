@@ -6,6 +6,7 @@ import LogIn from "../login/LogIn";
 import Underline from "../../components/button/Underline";
 import "./Account.css";
 import FullButton from "../../components/button/FullButton";
+import Footer from "../../components/footer/Footer";
 function Account() {
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -53,6 +54,7 @@ function Account() {
           )}
         </div>
       </div>
+      <Footer></Footer>
     </>
   );
 }

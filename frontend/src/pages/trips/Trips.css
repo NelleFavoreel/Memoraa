@@ -153,6 +153,7 @@ li {
 }
 .trips-list {
   margin-top: -90px;
+  margin-bottom: 90px;
   display: flex;
   flex-direction: column;
   align-items: center;

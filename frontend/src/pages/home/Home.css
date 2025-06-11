@@ -32,3 +32,11 @@
 .slideshow-hover-area {
   cursor: none;
 }
+.home {
+  margin-bottom: 100px;
+}
+@media (max-width: 955px) {
+  .home-background .footer {
+    margin-top: 100px;
+  }
+}

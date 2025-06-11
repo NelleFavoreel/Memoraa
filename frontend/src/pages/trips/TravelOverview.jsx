@@ -6,7 +6,7 @@ import "../../components/trips/AnimationTrips.css";
 import FullButton from "../../components/button/FullButton";
 import AddButton from "../../components/button/AddButton";
 import { useNavigate } from "react-router-dom";
-
+import Footer from "../../components/footer/Footer";
 function TravelOverview() {
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
@@ -38,6 +38,7 @@ function TravelOverview() {
       </div>
       <AddTrip show={showModal} onClose={() => setShowModal(false)} onTripAdded={handleTripAdded} />
       <TravelInfo scrollY={scrollY} refresh={refresh} onRefreshed={handleRefreshed} />
+      <Footer></Footer>
     </>
   );
 }

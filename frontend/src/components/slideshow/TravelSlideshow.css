@@ -35,7 +35,7 @@
 
 .slide-overlay {
   position: absolute;
-  bottom: 40px;
+  bottom: 30px;
   right: 50px;
   transform: none;
   background: #d7d3cd;
@@ -127,12 +127,21 @@
   }
   .slick-slide {
     position: relative;
-    height: 0vh !important;
     cursor: pointer;
     overflow: visible;
-    padding-bottom: 120px;
+    padding-bottom: 100px;
   }
   .trip-days-slider {
     height: auto !important;
+  }
+  .slick-slide1 {
+    padding-bottom: 90px;
+    height: auto !important;
+  }
+  .slick-slide1 img {
+    height: 250px;
+  }
+  .slide-image {
+    height: 500px;
   }
 }

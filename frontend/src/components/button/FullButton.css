@@ -57,10 +57,9 @@ a {
 /* Mobiel: animatie uitzetten */
 @media (max-width: 768px) {
   .custom-button {
-    width: 70px;
     min-width: 60px;
     font-size: 13px;
-    padding: 5px;
+    padding: 7px 10px;
     cursor: pointer;
     transition: none;
     animation: none !important;
