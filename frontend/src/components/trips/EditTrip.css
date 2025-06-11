@@ -12,7 +12,7 @@
   background-color: #f1f1f1;
   margin-top: 40px;
   flex-direction: column;
-  width: 40%;
+  width: auto;
   align-items: center;
 
   padding-top: 30px;
@@ -92,7 +92,7 @@
 .new-activity-row {
   display: flex;
   align-items: flex-end;
-  width: 140%;
+  width: 100%;
 }
 .new-activity-row button {
   margin-left: -0px;
@@ -175,6 +175,10 @@
   display: flex;
   justify-content: flex-start;
   margin-top: 40px;
+  height: 100%;
+}
+.button-container-edit-days .custom-button.default {
+  margin: 0;
 }
 .slick-track1 {
   height: 610px;
@@ -212,8 +216,7 @@
   max-width: 500px;
   margin-top: 50px;
   height: auto;
-  align-items: center;
-
+  align-items: flex-start;
   padding: 20px 10%;
 }
 .add-pictures-container {
@@ -223,6 +226,7 @@
 .add-pictures input {
   border: none;
   padding: 0;
+  margin: 0;
 }
 .add-picture-buttons {
   margin-top: 30px;
@@ -253,6 +257,9 @@
 .model-form-AddButton button {
   margin-left: 20px;
 }
+.custom-select {
+  width: 100% !important;
+}
 @media (max-width: 600px) {
   .edit-trip-container {
     flex-direction: column;
@@ -267,6 +274,7 @@
   }
   .edit-trip-modal {
     display: block;
+    padding: 40px 10%;
   }
   .trip-edit-general-info {
     margin: 0;
@@ -339,6 +347,7 @@
   }
   .custom-select {
     font-size: 11px;
+    width: 100% !important;
   }
   .date-input {
     font-size: 12px;
@@ -370,9 +379,6 @@
     margin-top: 10px;
     width: 100%;
   }
-  .edit-trip-buttons {
-    margin-top: -40px;
-  }
   .add-picture-buttons {
     align-items: baseline;
     margin-bottom: 0px;
@@ -385,5 +391,13 @@
     margin: 0;
     width: auto;
     margin-right: 20px;
+  }
+  .trip-day-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .button-container-edit {
+    margin-top: 0;
   }
 }

@@ -109,7 +109,7 @@ function AddPictures({ tripId, onPhotoAdded, onClose }) {
     <div className="add-pictures-container">
       <div className="add-pictures">
         <input type="file" accept="image/*,video/*" multiple onChange={handleFileChange} />
-        <div>
+        <div style={{ marginTop: "20px" }}>
           {mediaFiles.map((media, i) =>
             media.type === "image" ? (
               <img key={i} src={media.preview} alt="Preview" width="100%" />

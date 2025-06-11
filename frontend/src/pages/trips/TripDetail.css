@@ -343,7 +343,7 @@
   }
   .trip-background-image {
     margin-top: 40px;
-    height: 95vh;
+    height: 93vh;
   }
   .back-button-detail {
     margin-left: 3%;
@@ -380,7 +380,7 @@
 
   .button-container-edit-days {
     align-items: baseline;
-    margin-top: 0;
+    margin-top: 20px;
   }
   .edit-trip-modal select {
     padding: 5px 10px;
