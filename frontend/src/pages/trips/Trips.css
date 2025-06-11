@@ -153,7 +153,7 @@ li {
 }
 .trips-list {
   margin-top: -90px;
-  margin-bottom: 90px;
+  margin-bottom: 190px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -409,6 +409,7 @@ li {
   }
   .trips-list {
     margin-top: -50px;
+    margin-bottom: 90px;
   }
   .load-more-container {
     margin-top: 90px;

@@ -184,7 +184,30 @@ function AddTrip({ show, onClose, onTripAdded }) {
                 <option value="manual">Zelf uploaden</option>
               </select>
 
-              {!useAICover && <input type="text" placeholder="URL van je afbeelding" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />}
+              {!useAICover && (
+                <>
+                  <input
+                    style={{ borderBottom: "none", marginLeft: "0", marginBottom: "20px", marginTop: "-10px" }}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                          setImageUrl(reader.result); // base64 string
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                  />
+                  {imageUrl && (
+                    <div style={{ marginTop: "10px" }}>
+                      <img src={imageUrl} alt="Voorbeeld cover" style={{ maxWidth: "100%", maxHeight: "200px", marginBottom: "30px" }} />
+                    </div>
+                  )}
+                </>
+              )}
 
               <label>
                 Startdatum:

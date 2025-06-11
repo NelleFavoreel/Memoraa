@@ -21,10 +21,9 @@
   font-size: 13px;
   position: relative;
   z-index: 20;
-  margin-left: 8%;
   cursor: pointer;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   margin-bottom: 1rem;
   justify-content: space-between;
   margin: 0px, 30px;
@@ -38,7 +37,7 @@
 }
 .no-token-overlay {
   padding-top: 0px !important;
-  margin-top: -13.5% !important;
+  margin-top: -34vh !important;
   height: 100%;
 }
 .trip-days-slider {
@@ -97,7 +96,6 @@
   padding: 8px;
   z-index: 3;
   cursor: pointer;
-  margin-top: 100px;
   height: 15px;
   width: 20px;
   display: flex;
@@ -109,7 +107,10 @@
 }
 .trip-delete-header {
   display: flex;
+  padding-top: 12vh;
+
   justify-content: flex-end;
+  justify-content: space-between;
 }
 .slick-dots li.slick-active button:before {
   color: rgb(0, 0, 0);
@@ -119,7 +120,7 @@
 }
 .trip-detail-container-info {
   margin-top: 0%;
-  margin-bottom: 9%;
+  margin-bottom: 6%;
 }
 .trip-background-image {
   position: fixed;
@@ -153,7 +154,7 @@
 .map-container {
   height: 100vh;
   padding-bottom: 0%;
-  margin-top: 80px;
+  margin-top: 30px;
 }
 .photos-container img {
   width: 30%;
@@ -216,9 +217,10 @@
   justify-content: center;
   width: auto;
   max-width: 80%;
+  margin-top: 15vh;
 }
-.trip-detail-photos-header-button {
-  margin-top: 130px;
+.trip-detail-container with-back-button {
+  margin-top: 300px;
 }
 @media (max-width: 600px) {
   .fp-table {
@@ -306,7 +308,7 @@
   .trip-detail-header {
     justify-content: flex-start;
     margin-bottom: -27vh;
-    padding-top: 140px;
+    padding-top: 120px;
   }
   .trip-detail-header h1 {
     width: auto;
@@ -341,16 +343,17 @@
     margin: 0;
   }
   .trip-background-image {
-    margin-top: 40px;
-    height: 93vh;
+    height: 100vh;
   }
   .back-button-detail {
     margin-left: 3%;
     margin-top: -40px;
   }
   .trip-delete-header {
-    padding-top: 30px;
     margin-bottom: -220px;
+    margin-top: 40px;
+    align-items: baseline;
+    margin-left: -9%;
   }
   .trip-detail-edit-trip {
     display: flex;
@@ -359,7 +362,7 @@
     margin-bottom: 0px;
   }
   .trip-delete-button {
-    margin-top: 50px;
+    margin-top: 0px;
   }
   .edit-trip-modal {
     width: 100%;

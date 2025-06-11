@@ -32,15 +32,6 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
 
   return (
     <div className={`trip-detail-container ${token && !hideNavbar ? "with-back-button" : "without-back-button"}`}>
-      {token && !hideNavbar && (
-        <div className="back-button-detail" onClick={() => navigate("/trips")}>
-          <button className="underline-back-button">
-            <SlArrowRight style={{ transform: "rotate(180deg)", marginRight: "0.5rem" }} />
-            <span>Terug</span>
-          </button>
-        </div>
-      )}
-
       <div className="trip-detail-edit-trip"></div>
 
       <TripDetail trip={trip} setHideNavbar={setHideNavbar} hideNavbar={hideNavbar} />

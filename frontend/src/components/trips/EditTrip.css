@@ -378,14 +378,13 @@
     padding-top: 100px;
   }
   .photos-summary {
-    justify-content: center;
     width: auto;
   }
   .photos-summary button {
     width: auto;
-    margin-left: 90px;
-    margin-top: -16px;
-    height: 20px;
+    padding: 7px 10px;
+    margin-top: 20px;
+    justify-content: flex-end !important;
   }
   .traveler-selection td {
     margin-top: 10px;

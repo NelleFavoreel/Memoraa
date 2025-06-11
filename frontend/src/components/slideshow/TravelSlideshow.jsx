@@ -66,7 +66,7 @@ const TravelSlideshow = ({ parallaxTranslate }) => {
           >
             <img src={trip.imageUrl} alt={trip.place || "Trip"} className="slide-image" style={{ transform: `translateY(${parallaxTranslate}px)` }} />
             <div className="slide-overlay">
-              <div className="slide-place">{trip.country || trip.place}</div>
+              <div className="slide-place">{(trip.tripType === "roadtrip" ? "Roadtrip  " : "") + (trip.place || trip.country || "")}</div>
               <div className="slide-time">
                 {new Date(trip.startDate).toLocaleDateString()} - {new Date(trip.endDate).toLocaleDateString()}
               </div>
@@ -74,6 +74,7 @@ const TravelSlideshow = ({ parallaxTranslate }) => {
           </div>
         ))}
       </Slider>
+
       {showCursor && <CustomCursor x={cursorPos.x} y={cursorPos.y} />}
     </div>
   );

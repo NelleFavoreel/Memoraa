@@ -14,6 +14,7 @@ import AddButton from "../button/AddButton";
 import LoginModal from "../modal/LoginModal";
 import ReactFullpage from "@fullpage/react-fullpage";
 import DeleteTrip from "../../components/trips/DeleteTrip";
+import { SlArrowRight } from "react-icons/sl";
 
 function TravelDetail({ setHideNavbar, hideNavbar }) {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
@@ -31,6 +32,7 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
+
   const photosRef = useRef(null);
   const mapRef = useRef(null);
 
@@ -163,7 +165,6 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
   if (!trip) return <p>Reis niet gevonden.</p>;
 
   const isTraveler = trip.travelers?.includes(currentUserId);
-  console.log("trip:", trip);
 
   return (
     <ReactFullpage
@@ -194,6 +195,14 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
               }}
             ></div>
             <div className="trip-delete-header">
+              {token && !hideNavbar && (
+                <div className="back-button-detail" onClick={() => navigate("/trips")}>
+                  <button className="underline-back-button">
+                    <SlArrowRight style={{ transform: "rotate(180deg)", marginRight: "0.5rem" }} />
+                    <span>Terug</span>
+                  </button>
+                </div>
+              )}
               {trip.travelers?.includes(userId) && (
                 <div className="trip-delete-button">
                   <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
