@@ -227,6 +227,9 @@ function EditTrip({ onClose, isOpen }) {
                   <div className="button-container-edit">
                     <FullButton type="submit">Opslaan</FullButton>
                   </div>
+                  <button onClick={onClose} style={{ marginTop: "0px", marginLeft: "20px" }} className="cancel-button">
+                    Annuleren
+                  </button>
                   {/* <FullButton onClick={() => setShowDaysEditor(true)} className="edit-days-toggle-button">
                     Bewerk de dagen afzonderlijk
                   </FullButton> */}

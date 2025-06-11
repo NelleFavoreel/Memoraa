@@ -112,21 +112,21 @@ li {
   }
 
   p {
-    font-size: 11px;
+    font-size: 12px;
   }
   label {
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 600;
   }
   td {
-    font-size: 11px;
+    font-size: 14px;
   }
   th {
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 600;
   }
   li {
-    font-size: 11px;
+    font-size: 12px;
   }
   input {
     min-width: 190px;
@@ -134,9 +134,9 @@ li {
     margin-top: 5px;
     padding: 2px;
     padding-bottom: 3px;
-    font-size: 11px;
+    font-size: 13px;
   }
   button {
-    font-size: 11px;
+    font-size: 13px;
   }
 }

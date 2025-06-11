@@ -32,7 +32,7 @@ function HomeContent({ scrollY }) {
       <div className="home-content-container">
         <div className="home-content-box">
           <div className="home-content-text">
-            <h2>Jou volgende avontuur begint hier</h2>
+            <h2>Jouw volgende avontuur begint hier</h2>
             <div className="home-content">
               <p>Stel in een paar simpele stappen je perfecte familievakantie samen. Kies je bestemming, voeg je favoriete activiteiten toe en laat het avontuur beginnen!</p>
               <FullButton onClick={() => navigate("/login")}>Plan je reis</FullButton>

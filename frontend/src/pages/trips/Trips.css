@@ -89,6 +89,10 @@ ul {
   display: flex;
   justify-content: center;
 }
+.load-more-container button {
+  width: 100%;
+  padding: 7px 10px;
+}
 .modal-close {
   position: absolute;
   top: 0.5rem;
@@ -353,8 +357,8 @@ li {
     padding: 0;
   }
   .trip-link svg {
-    margin-left: -30px;
-    margin-top: -90px;
+    margin-left: 10px;
+    margin-top: 0px;
   }
   .trips-info-title {
     margin: 10px 0px 8px 5px;
@@ -366,7 +370,7 @@ li {
     font-size: 15px;
   }
   .trip-link {
-    margin: -30px -10px;
+    margin: -31px -15px;
     display: flex;
   }
   .trip-delete-button {
@@ -410,6 +414,17 @@ li {
   }
   .delete {
     margin-top: -50px;
+  }
+  .add-pictures {
+    width: 100%;
+    align-items: flex-start;
+  }
+  .add-pictures-container {
+    margin-top: 20px;
+  }
+  .model-form-AddButton {
+    margin: 0;
+    margin-top: 30px;
   }
 }
 @media (max-width: 1000px) {

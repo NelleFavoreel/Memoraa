@@ -12,7 +12,7 @@
   background-color: #f1f1f1;
   margin-top: 40px;
   flex-direction: column;
-  width: 50%;
+  width: 40%;
   align-items: center;
 
   padding-top: 30px;
@@ -83,6 +83,7 @@
 }
 .photo-upload input {
   border-bottom: none;
+  margin-left: 0;
 }
 .photo-upload .delete span {
   margin-left: -30px;
@@ -198,14 +199,15 @@
 }
 .edit-trip-buttons {
   display: block;
-  align-items: flex-end;
-  gap: 30px;
-  justify-content: center;
+  align-items: flex-start;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
 }
 .add-pictures {
   display: flex;
   flex-direction: column;
-  background-color: #d7d3cd;
+  background-color: #f1f1f1;
   width: 50%;
   max-width: 500px;
   margin-top: 50px;
@@ -328,22 +330,22 @@
     width: 100% !important;
   }
   .model-form-AddButton {
-    margin-right: 5% !important;
-    margin-left: 5% !important;
     justify-content: flex-start;
+    width: 100%;
+    align-items: baseline;
   }
   .table-header th {
-    font-size: 11px;
+    font-size: 14px;
   }
   .custom-select {
     font-size: 11px;
   }
   .date-input {
-    font-size: 11px;
+    font-size: 12px;
     font-family: "myriad-pro", sans-serif;
   }
   .traveler-selection td {
-    font-size: 11px;
+    font-size: 12px;
   }
   .edit-trip-slider input {
     font-size: 11px;
@@ -363,5 +365,25 @@
     margin-left: 90px;
     margin-top: -16px;
     height: 20px;
+  }
+  .traveler-selection td {
+    margin-top: 10px;
+    width: 100%;
+  }
+  .edit-trip-buttons {
+    margin-top: -40px;
+  }
+  .add-picture-buttons {
+    align-items: baseline;
+    margin-bottom: 0px;
+  }
+  .add-pictures {
+    align-items: flex-start;
+    width: 100%;
+  }
+  .model-form-AddButton button {
+    margin: 0;
+    width: auto;
+    margin-right: 20px;
   }
 }

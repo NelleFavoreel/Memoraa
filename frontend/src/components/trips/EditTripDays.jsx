@@ -145,10 +145,10 @@ function EditTripDays({ tripId, isOpen, onClose, tripDays, setTripDays }) {
                 <label>Activiteiten</label>
                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
                   <thead>
-                    <tr className="table-header">
+                    {/* <tr className="table-header">
                       <th style={{ textAlign: "left", padding: "5px" }}>Activiteit</th>
                       <th style={{ textAlign: "left", padding: "5px" }}>Verwijderen</th>
-                    </tr>
+                    </tr> */}
                   </thead>
                   <tbody>
                     {activeDay.activities?.length > 0 ? (
