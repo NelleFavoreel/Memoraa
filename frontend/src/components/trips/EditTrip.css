@@ -260,6 +260,18 @@
 .custom-select {
   width: 100% !important;
 }
+.model-button-add {
+  margin-top: 0px;
+  margin-bottom: 30px;
+  justify-content: flex-end;
+  display: flex;
+}
+.roadtrip-countries {
+  margin-bottom: 20px;
+}
+.model-button-add-inner {
+  display: flex;
+}
 @media (max-width: 600px) {
   .edit-trip-container {
     flex-direction: column;
@@ -331,7 +343,7 @@
   }
   .add-trip-modal {
     overflow: auto !important;
-    height: 90vh !important;
+    height: auto !important;
     margin-top: 50px;
   }
   .traveler-selection table {

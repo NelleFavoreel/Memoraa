@@ -163,6 +163,7 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
   if (!trip) return <p>Reis niet gevonden.</p>;
 
   const isTraveler = trip.travelers?.includes(currentUserId);
+  console.log("trip:", trip);
 
   return (
     <ReactFullpage
@@ -202,7 +203,7 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
             <div className="trip-detail-container-info">
               <div className="trip-detail-container">
                 <div className="trip-detail-header">
-                  <h1>{trip.country || trip.place || "Onbekende locatie"}</h1>
+                  <h1>{trip.tripType === "roadtrip" ? "Roadtrip" : trip.country || trip.place || "Onbekende locatie"}</h1>
 
                   <div className="trip-detail-header-actions">
                     <div className="trip-detail-share">
@@ -246,6 +247,12 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
                       <div className="trip-detail-info">
                         <label>Type:</label>
                         <p>{trip.tripType}</p>
+                      </div>
+                    )}
+                    {trip.tripType === "roadtrip" && trip.countries?.length > 0 && (
+                      <div className="trip-detail-info">
+                        <label>Landen:</label>
+                        <p>{trip.countries.join(", ")}</p>
                       </div>
                     )}
 

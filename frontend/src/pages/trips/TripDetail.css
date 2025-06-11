@@ -20,7 +20,6 @@
   font-weight: 100;
   font-size: 13px;
   position: relative;
-  margin-top: 90px;
   z-index: 20;
   margin-left: 8%;
   cursor: pointer;
@@ -347,7 +346,7 @@
   }
   .back-button-detail {
     margin-left: 3%;
-    margin-top: -50px;
+    margin-top: -40px;
   }
   .trip-delete-header {
     padding-top: 30px;

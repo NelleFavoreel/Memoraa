@@ -5,6 +5,8 @@ import "./EditTrip.css";
 import FullButton from "../button/FullButton";
 import { toast } from "react-toastify";
 import LoginModal from "../modal/LoginModal";
+import DeleteButton from "../button/DeleteButton";
+import AddButton from "../button/AddButton";
 
 function EditTrip({ onClose, isOpen }) {
   const { id } = useParams();
@@ -164,10 +166,43 @@ function EditTrip({ onClose, isOpen }) {
             <div className="trip-edit-general-info">
               <form onSubmit={handleSaveChanges} className="edit-trip-form">
                 <div>
-                  <div>
-                    <label>Land</label>
-                    <input type="text" value={trip.country} onChange={(e) => setTrip({ ...trip, country: e.target.value })} />
-                  </div>
+                  {trip.tripType === "roadtrip" ? (
+                    <div className="roadtrip-countries">
+                      <label>Landen</label>
+                      {trip.countries?.map((land, index) => (
+                        <div key={index} style={{ display: "flex", gap: "10px", marginBottom: "5px" }}>
+                          <input
+                            type="text"
+                            value={land}
+                            onChange={(e) => {
+                              const newCountries = [...trip.countries];
+                              newCountries[index] = e.target.value;
+                              setTrip({ ...trip, countries: newCountries });
+                            }}
+                          />
+                          <DeleteButton
+                            type="button"
+                            style={{ margin: "0px" }}
+                            onClick={() => {
+                              const newCountries = trip.countries.filter((_, i) => i !== index);
+                              setTrip({ ...trip, countries: newCountries });
+                            }}
+                          >
+                            Verwijder
+                          </DeleteButton>
+                        </div>
+                      ))}
+                      <AddButton type="button" onClick={() => setTrip({ ...trip, countries: [...(trip.countries || []), ""] })}>
+                        +
+                      </AddButton>
+                    </div>
+                  ) : (
+                    <div>
+                      <label>Land</label>
+                      <input type="text" value={trip.country} onChange={(e) => setTrip({ ...trip, country: e.target.value })} />
+                    </div>
+                  )}
+
                   <div>
                     <label>Stad</label>
                     <input type="text" value={trip.place} onChange={(e) => setTrip({ ...trip, place: e.target.value })} />
