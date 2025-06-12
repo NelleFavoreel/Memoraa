@@ -114,7 +114,6 @@ frontend/
 │   │   └── trips/
 │   │       ├── TravelOverview.jsx
 │   │       ├── TravelDetail.jsx
-│   │       └── Calendar.jsx
 │   ├── App.jsx            # Hoofdcomponent
 │   ├── App.css            # Algemene app styling
 │   ├── main.jsx           # Entreepunt React app
