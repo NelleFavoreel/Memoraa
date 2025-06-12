@@ -229,7 +229,11 @@ Hieronder vind je een overzicht van geraadpleegde bronnen tijdens de ontwikkelin
 
 ## Promo filmpje
 
-https://github.com/user-attachments/assets/dd58ed6e-76e2-4898-8b05-1504a540b493
+
+
+https://github.com/user-attachments/assets/a052aa9f-a64e-4f23-a67d-7010ddadbc13
+
+
 
 ## Author
 Nelle Favoreel
