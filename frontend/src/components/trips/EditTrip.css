@@ -272,6 +272,7 @@
 .model-button-add-inner {
   display: flex;
 }
+
 @media (max-width: 600px) {
   .edit-trip-container {
     flex-direction: column;

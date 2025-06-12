@@ -21,6 +21,7 @@ export default function Navbar({ hidden }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuOpen]);
+
   useEffect(() => {
     const fetchUnreadCount = async () => {
       const token = localStorage.getItem("token");
@@ -39,7 +40,6 @@ export default function Navbar({ hidden }) {
 
     fetchUnreadCount();
     const interval = setInterval(fetchUnreadCount, 5000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -54,7 +54,6 @@ export default function Navbar({ hidden }) {
             ☰
           </button>
         </div>
-
         <div className={`nav-links ${menuOpen ? "open" : ""}`}>
           <Link to="/" className="nav-link" onClick={() => setMenuOpen(false)}>
             Home
@@ -69,7 +68,6 @@ export default function Navbar({ hidden }) {
             Meldingen
             {unreadCount > 0 && <span className="notification-badge"></span>}
           </Link>
-
           <Link to="/users" className="nav-link" onClick={() => setMenuOpen(false)}>
             Account
           </Link>

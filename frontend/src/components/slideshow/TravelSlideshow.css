@@ -87,7 +87,7 @@
 
   .hover-info.fade {
     opacity: 0;
-    transform: translateY(10px); /* iets naar beneden verplaatsen bij uitfaden */
+    transform: translateY(10px);
   }
   .center-image:hover .hover-info,
   .center-image:focus .hover-info {

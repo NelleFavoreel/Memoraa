@@ -34,7 +34,6 @@ export default function Footer({ hidden }) {
         <div className="footer-logo">
           <Link to="/">Tripli</Link>
         </div>
-
         <div className="footer-links">
           <Link to="/" className="footer-link">
             Home

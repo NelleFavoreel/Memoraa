@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import AddButton from "../button/AddButton";
-import FullButton from "../button/FullButton";
 import { SlMagnifier } from "react-icons/sl";
 import DeleteButton from "../button/DeleteButton";
+
 function AddFamilyMembers() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -44,7 +44,6 @@ function AddFamilyMembers() {
     const data = await res.json();
     setMessage(data.message);
 
-    // Update vriendenlijst
     const updatedFriends = await fetch("http://localhost:3001/family/friends", {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -61,7 +60,6 @@ function AddFamilyMembers() {
       body: JSON.stringify({ friendId }),
     });
 
-    // Update vriendenlijst
     const updatedFriends = await fetch("http://localhost:3001/family/friends", {
       headers: { Authorization: `Bearer ${token}` },
     });

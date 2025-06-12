@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DeleteButton from "../button/DeleteButton";
 import AddButton from "../button/AddButton";
-import { label } from "yet-another-react-lightbox";
 
 function FamilyRequests() {
   const [requests, setRequests] = useState([]);
@@ -68,7 +67,6 @@ function FamilyRequests() {
   return (
     <div className="family-requests-container">
       <label>Familie verzoeken</label>
-
       {requests.length === 0 ? (
         <p>Geen verzoeken gevonden.</p>
       ) : (

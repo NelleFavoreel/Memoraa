@@ -35,6 +35,7 @@ function ClickableMap({ coordinates }) {
 
     markersRef.current.forEach((marker) => marker.remove());
     markersRef.current = [];
+
     coordinates.forEach((coord) => {
       const popupNode = document.createElement("div");
       popupNode.style.padding = "5px 10px";
@@ -45,8 +46,8 @@ function ClickableMap({ coordinates }) {
       popupNode.style.minWidth = "100px";
       popupNode.style.textAlign = "center";
       popupNode.textContent = coord.place || `Dag ${coord.dayIndex + 1} - ${coord.place}`;
-      const popup = new mapboxgl.Popup().setDOMContent(popupNode);
 
+      const popup = new mapboxgl.Popup().setDOMContent(popupNode);
       const marker = new mapboxgl.Marker().setLngLat(coord.coordinates).setPopup(popup).addTo(map);
 
       markersRef.current.push(marker);

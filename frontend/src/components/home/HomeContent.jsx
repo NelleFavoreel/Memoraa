@@ -18,14 +18,16 @@ import "./HomeContent.css";
 function HomeContent({ scrollY }) {
   useAnimateOnVisible(".rotate-on-visible");
   useAnimateOnVisible(".rotate-on-visible1");
+
   const translateY1 = scrollY * 0.2;
   const translateY2 = scrollY * 0.3;
   const translateY3 = scrollY * 0.1;
   const translateY4 = scrollY * 0.05;
   const translateY5 = scrollY * 0.15;
-  const [showLogin, setShowLogin] = useState(false);
 
+  const [showLogin, setShowLogin] = useState(false);
   const navigate = useNavigate();
+
   return (
     <>
       <img src={BlueSeePicture} alt="Blue See" className="image1" style={{ transform: `translateY(${translateY1}px)` }} />
