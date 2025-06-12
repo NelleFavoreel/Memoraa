@@ -5,7 +5,6 @@ import FullButton from "../button/FullButton";
 import AddButton from "../button/AddButton";
 import { toast } from "react-toastify";
 import LoginModal from "../modal/LoginModal";
-import { div } from "three/tsl";
 import Underline from "../button/Underline";
 
 function AddTrip({ show, onClose, onTripAdded }) {
@@ -43,7 +42,7 @@ function AddTrip({ show, onClose, onTripAdded }) {
 
   const fetchCountryImage = async (countryName) => {
     if (!countryName) return "";
-    const accessKey = "ul5tNUtQ1UlFRJ-IaGYykyzhxTSnjhanMR7NDqMJLag";
+    const accessKey = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
     try {
       const response = await fetch(`https://api.unsplash.com/search/photos?query=${countryName}&orientation=landscape&client_id=${accessKey}`);
       const data = await response.json();
