@@ -34,7 +34,7 @@ function HomeContent({ scrollY }) {
           <div className="home-content-text">
             <h2>Jouw volgende avontuur begint hier</h2>
             <div className="home-content">
-              <p>Stel in een paar simpele stappen je perfecte familievakantie samen. Kies je bestemming, voeg je favoriete activiteiten toe en laat het avontuur beginnen!</p>
+              <p>Stel in een paar simpele stappen jullie perfecte familievakantie samen. Kies een bestemming, voeg favoriete activiteiten toe en start een avontuur om nooit te vergeten!</p>
               <FullButton onClick={() => navigate("/login")}>Plan je reis</FullButton>
             </div>
           </div>
@@ -45,10 +45,10 @@ function HomeContent({ scrollY }) {
         </div>
         <div className="home-content-box-1">
           <div className="home-content-text">
-            <h2>Houd overzicht over alle familieavonturen</h2>
+            <h2>Houd overzicht over al jullie familieavonturen</h2>
             <div className="home-content">
-              <p>Bekijk de gezamenlijke kalender en ontdek welke reizen gepland staan. Zo mis je geen enkel moment van jullie onvergetelijke ervaringen.</p>
-              <FullButton onClick={() => navigate("/login")}>Plan je reis</FullButton>
+              <p>Bekijk eerdere reizen en zie wat er nog op de planning staat. Zo mis je geen enkel speciaal moment met de mensen die je liefhebt.</p>
+              <FullButton onClick={() => navigate("/login")}>Bekijk het overzicht</FullButton>
             </div>
           </div>
           <div className="picture-container">
@@ -59,9 +59,9 @@ function HomeContent({ scrollY }) {
 
         <div className="home-content-box2">
           <div className="home-content-text">
-            <h2>Laat je inspireren door echte familieavonturen</h2>
+            <h2>Laat je inspireren door echte familieverhalen</h2>
             <div className="home-content">
-              <p>Bekijk alle onvergetelijke reizen die gezinnen voor jou hebben gedeeld. Misschien zit jouw volgende droomreis er wel tussen!</p>
+              <p>Ontdek unieke reizen die andere gezinnen hebben gedeeld. Misschien vind je er wel het idee voor jullie volgende droomvakantie!</p>
               <FullButton onClick={() => navigate("/login")}>Bekijk je reis</FullButton>
             </div>
           </div>
