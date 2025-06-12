@@ -250,7 +250,7 @@ li {
 }
 .custom-cursor {
   position: fixed;
-  pointer-events: none; /* Zodat hij geen muisinteracties blokkeert */
+  pointer-events: none;
   top: 0;
   left: 0;
   width: 50px;
@@ -259,15 +259,15 @@ li {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgb(0, 4, 255); /* Of een kleur die je pijl zichtbaar maakt */
+  color: rgb(0, 4, 255);
   user-select: none;
 }
 .custom-cursor-icon {
   width: 30px;
   height: 30px;
-  font-size: 24px; /* Groter als je wil */
-  color: white; /* Of zwart, wat jij wil */
-  text-shadow: 0 0 2px black, 0 0 2px black; /* Maakt het 'vetter' */
+  font-size: 24px;
+  color: white;
+  text-shadow: 0 0 2px black, 0 0 2px black;
 }
 
 .trip-content {

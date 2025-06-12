@@ -11,7 +11,6 @@ function BeforeHome() {
   const [showLogin, setShowLogin] = useState(false);
   const navigate = useNavigate();
   const [scrollY, setScrollY] = useState(0);
-  // const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -22,19 +21,10 @@ function BeforeHome() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setShowContent(true);
-  //   }, 4000); // 4 seconden wachten
-
-  //   return () => clearTimeout(timer);
-  // }, []);
 
   return (
     <div className="before-home">
       {/* <FlyingPlaneCanvas /> */}
-
-      {/* {showContent && ( */}
       <>
         <div className="before-home-button">
           <h1 className="logo">Tripli</h1>
@@ -54,7 +44,6 @@ function BeforeHome() {
           </LoginModal>
         </div>
       </>
-      {/* )} */}
     </div>
   );
 }

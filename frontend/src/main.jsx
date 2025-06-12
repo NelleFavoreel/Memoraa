@@ -13,8 +13,7 @@ function Root() {
     function checkWidth() {
       setShowToast(window.innerWidth >= 900);
     }
-
-    checkWidth(); // direct checken
+    checkWidth();
     window.addEventListener("resize", checkWidth);
     return () => window.removeEventListener("resize", checkWidth);
   }, []);
