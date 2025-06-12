@@ -36,12 +36,10 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
   const photosRef = useRef(null);
   const mapRef = useRef(null);
 
-  // Navbar verbergen/showen
   useEffect(() => {
     return () => setHideNavbar(false);
   }, [setHideNavbar]);
 
-  // Trip ophalen
   useEffect(() => {
     const fetchTripDetails = async () => {
       try {
@@ -137,10 +135,8 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
     }
   }, [tripDays]);
 
-  // Foto toegevoegd handler voor AddPictures component
   const handlePhotoAdded = (newPhotoUrl, dayIndex = null) => {
     if (dayIndex !== null) {
-      // Foto aan specifieke dag toevoegen
       setTripDays((prevDays) => {
         const updatedDays = [...prevDays];
         if (!updatedDays[dayIndex].photos) updatedDays[dayIndex].photos = [];
@@ -151,7 +147,6 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
         handleDayChange(dayIndex);
       }
     } else {
-      // Foto algemeen toevoegen aan trip
       setTrip((prevTrip) => ({
         ...prevTrip,
         photos: prevTrip.photos ? [...prevTrip.photos, newPhotoUrl] : [newPhotoUrl],
@@ -227,15 +222,12 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
                     {showModal && <EditTrip isOpen={showModal} onClose={() => setShowModal(false)} />}
                   </div>
                 </div>
-
                 <div className="trip-detail-general-info">
                   <div className="trip-detail-info1">
-                    {/* Datum is altijd aanwezig */}
                     <p>
                       {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
                     </p>
 
-                    {/* Stad tonen als die er is */}
                     {trip.place && (
                       <div className="trip-detail-info">
                         <label>Stad:</label>
@@ -243,7 +235,6 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
                       </div>
                     )}
 
-                    {/* Aantal dagen tonen als tripDays bestaat */}
                     {tripDays.length > 0 && (
                       <div className="trip-detail-info">
                         <label>Aantal dagen:</label>
@@ -251,13 +242,13 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
                       </div>
                     )}
 
-                    {/* Type tonen als die ingevuld is */}
                     {trip.tripType && (
                       <div className="trip-detail-info">
                         <label>Type:</label>
                         <p>{trip.tripType}</p>
                       </div>
                     )}
+
                     {trip.tripType === "roadtrip" && trip.countries?.length > 0 && (
                       <div className="trip-detail-info">
                         <label>Landen:</label>
@@ -265,7 +256,6 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
                       </div>
                     )}
 
-                    {/* Reizigers tonen als er namen zijn */}
                     {travelerNames.length > 0 && (
                       <div className="trip-detail-info">
                         <label>Reizigers:</label>

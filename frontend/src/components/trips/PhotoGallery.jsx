@@ -2,11 +2,9 @@ import "yet-another-react-lightbox/styles.css";
 import Lightbox from "yet-another-react-lightbox";
 import { useState } from "react";
 import FullButton from "../button/FullButton";
-
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import LoginModal from "../modal/LoginModal";
 
 function PhotoGallery({ generalPhotos, tripDays }) {
@@ -59,7 +57,6 @@ function PhotoGallery({ generalPhotos, tripDays }) {
   return (
     <div className="photos-container">
       <h2>Alle foto's</h2>
-
       <div className="photos-summary">
         {isTripDone && !showSummary && (
           <FullButton onClick={startSummary} style={{ marginBottom: "15px", padding: "10px 15px", cursor: "pointer" }}>
@@ -67,7 +64,6 @@ function PhotoGallery({ generalPhotos, tripDays }) {
           </FullButton>
         )}
       </div>
-
       {!showSummary && (
         <>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", objectFit: "cover" }}>
@@ -89,8 +85,6 @@ function PhotoGallery({ generalPhotos, tripDays }) {
           {showLightbox && <Lightbox open={showLightbox} close={() => setShowLightbox(false)} slides={allPhotos.map((p) => ({ src: getPhotoSrc(p) }))} index={index} carousel={{ finite: true }} />}
         </>
       )}
-
-      {/* Hier gebruik je LoginModal voor samenvatting */}
       <LoginModal isOpen={showSummary} onClose={() => setShowSummary(false)}>
         <div className="summary-container">
           <Slider {...slickSettings}>

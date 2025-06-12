@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import DeleteTrip from "./DeleteTrip";
 import FullButton from "../button/FullButton";
-import Underline from "../button/Underline";
 import { SlArrowRight } from "react-icons/sl";
 import Filters from "../../components/trips/filters/Filters";
 import useAnimateOnVisible from "../animations/useAnimateOnVisible";
@@ -138,7 +136,6 @@ function TravelInfo({ refresh, onRefreshed, scrollY }) {
                     <p>
                       <label>Datum:</label> {new Date(trip.startDate).toLocaleDateString()} tot {new Date(trip.endDate).toLocaleDateString()}
                     </p>
-
                     <div className="trip-link">
                       <Link to={`/trips/${trip._id}`}>
                         <button>

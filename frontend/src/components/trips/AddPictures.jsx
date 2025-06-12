@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import AddButton from "../button/AddButton";
-import { div } from "three/tsl";
 import FullButton from "../button/FullButton";
 
 function AddPictures({ tripId, onPhotoAdded, onClose }) {
@@ -90,7 +88,6 @@ function AddPictures({ tripId, onPhotoAdded, onClose }) {
           throw new Error("Fout bij het uploaden van media");
         }
 
-        // Bel de callback voor elke succesvolle upload
         if (onPhotoAdded) onPhotoAdded(base64Data);
       }
 
@@ -135,7 +132,6 @@ function AddPictures({ tripId, onPhotoAdded, onClose }) {
             Annuleer
           </button>
         </div>
-
         {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
     </div>
