@@ -14,8 +14,9 @@ import AddButton from "../button/AddButton";
 import LoginModal from "../modal/LoginModal";
 import ReactFullpage from "@fullpage/react-fullpage";
 import DeleteTrip from "../../components/trips/DeleteTrip";
+import { SlArrowRight } from "react-icons/sl";
 
-function TravelDetail({ setHideNavbar }) {
+function TravelDetail({ setHideNavbar, hideNavbar }) {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
   const { id } = useParams();
   const [trip, setTrip] = useState(null);
@@ -31,12 +32,12 @@ function TravelDetail({ setHideNavbar }) {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
+
   const photosRef = useRef(null);
   const mapRef = useRef(null);
 
   // Navbar verbergen/showen
   useEffect(() => {
-    setHideNavbar(true);
     return () => setHideNavbar(false);
   }, [setHideNavbar]);
 
@@ -173,10 +174,15 @@ function TravelDetail({ setHideNavbar }) {
       fitToSection={true}
       scrollOverflow={false}
       anchors={["info", "photos", "map"]}
-      navigation
+      navigation={false}
       render={({ fullpageApi }) => (
-        <div id="fullpage-wrapper">
-          {/* SECTION 1 - INFO */}
+        <div
+          id="fullpage-wrapper"
+          className={token ? "has-token" : "no-token-overlay"}
+          style={{
+            marginTop: setHideNavbar ? "-13%" : "0px",
+          }}
+        >
           <div className="section">
             <div
               className="trip-background-image"
@@ -189,6 +195,14 @@ function TravelDetail({ setHideNavbar }) {
               }}
             ></div>
             <div className="trip-delete-header">
+              {token && !hideNavbar && (
+                <div className="back-button-detail" onClick={() => navigate("/trips")}>
+                  <button className="underline-back-button">
+                    <SlArrowRight style={{ transform: "rotate(180deg)", marginRight: "0.5rem" }} />
+                    <span>Terug</span>
+                  </button>
+                </div>
+              )}
               {trip.travelers?.includes(userId) && (
                 <div className="trip-delete-button">
                   <DeleteTrip tripId={trip._id} onDelete={handleDelete} />
@@ -198,7 +212,7 @@ function TravelDetail({ setHideNavbar }) {
             <div className="trip-detail-container-info">
               <div className="trip-detail-container">
                 <div className="trip-detail-header">
-                  <h1>{trip.country || trip.place || "Onbekende locatie"}</h1>
+                  <h1>{trip.tripType === "roadtrip" ? "Roadtrip" : trip.country || trip.place || "Onbekende locatie"}</h1>
 
                   <div className="trip-detail-header-actions">
                     <div className="trip-detail-share">
@@ -244,6 +258,12 @@ function TravelDetail({ setHideNavbar }) {
                         <p>{trip.tripType}</p>
                       </div>
                     )}
+                    {trip.tripType === "roadtrip" && trip.countries?.length > 0 && (
+                      <div className="trip-detail-info">
+                        <label>Landen:</label>
+                        <p>{trip.countries.join(", ")}</p>
+                      </div>
+                    )}
 
                     {/* Reizigers tonen als er namen zijn */}
                     {travelerNames.length > 0 && (
@@ -264,7 +284,6 @@ function TravelDetail({ setHideNavbar }) {
               <TripDays tripDays={tripDays} setTripDays={setTripDays} tripId={trip._id} trip={trip} onDayChange={handleDayChange} />
             </div>
           </div>
-
           {/* SECTION 2 - FOTO'S */}
           <div className="section">
             <div className="trip-detail-under-content">
@@ -286,7 +305,6 @@ function TravelDetail({ setHideNavbar }) {
               <PhotoGallery generalPhotos={trip?.photos || []} tripDays={tripDays} />
             </div>
           </div>
-
           {/* SECTION 3 - KAART */}
           <div className="section">
             <div className="map-container">

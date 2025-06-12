@@ -6,6 +6,7 @@ import AddButton from "../button/AddButton";
 import { toast } from "react-toastify";
 import LoginModal from "../modal/LoginModal";
 import { div } from "three/tsl";
+import Underline from "../button/Underline";
 
 function AddTrip({ show, onClose, onTripAdded }) {
   const [place, setPlace] = useState("");
@@ -183,7 +184,30 @@ function AddTrip({ show, onClose, onTripAdded }) {
                 <option value="manual">Zelf uploaden</option>
               </select>
 
-              {!useAICover && <input type="text" placeholder="URL van je afbeelding" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />}
+              {!useAICover && (
+                <>
+                  <input
+                    style={{ borderBottom: "none", marginLeft: "0", marginBottom: "20px", marginTop: "-10px" }}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                          setImageUrl(reader.result); // base64 string
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                  />
+                  {imageUrl && (
+                    <div style={{ marginTop: "10px" }}>
+                      <img src={imageUrl} alt="Voorbeeld cover" style={{ maxWidth: "100%", maxHeight: "200px", marginBottom: "30px" }} />
+                    </div>
+                  )}
+                </>
+              )}
 
               <label>
                 Startdatum:
@@ -206,8 +230,8 @@ function AddTrip({ show, onClose, onTripAdded }) {
                 <tbody>
                   {friends.map((friend) => (
                     <tr key={friend._id}>
-                      <td style={{ padding: "8px" }}>{friend.screenName}</td>
-                      <td style={{ padding: "8px" }}>
+                      <td style={{ padding: "0px 8px" }}>{friend.screenName}</td>
+                      <td style={{ padding: "0px 8px" }}>
                         <input type="checkbox" checked={selectedFriend.includes(friend._id)} onChange={() => handleCheckboxChange(friend._id)} />
                       </td>
                     </tr>
@@ -218,6 +242,9 @@ function AddTrip({ show, onClose, onTripAdded }) {
           </div>
           <div className="model-form-AddButton">
             <FullButton type="submit">Voeg reis toe</FullButton>
+            <button type="button" onClick={onClose}>
+              Annuleer
+            </button>
           </div>
         </form>
       </div>

@@ -77,33 +77,30 @@ function TravelInfo({ refresh, onRefreshed, scrollY }) {
   }, [refresh]);
 
   useEffect(() => {
-    if (trips.length > 0) {
-      setTimeout(() => {
-        const elements = document.querySelectorAll(".trip-image-little img");
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("animate");
-                entry.target.classList.remove("fade-out");
-              } else {
-                entry.target.classList.remove("animate");
-                entry.target.classList.add("fade-out");
-              }
-            });
-          },
-          {
-            threshold: 0.2,
+    if (filteredTrips.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate");
+            entry.target.classList.remove("fade-out");
+          } else {
+            entry.target.classList.remove("animate");
+            entry.target.classList.add("fade-out");
           }
-        );
+        });
+      },
+      { threshold: 0.2 }
+    );
 
-        elements.forEach((el) => observer.observe(el));
+    const elements = document.querySelectorAll(".trip-image-little img");
+    elements.forEach((el) => observer.observe(el));
 
-        return () => observer.disconnect();
-      }, 100);
-    }
-  }, [trips]);
-  useAnimateOnVisible(".trip-info", [trips]);
+    return () => observer.disconnect();
+  }, [filteredTrips, visibleCount]);
+
+  useAnimateOnVisible(".trip-info", [trips, visibleCount, filters]);
 
   const getSmallPhotos = (trip) => {
     const dayPhotos = trip.randomPhotos || [];

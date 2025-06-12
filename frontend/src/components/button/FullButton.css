@@ -51,16 +51,15 @@
 /* Link stijl */
 a {
   text-decoration: none;
-  color: #373737;
+  color: #3c4b64;
 }
 
 /* Mobiel: animatie uitzetten */
 @media (max-width: 768px) {
   .custom-button {
-    width: 70px;
     min-width: 60px;
-    font-size: 10px;
-    padding: 5px;
+    font-size: 13px;
+    padding: 7px 10px;
     cursor: pointer;
     transition: none;
     animation: none !important;
@@ -71,5 +70,8 @@ a {
     background-color: inherit;
     color: inherit;
     animation: none !important;
+  }
+  .custom-button.default {
+    margin-top: 20px;
   }
 }

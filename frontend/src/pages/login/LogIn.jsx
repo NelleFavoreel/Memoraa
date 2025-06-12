@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
 import FullButton from "../../components/button/FullButton";
-function LogIn() {
+function LogIn({ onClose }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -123,8 +123,8 @@ function LogIn() {
         <>
           <div className="login-background">
             <div className="login-container">
-              <h1 className="title-header">{isRegistering ? "Registreren" : "Inloggen"}</h1>
-              <form onSubmit={isRegistering ? handleRegister : handleLogin}>
+              <form onSubmit={isRegistering ? handleRegister : handleLogin} className="login-form">
+                <h1 className="title-header">{isRegistering ? "Registreren" : "Inloggen"}</h1>
                 {isRegistering && (
                   <>
                     <div>
@@ -146,15 +146,20 @@ function LogIn() {
                   <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
                 {error && <p style={{ color: "red" }}>{error}</p>}
-                <FullButton type="submit">{isRegistering ? "Registreren" : "Inloggen"}</FullButton>
+                <div className="login-buttons">
+                  <FullButton type="submit">{isRegistering ? "Registreren" : "Inloggen"}</FullButton>
+                  <button type="button" onClick={onClose} style={{ float: "right", marginBottom: "1rem" }}>
+                    Annuleer
+                  </button>
+                </div>
               </form>
               <p>
                 {isRegistering ? (
-                  <span>
+                  <span style={{ color: "white" }}>
                     Heb je al een account? <FullButton onClick={() => setIsRegistering(false)}>Inloggen</FullButton>
                   </span>
                 ) : (
-                  <span>
+                  <span style={{ color: "white" }}>
                     Nog geen account? <FullButton onClick={() => setIsRegistering(true)}>Registreren</FullButton>
                   </span>
                 )}

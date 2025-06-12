@@ -20,18 +20,31 @@
   font-weight: 100;
   font-size: 13px;
   position: relative;
-  margin-top: 80px;
   z-index: 20;
-  margin-left: 100px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+  margin: 0px, 30px;
 }
 #fullpage-wrapper {
   margin-top: -100px;
+}
+.without-back-button {
+  margin-top: 180px;
+  height: 20vh;
+}
+.no-token-overlay {
+  padding-top: 0px !important;
+  margin-top: -34vh !important;
+  height: 100%;
 }
 .trip-days-slider {
   background-color: #d7d3cd;
   padding: 20px 80px 60px 80px;
   font-family: "myriad-pro", sans-serif;
-  width: 40%;
+  width: 35%;
   z-index: 1;
   max-width: 450px;
   opacity: 0.9;
@@ -83,7 +96,6 @@
   padding: 8px;
   z-index: 3;
   cursor: pointer;
-  margin-top: 100px;
   height: 15px;
   width: 20px;
   display: flex;
@@ -95,7 +107,10 @@
 }
 .trip-delete-header {
   display: flex;
+  padding-top: 12vh;
+
   justify-content: flex-end;
+  justify-content: space-between;
 }
 .slick-dots li.slick-active button:before {
   color: rgb(0, 0, 0);
@@ -105,7 +120,7 @@
 }
 .trip-detail-container-info {
   margin-top: 0%;
-  margin-bottom: 4%;
+  margin-bottom: 6%;
 }
 .trip-background-image {
   position: fixed;
@@ -139,7 +154,7 @@
 .map-container {
   height: 100vh;
   padding-bottom: 0%;
-  margin-top: 80px;
+  margin-top: 30px;
 }
 .photos-container img {
   width: 30%;
@@ -152,7 +167,7 @@
 .trip-detail-edit-trip {
   display: flex;
   justify-content: flex-end;
-  margin-top: -40px;
+  margin-top: 90px;
   margin-bottom: 50px;
 }
 .trip-detail-general-info button {
@@ -194,17 +209,18 @@
   margin-left: 0;
 }
 .section {
-  margin: 0px 100px;
+  margin: 0px 10%;
 }
 .fp-table {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: auto;
-  max-width: 85%;
+  max-width: 80%;
+  margin-top: 15vh;
 }
-.trip-detail-photos-header-button {
-  margin-top: 130px;
+.trip-detail-container with-back-button {
+  margin-top: 300px;
 }
 @media (max-width: 600px) {
   .fp-table {
@@ -218,22 +234,26 @@
     padding: 0;
   }
   .trip-detail-container-info {
-    margin-top: 200px;
+    margin-top: 0px;
     width: 100%;
     height: 100vh;
   }
   .trip-detail-general-info {
-    width: 80%;
-    margin-top: -60px;
-    padding-top: 60px;
+    width: 75%;
+    margin-top: 0px;
+    margin-top: 20vh;
+    padding-top: 50px;
+    padding-right: 70px;
+    padding-bottom: 20px;
   }
   .trip-detail-general-info button {
     font-size: 10px;
   }
   .trip-days-slider {
-    padding: 20px 70px 50px 70px;
-    width: 80%;
-    margin-top: 10px;
+    padding: 20px 70px 20px 70px;
+    width: 67%;
+    margin-top: 0px;
+    margin-left: -17%;
   }
   .days-place {
     margin-top: 20px !important;
@@ -245,7 +265,6 @@
   }
   .section {
     margin: 0px 8%;
-    width: 100%;
   }
   .slick-dots {
     display: none;
@@ -277,7 +296,7 @@
     margin-bottom: 10px;
   }
   .trip-detail-container {
-    margin-top: 50px;
+    margin-top: 120px;
   }
   .back-button-detail {
     margin-bottom: 30px;
@@ -288,6 +307,11 @@
   }
   .trip-detail-header {
     justify-content: flex-start;
+    margin-bottom: -27vh;
+    padding-top: 120px;
+  }
+  .trip-detail-header h1 {
+    width: auto;
   }
   .trip-detail-share {
     margin: 20px 0px 0px 0px;
@@ -296,17 +320,20 @@
     margin: 20px 0px 0px 0px;
   }
   .trip-days-container button {
-    margin-left: 100%;
-    margin-bottom: -70px;
-    margin-top: -20px;
+    margin-left: 75%;
+    margin-bottom: -60px;
+    margin-top: -40px;
   }
   .trip-detail-photos-header-button {
     margin-bottom: -90px;
     margin-top: 0;
   }
-
+  #fullpage-wrapper {
+    margin-top: -12% !important;
+  }
   .add-pictures input {
-    margin-left: 30%;
+    margin-left: 0;
+    margin-top: 20px;
     background-color: transparent;
   }
   .photos-container img {
@@ -314,5 +341,50 @@
   }
   .back-button-detail button {
     margin: 0;
+  }
+  .trip-background-image {
+    height: 100vh;
+  }
+  .back-button-detail {
+    margin-left: 3%;
+    margin-top: -40px;
+  }
+  .trip-delete-header {
+    margin-bottom: -220px;
+    margin-top: 40px;
+    align-items: baseline;
+    margin-left: -9%;
+  }
+  .trip-detail-edit-trip {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -50px;
+    margin-bottom: 0px;
+  }
+  .trip-delete-button {
+    margin-top: 0px;
+  }
+  .edit-trip-modal {
+    width: 100%;
+  }
+  .photo-upload img {
+    width: 70%;
+    height: 90px;
+  }
+  .photo-upload .delete span {
+    margin-top: 50px;
+  }
+  .button-container-edit-days button {
+    margin-top: 0px;
+    width: 80%;
+    margin: 0;
+  }
+
+  .button-container-edit-days {
+    align-items: baseline;
+    margin-top: 20px;
+  }
+  .edit-trip-modal select {
+    padding: 5px 10px;
   }
 }

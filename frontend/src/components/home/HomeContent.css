@@ -205,6 +205,18 @@ img {
   .home-content-text h2 {
     margin-bottom: 20px;
   }
+  .before-home-button {
+    height: 30px !important;
+  }
+  .logo {
+    font-size: 20px !important;
+  }
+  .home-content-container {
+    margin-top: 0px;
+  }
+  .home-content button {
+    margin-top: 0 !important;
+  }
 }
 
 /* Animatie */

@@ -11,11 +11,16 @@
 .before-home-button {
   align-items: end;
   display: flex;
-  margin-left: 80%;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+}
+.logo {
+  font-size: 30px;
+  font-weight: 600;
 }
 .before-home {
-  margin-top: 20px;
+  margin-top: 90px;
 }
 .before-home-header {
   width: 60%;
@@ -26,6 +31,9 @@
   }
   .before-home {
     margin-top: -70px;
+  }
+  .before-home-header h1 {
+    margin-top: 50px;
   }
 }
 @media (max-width: 555px) {
@@ -40,11 +48,10 @@
   .before-home-container {
     align-items: flex-start;
   }
-  .before-home-button {
-    margin-left: 90%;
-  }
+
   .before-home {
-    margin-top: -40px;
+    margin-top: -90px;
+    margin-bottom: 0px;
   }
 }
 @media (min-width: 768px) and (max-width: 1380px) {

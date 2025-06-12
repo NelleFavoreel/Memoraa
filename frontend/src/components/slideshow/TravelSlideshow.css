@@ -6,18 +6,27 @@
   padding-bottom: 300px;
 }
 
-.slick-slide {
+.slick-slide1 {
   position: relative;
-  height: 65vh;
+  height: auto;
   cursor: pointer;
   overflow: visible;
   padding-bottom: 120px;
+  cursor: none;
 }
 
 .home .title {
   margin-top: 0px;
 }
+.slide-place {
+  font-size: 40px;
+  font-weight: 700;
+}
 
+.slide-time {
+  font-size: 14px;
+  margin-top: 10px;
+}
 .slide-image {
   width: 100%;
   height: auto;
@@ -27,7 +36,7 @@
 
 .slide-overlay {
   position: absolute;
-  bottom: 40px;
+  bottom: 30px;
   right: 50px;
   transform: none;
   background: #d7d3cd;
@@ -40,15 +49,6 @@
   z-index: 10;
 }
 
-.slide-place {
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-.slide-time {
-  font-size: 1rem;
-  margin-top: 0.5rem;
-}
 .slideshow-hover-area {
   position: relative;
   z-index: 1;
@@ -97,11 +97,11 @@
   }
 
   .slide-place {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .slide-time {
-    font-size: 14px;
+    font-size: 11px;
   }
 
   .nav-button {
@@ -116,11 +116,33 @@
   .nav-button.right {
     right: 10px;
   }
-  .slide-time {
-    font-size: 11px;
-    font-weight: 100;
+  .slick-wrapper {
+    padding-bottom: 0px;
+    margin-bottom: -160px;
   }
-  .slide-place {
-    font-size: 15px;
+  .slide-overlay {
+    padding: 15px 20px;
+    width: 40%;
+    bottom: 80px;
+    right: 20px;
+  }
+  .slick-slide {
+    position: relative;
+    cursor: pointer;
+    overflow: visible;
+    padding-bottom: 100px;
+  }
+  .trip-days-slider {
+    height: auto !important;
+  }
+  .slick-slide1 {
+    padding-bottom: 90px;
+    height: auto !important;
+  }
+  .slick-slide1 img {
+    height: 250px;
+  }
+  .slide-image {
+    height: 500px;
   }
 }

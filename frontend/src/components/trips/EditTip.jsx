@@ -5,6 +5,8 @@ import "./EditTrip.css";
 import FullButton from "../button/FullButton";
 import { toast } from "react-toastify";
 import LoginModal from "../modal/LoginModal";
+import DeleteButton from "../button/DeleteButton";
+import AddButton from "../button/AddButton";
 
 function EditTrip({ onClose, isOpen }) {
   const { id } = useParams();
@@ -116,6 +118,7 @@ function EditTrip({ onClose, isOpen }) {
     if (trip.startDate !== originalTrip.startDate) updatedTrip.startDate = trip.startDate;
     if (trip.endDate !== originalTrip.endDate) updatedTrip.endDate = trip.endDate;
     if (JSON.stringify(trip.travelers) !== JSON.stringify(originalTrip.travelers)) updatedTrip.travelers = trip.travelers;
+    if (trip.place !== originalTrip.place) updatedTrip.place = trip.place;
 
     if (JSON.stringify(tripDays) !== JSON.stringify(originalTripDays)) updatedTrip.tripDays = tripDays;
 
@@ -163,9 +166,46 @@ function EditTrip({ onClose, isOpen }) {
             <div className="trip-edit-general-info">
               <form onSubmit={handleSaveChanges} className="edit-trip-form">
                 <div>
+                  {trip.tripType === "roadtrip" ? (
+                    <div className="roadtrip-countries">
+                      <label>Landen</label>
+                      {trip.countries?.map((land, index) => (
+                        <div key={index} style={{ display: "flex", gap: "10px", marginBottom: "5px" }}>
+                          <input
+                            type="text"
+                            value={land}
+                            onChange={(e) => {
+                              const newCountries = [...trip.countries];
+                              newCountries[index] = e.target.value;
+                              setTrip({ ...trip, countries: newCountries });
+                            }}
+                          />
+                          <DeleteButton
+                            type="button"
+                            style={{ margin: "0px" }}
+                            onClick={() => {
+                              const newCountries = trip.countries.filter((_, i) => i !== index);
+                              setTrip({ ...trip, countries: newCountries });
+                            }}
+                          >
+                            Verwijder
+                          </DeleteButton>
+                        </div>
+                      ))}
+                      <AddButton type="button" onClick={() => setTrip({ ...trip, countries: [...(trip.countries || []), ""] })}>
+                        +
+                      </AddButton>
+                    </div>
+                  ) : (
+                    <div>
+                      <label>Land</label>
+                      <input type="text" value={trip.country} onChange={(e) => setTrip({ ...trip, country: e.target.value })} />
+                    </div>
+                  )}
+
                   <div>
-                    <label>Land</label>
-                    <input type="text" value={trip.country} onChange={(e) => setTrip({ ...trip, country: e.target.value })} />
+                    <label>Stad</label>
+                    <input type="text" value={trip.place} onChange={(e) => setTrip({ ...trip, place: e.target.value })} />
                   </div>
 
                   <div>
@@ -209,8 +249,8 @@ function EditTrip({ onClose, isOpen }) {
                     <tbody>
                       {familyMembers.map((member) => (
                         <tr key={member._id}>
-                          <td style={{ padding: "8px" }}>{member.screenName}</td>
-                          <td style={{ padding: "8px" }}>
+                          <td style={{ padding: "0px 8px" }}>{member.screenName}</td>
+                          <td style={{ padding: "0px 8px" }}>
                             <input type="checkbox" checked={trip.travelers.includes(member._id)} onChange={() => handleTravelerToggle(member._id)} />
                           </td>
                         </tr>
@@ -222,6 +262,9 @@ function EditTrip({ onClose, isOpen }) {
                   <div className="button-container-edit">
                     <FullButton type="submit">Opslaan</FullButton>
                   </div>
+                  <button onClick={onClose} style={{ marginTop: "0px", marginLeft: "20px" }} className="cancel-button">
+                    Annuleren
+                  </button>
                   {/* <FullButton onClick={() => setShowDaysEditor(true)} className="edit-days-toggle-button">
                     Bewerk de dagen afzonderlijk
                   </FullButton> */}
