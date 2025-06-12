@@ -2,7 +2,7 @@
 Een gebruiksvriendelijke webapplicatie waarmee families hun reizen kunnen plannen, bekijken en delen.
 Gebruikers kunnen reizen aanmaken, dag per dag activiteiten toevoegen, foto's uploaden, reizen delen,…
 Ook kunnen familieleden worden toegevoegd en meldingen ontvangen bij updates.
-## ✨ Features
+## Features
 - 📅 Reizen aanmaken en beheren
 - 📸 Activiteiten per dag toevoegen en foto's uploaden
 - 👨‍👩‍👧‍👦 Familieleden toevoegen en beheren
@@ -19,6 +19,7 @@ Ook kunnen familieleden worden toegevoegd en meldingen ontvangen bij updates.
 - [Databasestructuur](#Databasestructuur)
 - [Style Guide](#Style-Guide)
 - [Bronnen](#Bronnen)
+- [Promo filmpje](#Promo-filmpje)
 - [Author](#Author)
 
 ## Installatie
@@ -226,7 +227,9 @@ Hieronder vind je een overzicht van geraadpleegde bronnen tijdens de ontwikkelin
 - [Git branch strategie (GitKraken)](https://www.gitkraken.com/learn/git/best-practices/git-branch-strategy)  
 - [Best README Template (GitHub)](https://github.com/othneildrew/Best-README-Template)
 
-## License
+## Promo filmpje
+
+https://github.com/user-attachments/assets/dd58ed6e-76e2-4898-8b05-1504a540b493
 
 ## Author
 Nelle Favoreel
