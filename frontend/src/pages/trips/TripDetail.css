@@ -150,6 +150,8 @@
 .trip-detail-under-content {
   margin-top: 0px;
   height: 100vh;
+  margin-bottom: -40px;
+  margin-top: 40px;
 }
 .map-container {
   height: 100vh;

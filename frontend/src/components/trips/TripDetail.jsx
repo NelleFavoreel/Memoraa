@@ -287,21 +287,26 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
           {/* SECTION 2 - FOTO'S */}
           <div className="section">
             <div className="trip-detail-under-content">
-              <div className="trip-detail-photos-header-button">
-                <AddButton onClick={() => setIsModalOpen(true)} style={{ cursor: "pointer" }}>
-                  +
-                </AddButton>
-              </div>
-              <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <AddPictures
-                  tripId={id}
-                  onPhotoAdded={(newPhotoUrl) => {
-                    handlePhotoAdded(newPhotoUrl);
-                    setIsModalOpen(false);
-                  }}
-                  onClose={() => setIsModalOpen(false)}
-                />
-              </LoginModal>
+              {isTraveler && (
+                <>
+                  <div className="trip-detail-photos-header-button">
+                    <AddButton onClick={() => setIsModalOpen(true)} style={{ cursor: "pointer" }}>
+                      +
+                    </AddButton>
+                  </div>
+                  <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                    <AddPictures
+                      tripId={id}
+                      onPhotoAdded={(newPhotoUrl) => {
+                        handlePhotoAdded(newPhotoUrl);
+                        setIsModalOpen(false);
+                      }}
+                      onClose={() => setIsModalOpen(false)}
+                    />
+                  </LoginModal>
+                </>
+              )}
+
               <PhotoGallery generalPhotos={trip?.photos || []} tripDays={tripDays} />
             </div>
           </div>
