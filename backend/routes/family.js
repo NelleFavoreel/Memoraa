@@ -1,3 +1,4 @@
+// backend/routes/family.js
 const express = require("express");
 const router = express.Router();
 const { getDB } = require("../db");
@@ -69,6 +70,7 @@ router.post("/add-friend", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Verzoek verzenden mislukt." });
   }
 });
+// Accepteer een familieverzoek
 router.put("/accept-family-request", authenticateToken, async (req, res) => {
   const db = getDB();
   const usersCollection = db.collection("users");
@@ -116,7 +118,7 @@ router.put("/accept-family-request", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Fout bij accepteren familieverzoek." });
   }
 });
-
+// Weiger een familieverzoek
 router.get("/family-requests", authenticateToken, async (req, res) => {
   const db = getDB();
   const collection = db.collection("users");
@@ -140,6 +142,7 @@ router.get("/family-requests", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Ophalen mislukt." });
   }
 });
+// Haal familieleden op
 router.get("/friends", authenticateToken, async (req, res) => {
   const db = getDB();
   const collection = db.collection("users");
@@ -163,6 +166,7 @@ router.get("/friends", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Ophalen familieleden mislukt." });
   }
 });
+// Verwijder een familielid
 router.delete("/remove-friend", authenticateToken, async (req, res) => {
   const db = getDB();
   const collection = db.collection("users");
@@ -182,7 +186,7 @@ router.delete("/remove-friend", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Verwijderen mislukt." });
   }
 });
-
+// Accepteer een familieverzoek
 router.post("/accept", authenticateToken, async (req, res) => {
   try {
     const db = getDB();
@@ -211,7 +215,7 @@ router.post("/accept", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Fout bij accepteren familieverzoek." });
   }
 });
-
+// Weiger een familieverzoek
 router.post("/reject-family-request", authenticateToken, async (req, res) => {
   try {
     const db = getDB();
