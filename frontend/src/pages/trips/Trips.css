@@ -193,7 +193,6 @@ li {
   width: 280px;
   padding: 12px 10px;
   background-color: #f1f1f1;
-  color: white !important;
 }
 .searchbar::placeholder {
   color: rgba(94, 94, 94, 0.85);

@@ -1,3 +1,6 @@
+import { useState } from "react";
+import LoginModal from "../modal/LoginModal";
+import LogIn from "../../pages/login/LogIn";
 import FullButton from "../../components/button/FullButton";
 import { useNavigate } from "react-router-dom";
 import BlueSeePicture from "../../../public/images/BlueSeePicture.jpeg";
@@ -20,6 +23,8 @@ function HomeContent({ scrollY }) {
   const translateY3 = scrollY * 0.1;
   const translateY4 = scrollY * 0.05;
   const translateY5 = scrollY * 0.15;
+  const [showLogin, setShowLogin] = useState(false);
+
   const navigate = useNavigate();
   return (
     <>
@@ -35,7 +40,7 @@ function HomeContent({ scrollY }) {
             <h2>Jouw volgende avontuur begint hier</h2>
             <div className="home-content">
               <p>Stel in een paar simpele stappen jullie perfecte familievakantie samen. Kies een bestemming, voeg favoriete activiteiten toe en start een avontuur om nooit te vergeten!</p>
-              <FullButton onClick={() => navigate("/login")}>Plan je reis</FullButton>
+              <FullButton onClick={() => setShowLogin(true)}>Plan je reis</FullButton>
             </div>
           </div>
           <div className="picture-container">
@@ -48,7 +53,7 @@ function HomeContent({ scrollY }) {
             <h2>Houd overzicht over al jullie familieavonturen</h2>
             <div className="home-content">
               <p>Bekijk eerdere reizen en zie wat er nog op de planning staat. Zo mis je geen enkel speciaal moment met de mensen die je liefhebt.</p>
-              <FullButton onClick={() => navigate("/login")}>Bekijk het overzicht</FullButton>
+              <FullButton onClick={() => setShowLogin(true)}>Bekijk het overzicht</FullButton>
             </div>
           </div>
           <div className="picture-container">
@@ -62,7 +67,7 @@ function HomeContent({ scrollY }) {
             <h2>Laat je inspireren door echte familieverhalen</h2>
             <div className="home-content">
               <p>Ontdek unieke reizen die andere gezinnen hebben gedeeld. Misschien vind je er wel het idee voor jullie volgende droomvakantie!</p>
-              <FullButton onClick={() => navigate("/login")}>Bekijk je reis</FullButton>
+              <FullButton onClick={() => setShowLogin(true)}>Bekijk je reis</FullButton>
             </div>
           </div>
           <div className="picture-container">
@@ -70,6 +75,9 @@ function HomeContent({ scrollY }) {
           </div>
         </div>
       </div>
+      <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)}>
+        <LogIn onClose={() => setShowLogin(false)} />
+      </LoginModal>
     </>
   );
 }
