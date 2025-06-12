@@ -20,7 +20,7 @@ Ook kunnen familieleden worden toegevoegd en meldingen ontvangen bij updates.
 - [Style Guide](#Style-Guide)
 - [Bronnen](#Bronnen)
 - [Promo filmpje](#Promo-filmpje)
-- [Author](#Author)
+- [Auteur](#Auteur)
 
 ## Installatie
 Zorg ervoor dat Node.js en Npm zijn geïnstalleerd:
@@ -133,6 +133,13 @@ frontend/
 - Houd componenten zo klein en herbruikbaar mogelijk.
 ### CSS Modules (Optioneel)
 - Voor betere scheiding van stijlen kun je CSS-modules gebruiken. Bestandsnamen eindigen dan op .module.css en worden geïmporteerd in de bijbehorende React-component.
+### Commit Conventies
+Gebruik duidelijke prefixes bij je commits om aan te geven wat voor soort wijziging je maakt. Gebruik `PascalCase` na de prefix voor duidelijkheid.
+- `Feature/` – Voor het toevoegen van nieuwe functionaliteit  
+- `Fix/` – Voor het oplossen van bugs of fouten  
+- `Style/` – Voor aanpassingen in opmaak, witruimtes, indents, etc. (geen functionele wijziging)  
+- `Chore/` – Voor onderhoudstaken zoals dependency updates of projectstructuur
+
 ## Databasestructuur
 ### Users:
 ```bash
@@ -234,5 +241,5 @@ https://github.com/user-attachments/assets/a052aa9f-a64e-4f23-a67d-7010ddadbc13
 
 
 
-## Author
+## Auteur
 Nelle Favoreel
