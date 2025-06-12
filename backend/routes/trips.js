@@ -83,7 +83,6 @@ router.delete("/:id", authenticateToken, async (req, res) => {
     res.status(500).send("Fout bij verwijderen van reis.");
   }
 });
-
 // Reis toevoegen (POST)
 router.post("/", async (req, res) => {
   try {
@@ -94,12 +93,10 @@ router.post("/", async (req, res) => {
 
     const { tripType, place, country, countries, imageUrl, startDate, endDate, screenNames, familyId, userId, selectedFriend = [] } = req.body;
 
-    // Basisvalidatie
     if (!tripType || !startDate || !endDate || !familyId || !userId) {
       return res.status(400).json({ message: "Fout: Alle verplichte velden moeten ingevuld zijn." });
     }
 
-    // Validatie per tripType
     if (tripType === "staytrip") {
       if (!place || !country) {
         return res.status(400).json({ message: "Plaats en land zijn verplicht voor staytrip." });
@@ -128,7 +125,6 @@ router.post("/", async (req, res) => {
       travelerIds.push(currentUserObjectId);
     }
 
-    // Maak nieuw trip object aan
     const newTrip = {
       tripType,
       startDate: new Date(startDate),
@@ -152,21 +148,17 @@ router.post("/", async (req, res) => {
 
     const result = await collection.insertOne(newTrip);
 
-    // Haal familieleden van huidige gebruiker op
     const currentUser = await usersCollection.findOne({ _id: currentUserObjectId });
     const familyMemberIds = (currentUser.familyMembers || []).filter((id) => ObjectId.isValid(id)).map((id) => new ObjectId(id));
 
-    // Maak een Set van alle ontvangers (travelerIds + familieleden)
     const recipientsSet = new Set(travelerIds.map((id) => id.toString()));
 
-    // Voeg familieleden toe die nog niet in travelerIds zitten en niet de huidige gebruiker zijn
     familyMemberIds.forEach((fmId) => {
       if (!recipientsSet.has(fmId.toString()) && !fmId.equals(currentUserObjectId)) {
         recipientsSet.add(fmId.toString());
       }
     });
 
-    // Zet terug naar ObjectId en filter huidige gebruiker eruit
     const finalRecipients = Array.from(recipientsSet)
       .map((idStr) => new ObjectId(idStr))
       .filter((id) => !id.equals(currentUserObjectId));
@@ -190,7 +182,6 @@ router.post("/", async (req, res) => {
     res.status(500).json({ message: "Fout bij het toevoegen van reis." });
   }
 });
-
 // Reis detailpagina met bijbehorende dagen ophalen
 router.get("/:id", async (req, res) => {
   try {
@@ -209,7 +200,6 @@ router.get("/:id", async (req, res) => {
 
     let tripDays = await tripDaysCollection.find({ tripId: tripObjectId }).toArray();
 
-    // Als er geen tripDays bestaan: automatisch aanmaken
     if (!tripDays.length) {
       const start = new Date(trip.startDate);
       const end = new Date(trip.endDate);
@@ -240,8 +230,7 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ message: "Fout bij ophalen van reis details." });
   }
 });
-
-// Reis bewerken (PUT)
+// Reis bewerken
 router.put("/:id", authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
@@ -322,6 +311,7 @@ router.put("/:id", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Fout bij het bijwerken van reis." });
   }
 });
+// Voeg een foto's toe aan een reis
 router.post("/:id/photos", authenticateToken, async (req, res) => {
   try {
     const tripId = new ObjectId(req.params.id);

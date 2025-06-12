@@ -39,14 +39,12 @@ function EditTripDays({ tripId, isOpen, onClose, tripDays, setTripDays }) {
     setTripDays(updatedTripDays);
   };
 
-  // Foto verwijderen
   const handlePhotoDelete = (dayIndex, photoIndex) => {
     const updatedTripDays = [...tripDays];
     updatedTripDays[dayIndex].photos.splice(photoIndex, 1);
     setTripDays(updatedTripDays);
   };
 
-  // Foto's uploaden (zelfde functie als jij had)
   const resizeImageToBase64 = (file, maxWidth = 800, quality = 0.7) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -88,7 +86,6 @@ function EditTripDays({ tripId, isOpen, onClose, tripDays, setTripDays }) {
     }
   };
 
-  // Opslaan functie hetzelfde als jij had
   const handleSaveChanges = async () => {
     try {
       const response = await fetch(`http://localhost:3001/trips/${tripId}`, {
@@ -113,14 +110,12 @@ function EditTripDays({ tripId, isOpen, onClose, tripDays, setTripDays }) {
     }
   };
 
-  // De actieve dag om makkelijk te renderen
   const activeDay = tripDays[activeIndex];
 
   return (
     <LoginModal isOpen={isOpen} onClose={onClose}>
       <div className="edit-trip-days-container">
         <div className="edit-trip-modal">
-          {/* Dropdown om dag te kiezen */}
           <div style={{ display: "flex", alignItems: "center", width: "80%", height: "40px" }}>
             <div>
               <label htmlFor="day-select" style={{ marginRight: "10px" }}>
@@ -144,12 +139,6 @@ function EditTripDays({ tripId, isOpen, onClose, tripDays, setTripDays }) {
               <div className="traveler-selection">
                 <label>Activiteiten</label>
                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                  <thead>
-                    {/* <tr className="table-header">
-                      <th style={{ textAlign: "left", padding: "5px" }}>Activiteit</th>
-                      <th style={{ textAlign: "left", padding: "5px" }}>Verwijderen</th>
-                    </tr> */}
-                  </thead>
                   <tbody>
                     {activeDay.activities?.length > 0 ? (
                       activeDay.activities.map((activity, i) => (

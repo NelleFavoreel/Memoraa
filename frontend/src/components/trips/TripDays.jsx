@@ -4,7 +4,6 @@ import { SlArrowRight } from "react-icons/sl";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import EditTripDays from "./EditTripDays";
-import FullButton from "../button/FullButton";
 import { SlSettings } from "react-icons/sl";
 import Underline from "../button/Underline";
 

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { div } from "three/tsl";
 import FullButton from "../button/FullButton";
-import Underline from "../button/Underline";
 import { toast } from "react-toastify";
 
 function ChangingPassword({ onClose }) {
@@ -29,11 +27,9 @@ function ChangingPassword({ onClose }) {
         body: JSON.stringify({ currentPassword, newPassword }),
       });
 
-      const data = await response.json();
-
       if (response.ok) {
         toast.success("Wachtwoord is aangepast!");
-        onClose(); // Sluit formulier
+        onClose();
       } else {
         toast.error("Wachtwoord veranderen niet gelukt");
       }

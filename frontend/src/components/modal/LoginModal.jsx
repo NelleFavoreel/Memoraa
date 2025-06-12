@@ -1,6 +1,5 @@
 import Modal from "react-modal";
 import "./LoginModal.css";
-import { color } from "three/tsl";
 
 Modal.setAppElement("#root");
 

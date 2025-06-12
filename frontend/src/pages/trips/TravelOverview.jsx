@@ -3,10 +3,10 @@ import TravelInfo from "../../components/trips/TravelInfo";
 import AddTrip from "../../components/trips/AddTrip";
 import "./Trips.css";
 import "../../components/trips/AnimationTrips.css";
-import FullButton from "../../components/button/FullButton";
 import AddButton from "../../components/button/AddButton";
 import { useNavigate } from "react-router-dom";
-import Footer from "../../components/footer/Footer";
+import Footer from "../../components/footer/footer";
+
 function TravelOverview() {
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
@@ -24,6 +24,7 @@ function TravelOverview() {
   const handleRefreshed = () => {
     setRefresh(false);
   };
+
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -31,6 +32,7 @@ function TravelOverview() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <>
       <div className="model-form-container">

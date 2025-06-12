@@ -24,9 +24,7 @@ function Home() {
       <div className="home-background">
         <div className="home">
           <h1 className="title">Toekomstige reizen</h1>
-          {/* <div className="slideshow-hover-area" onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })} onMouseEnter={() => setShowCursor(true)} onMouseLeave={() => setShowCursor(false)}> */}
           <TravelSlideshow parallaxTranslate={parallaxTranslate} />
-          {/* </div> */}
           <div className="home-content1">
             <HomeContent />
           </div>

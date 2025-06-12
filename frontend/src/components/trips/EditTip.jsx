@@ -139,7 +139,7 @@ function EditTrip({ onClose, isOpen }) {
       if (!response.ok) throw new Error("Fout bij het bijwerken van de reis");
 
       const data = await response.json();
-      // toast.success(data.message || "Reis opgeslagen!");
+
       if (onClose) onClose();
       else navigate(`/trips/${id}`);
       window.location.reload();
@@ -155,9 +155,6 @@ function EditTrip({ onClose, isOpen }) {
     <div className="edit-trip-container">
       {showDaysEditor ? (
         <>
-          {/* <FullButton onClick={() => setShowDaysEditor(false)} className="edit-days-toggle-button">
-            Terug naar algemene info
-          </FullButton> */}
           <EditTripDays tripDays={tripDays} setTripDays={setTripDays} tripId={id} />
         </>
       ) : (
@@ -265,9 +262,6 @@ function EditTrip({ onClose, isOpen }) {
                   <button onClick={onClose} style={{ marginTop: "0px", marginLeft: "20px" }} className="cancel-button">
                     Annuleren
                   </button>
-                  {/* <FullButton onClick={() => setShowDaysEditor(true)} className="edit-days-toggle-button">
-                    Bewerk de dagen afzonderlijk
-                  </FullButton> */}
                 </div>
               </form>
             </div>

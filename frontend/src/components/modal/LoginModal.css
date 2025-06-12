@@ -13,8 +13,6 @@
 .modal-content {
   padding: 2rem;
   border-radius: 8px;
-  /* max-width: 500px; */
-  /* width: 90%; */
 }
 
 .modal-close {
@@ -31,7 +29,6 @@ button {
 }
 
 /* animatie */
-/* Overlay fade in/out */
 .ReactModal__Overlay {
   opacity: 0;
   transition: opacity 300ms ease-in-out;

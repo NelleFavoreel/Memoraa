@@ -3,10 +3,6 @@ import TripDetail from "../../components/trips/TripDetail";
 import EditTrip from "../../components/trips/EditTip";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import "./TripDetail.css";
-import FullButton from "../../components/button/FullButton";
-import { SlArrowRight } from "react-icons/sl";
-import AddButton from "../../components/button/AddButton";
-import Underline from "../../components/button/Underline";
 
 function TravelDetail({ setHideNavbar, hideNavbar }) {
   const { id } = useParams();
@@ -33,7 +29,6 @@ function TravelDetail({ setHideNavbar, hideNavbar }) {
   return (
     <div className={`trip-detail-container ${token && !hideNavbar ? "with-back-button" : "without-back-button"}`}>
       <div className="trip-detail-edit-trip"></div>
-
       <TripDetail trip={trip} setHideNavbar={setHideNavbar} hideNavbar={hideNavbar} />
     </div>
   );

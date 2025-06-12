@@ -7,8 +7,8 @@ function Airplane({ targetPosition = new THREE.Vector3(0, 2, 5) }) {
   const ref = useRef();
   const { scene } = useGLTF("/models/scene.gltf");
   const [hasFlown, setHasFlown] = useState(false);
-  const velocity = useRef(0.05); // start snelheid
-  const direction = useRef(new THREE.Vector3()); // bewegingsrichting
+  const velocity = useRef(0.05);
+  const direction = useRef(new THREE.Vector3());
 
   useEffect(() => {
     if (ref.current) {
@@ -35,7 +35,7 @@ function Airplane({ targetPosition = new THREE.Vector3(0, 2, 5) }) {
       // Schaal afhankelijk van afstand (bijv. van 0.5 op 15 units afstand tot 1.5 op 0 afstand)
       const minScale = 0.5;
       const maxScale = 1.5;
-      const maxDistance = 15; // start afstand ongeveer
+      const maxDistance = 15;
       const scale = THREE.MathUtils.lerp(maxScale, minScale, distance / maxDistance);
       ref.current.scale.set(scale, scale, scale);
 

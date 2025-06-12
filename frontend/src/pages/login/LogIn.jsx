@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
 import FullButton from "../../components/button/FullButton";
+
 function LogIn({ onClose }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

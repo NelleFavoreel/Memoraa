@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import FamilyRequests from "../../components/notifications/FamilyRequests";
 import GetNotifications from "../../components/notifications/GetNotifications";
 import "./Notifications.css";
-import Footer from "../../components/footer/Footer";
+import Footer from "../../components/footer/footer";
 function Notifications() {
   const [animate, setAnimate] = useState(false);
 

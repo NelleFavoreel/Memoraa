@@ -1,8 +1,6 @@
 import React from "react";
 import { toast } from "react-toastify";
-import DeleteButton from "../button/DeleteButton";
 import { useNavigate } from "react-router-dom";
-import Underline from "../button/Underline";
 import { SlTrash } from "react-icons/sl";
 
 function DeleteTrip({ tripId, onDelete }) {

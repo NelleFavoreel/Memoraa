@@ -5,7 +5,6 @@ import FullButton from "../button/FullButton";
 import AddButton from "../button/AddButton";
 import { toast } from "react-toastify";
 import LoginModal from "../modal/LoginModal";
-import Underline from "../button/Underline";
 
 function AddTrip({ show, onClose, onTripAdded }) {
   const [place, setPlace] = useState("");
@@ -194,7 +193,7 @@ function AddTrip({ show, onClose, onTripAdded }) {
                       if (file) {
                         const reader = new FileReader();
                         reader.onloadend = () => {
-                          setImageUrl(reader.result); // base64 string
+                          setImageUrl(reader.result);
                         };
                         reader.readAsDataURL(file);
                       }

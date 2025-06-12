@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import ChangingPassword from "./ChangePassword";
 
 function InfoForm() {
   const [user, setUser] = useState(null);
