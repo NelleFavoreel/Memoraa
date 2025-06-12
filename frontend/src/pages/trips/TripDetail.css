@@ -390,4 +390,7 @@
   .edit-trip-modal select {
     padding: 5px 10px;
   }
+  .map-container {
+    margin-top: 60px;
+  }
 }
